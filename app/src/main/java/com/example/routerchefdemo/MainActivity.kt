@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             binding.webView.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    binding.webView.evaluateJavascript(getLoginScript("", ""), null)
+                    binding.webView.evaluateJavascript(getLoginScript("admin", "K9114659"), null)
                 }
 
                 @SuppressLint("WebViewClientOnReceivedSslError")
@@ -52,14 +52,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             binding.webView.loadUrl("https://192.168.1.1/")
-
+            //binding.webView.visibility = View.INVISIBLE
 // run script
         }
     }
     fun getLoginScript(str: String, str2: String): String {
       //  return ("javascript: document.getElementById('index_username').value = 'e'" +
-         return ( "javascript: document.getElementById('password').value = 'e'")
+        // return ( "javascript: document.getElementById('password').value = 'e'")
         //return "script: document.getElementById(\"Btn_Next\").click();"
+        return ("javascript: document.getElementById('index_username').value = '$str'; " +
+                "document.getElementById('password').value = '$str2'; " +
+                "document.getElementById('loginbtn').click();")
     }
   /*  fun getLoginScript(str: String, str2: String): String {
         return concatStrings(
