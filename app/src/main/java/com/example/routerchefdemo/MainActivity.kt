@@ -53,19 +53,39 @@ class MainActivity : AppCompatActivity() {
 
     fun getLoginScript(str: String, str2: String): String {
         return ("javascript: " +
+                "var delay = ( function() {" +
+                "    var timer = 0;" +
+                "    return function(callback, ms) {" +
+                "        clearTimeout (timer);" +
+                "        timer = setTimeout(callback, ms);" +
+                "    };" +
+                "})();" +
+                "delay(function(){" +
+
+                "if (document.getElementById('WANUrl')) Android.callbackHandle('succeeded'); " +
+                "else Android.callbackHandle('failed'); " +
+                "}, 5000 ); " +
+
                 "document.getElementById('Frm_Username').value = '$str'; " +
                 "document.getElementById('Frm_Password').value = '$str2'; " +
-                "document.getElementById('LoginId').click();" +
-                "function wait(ms){" +
-                "var start = new Date().getTime();" +
-                "var end = start;" +
-                "while(end < start + ms) {" +
-                "end = new Date().getTime();" +
-                "}" +
-                "}" +
-                "wait(5000);" +
-                "if (document.getElementById('WANUrl')) Android.callbackHandle('succeeded');" +
-                "else Android.callbackHandle('failed');")
+                "document.getElementById('LoginId').click();")
+
+        //Google Working
+//        ("javascript: " +
+//                "var delay = ( function() {" +
+//                "    var timer = 0;" +
+//                "    return function(callback, ms) {" +
+//                "        clearTimeout (timer);" +
+//                "        timer = setTimeout(callback, ms);" +
+//                "    };" +
+//                "})();" +
+//                "delay(function(){" +
+//
+//                "document.getElementsByName('q')[0].value = '$str'; "+
+//                "if (document.getElementsByName('q')[0].value == '$str') Android.callbackHandle('succeeded'); " +
+//                "else Android.callbackHandle('failed'); " +
+//                "}, 5000 ); " +
+//                "document.getElementsByName('q')[0].value = '$str2'; ")
     }
 
     @JavascriptInterface
