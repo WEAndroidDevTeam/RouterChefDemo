@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             binding.webView.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    binding.webView.evaluateJavascript(getLoginScript("admin", "K9114659"), null)
+                    binding.webView.evaluateJavascript(getLoginScript("admin", "762021Loka"), null)
                 }
 
                 @SuppressLint("WebViewClientOnReceivedSslError")
@@ -52,10 +52,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getLoginScript(str: String, str2: String): String {
-        return ("javascript: document.getElementById('index_username').value = '$str'; " +
-                "document.getElementById('password').value = '$str2'; " +
-                "document.getElementById('loginbtn').click();" +
-                "if (document.getElementById('wizard_wifi_title')) Android.callbackHandle('succeeded');" +
+        return ("javascript: document.getElementById('Frm_Username').value = '$str'; " +
+                "document.getElementById('Frm_Password').value = '$str2'; " +
+                "document.getElementById('LoginId').click();" +
+                "if (document.getElementById('WANUrl')) Android.callbackHandle('succeeded');" +
                 "else Android.callbackHandle('failed');")
     }
 
