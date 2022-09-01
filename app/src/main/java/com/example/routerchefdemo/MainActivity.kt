@@ -52,9 +52,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getLoginScript(str: String, str2: String): String {
-        return ("javascript: document.getElementById('Frm_Username').value = '$str'; " +
+        return ("javascript: " +
+                "function wait(ms){" +
+                "var start = new Date().getTime();" +
+                "var end = start;" +
+                "while(end < start + ms) {" +
+                "end = new Date().getTime();" +
+                "}" +
+                "}" +
+                "document.getElementById('Frm_Username').value = '$str'; " +
                 "document.getElementById('Frm_Password').value = '$str2'; " +
                 "document.getElementById('LoginId').click();" +
+                "wait(5000);" +
                 "if (document.getElementById('WANUrl')) Android.callbackHandle('succeeded');" +
                 "else Android.callbackHandle('failed');")
     }
