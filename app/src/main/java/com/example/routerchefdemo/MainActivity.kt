@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             binding.webView.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    binding.webView.evaluateJavascript(getLoginScript("admin", "762021Loka"), null)
+                    binding.webView.evaluateJavascript(getLoginScript("admin", "juuu"), null)
                 }
 
                 @SuppressLint("WebViewClientOnReceivedSslError")
@@ -62,9 +62,9 @@ class MainActivity : AppCompatActivity() {
                 "})();" +
                 "delay(function(){" +
 
-                "if (document.getElementById('WANUrl')) Android.callbackHandle('succeeded'); " +
+                "if (document.getElementById('LogOffLnk')) Android.callbackHandle('succeeded'); " +
                 "else Android.callbackHandle('failed'); " +
-                "}, 5000 ); " +
+                "}, 15000 ); " +
 
                 "document.getElementById('Frm_Username').value = '$str'; " +
                 "document.getElementById('Frm_Password').value = '$str2'; " +
@@ -90,10 +90,10 @@ class MainActivity : AppCompatActivity() {
 
     @JavascriptInterface
     public fun callbackHandle(str: String) {
-        if (str == "succeeded")
-            Toast.makeText(this, "succeeded", Toast.LENGTH_LONG).show()
-        else
-            Toast.makeText(this, "failed", Toast.LENGTH_LONG).show();
+//        if (str == "succeeded")
+            Toast.makeText(this, str, Toast.LENGTH_LONG).show()
+//        else
+//            Toast.makeText(this, "failed", Toast.LENGTH_LONG).show();
 
     }
 }
