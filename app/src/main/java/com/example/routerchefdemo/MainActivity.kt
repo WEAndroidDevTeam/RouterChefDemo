@@ -35,7 +35,14 @@ class MainActivity : AppCompatActivity() {
             binding.webView.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    binding.webView.evaluateJavascript(getLoginScript("admin", "762021Loka"), null)
+                    binding.webView.evaluateJavascript(getLoginScript(binding.etUsername.text.toString(), binding.etPassword.text.toString()), null)
+                }
+
+                override fun shouldOverrideUrlLoading(
+                    view: WebView?,
+                    request: WebResourceRequest?
+                ): Boolean {
+                    return false
                 }
 
                 @SuppressLint("WebViewClientOnReceivedSslError")
@@ -62,39 +69,18 @@ class MainActivity : AppCompatActivity() {
                 "})();" +
                 "delay(function(){" +
 
-                "if (document.getElementById('WANUrl')) Android.callbackHandle('succeeded'); " +
-                "else Android.callbackHandle('failed'); " +
+                "if (document.getElementsByName('Password')[0]) { Android.callbackHandle('failed');}" +
+                "else { Android.callbackHandle('succeeded'); document.getElementById('setlogin').click(); }" +
+
                 "}, 5000 ); " +
 
-                "document.getElementById('Frm_Username').value = '$str'; " +
-                "document.getElementById('Frm_Password').value = '$str2'; " +
-                "document.getElementById('LoginId').click();")
-
-        //Google Working
-//        ("javascript: " +
-//                "var delay = ( function() {" +
-//                "    var timer = 0;" +
-//                "    return function(callback, ms) {" +
-//                "        clearTimeout (timer);" +
-//                "        timer = setTimeout(callback, ms);" +
-//                "    };" +
-//                "})();" +
-//                "delay(function(){" +
-//
-//                "document.getElementsByName('q')[0].value = '$str'; "+
-//                "if (document.getElementsByName('q')[0].value == '$str') Android.callbackHandle('succeeded'); " +
-//                "else Android.callbackHandle('failed'); " +
-//                "}, 5000 ); " +
-//                "document.getElementsByName('q')[0].value = '$str2'; ")
-    }
+                "document.getElementsByName('Username')[0].value = '$str'; " +
+                "document.getElementsByName('Password')[0].value = '$str2'; " +
+                "document.getElementById('btnLogin').click();")
+}
 
     @JavascriptInterface
     public fun callbackHandle(str: String) {
-        if (str == "succeeded")
-            Toast.makeText(this, "succeeded", Toast.LENGTH_LONG).show()
-        else
-            Toast.makeText(this, "failed", Toast.LENGTH_LONG).show();
-
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show()
     }
 }
-

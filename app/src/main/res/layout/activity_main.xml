@@ -22,6 +22,7 @@
         android:inputType="text"
         android:textSize="@dimen/_14ssp"
         android:hint="@string/user_name"
+        android:text="admin"
         android:textColorHint="@color/black"
         android:background="@drawable/edit_text_background"
         android:backgroundTint="@color/light_grey"
@@ -46,6 +47,7 @@
         android:textSize="@dimen/_14ssp"
         android:hint="@string/password"
         android:autofillHints="@string/password"
+        android:text="08902015"
         android:textColorHint="@color/black"
         android:backgroundTint="@color/light_grey"
         android:background="@drawable/edit_text_background"
@@ -73,5 +75,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_constraintTop_toBottomOf="@id/b_login"
-    android:id="@+id/webView"/>
+    android:id="@+id/webView"
+    android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
