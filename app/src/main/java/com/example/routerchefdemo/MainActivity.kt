@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 "delay(function(){" +
 
                 "if (document.getElementsByName('Password')[0]) { Android.callbackHandle('failed');}" +
-                "else { Android.callbackHandle('succeeded'); document.getElementById('setlogin').click(); }" +
+                "else { Android.callbackHandle('succeeded'); }" +
 
                 "}, 5000 ); " +
 
