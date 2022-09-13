@@ -1,6 +1,7 @@
 package com.example.routerchefdemo
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
 import android.view.View
@@ -8,7 +9,7 @@ import android.webkit.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.routerchefdemo.databinding.ActivityMainBinding
-
+import com.example.routerchefdemo.Constants.webview as webView
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,46 +20,55 @@ class MainActivity : AppCompatActivity() {
         val view: View = binding.root
         setContentView(view)
 
-        binding.bLogin.setOnClickListener {
-            val settings = binding.webView.settings
-            settings.javaScriptEnabled = true
-            settings.domStorageEnabled = true
-            settings.databaseEnabled = true
-            settings.mixedContentMode = 0
-            settings.builtInZoomControls = true
-            settings.loadWithOverviewMode = true
-            settings.useWideViewPort = true
-            settings.setAppCacheEnabled(false)
 
-            binding.webView.addJavascriptInterface(this, "Android")
+        Constants.webview = WebView(this)
 
-            binding.webView.webViewClient = object : WebViewClient() {
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    super.onPageFinished(view, url)
-                    binding.webView.evaluateJavascript(getLoginScript(binding.etUsername.text.toString(), binding.etPassword.text.toString()), null)
-                }
+        val settings = webView.settings
+        settings.javaScriptEnabled = true
+        settings.domStorageEnabled = true
+        settings.databaseEnabled = true
+        settings.mixedContentMode = 0
+        settings.builtInZoomControls = true
+        settings.loadWithOverviewMode = true
+        settings.useWideViewPort = true
+        settings.setAppCacheEnabled(false)
 
-                override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest?
-                ): Boolean {
-                    return false
-                }
+        webView.addJavascriptInterface(this, "Android")
 
-                @SuppressLint("WebViewClientOnReceivedSslError")
-                override fun onReceivedSslError(
-                    view: WebView?,
-                    handler: SslErrorHandler?,
-                    error: SslError?
-                ) {
-                    handler?.proceed()
-                }
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
             }
-            binding.webView.loadUrl("https://192.168.1.1/")
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                return false
+            }
+
+            @SuppressLint("WebViewClientOnReceivedSslError")
+            override fun onReceivedSslError(
+                view: WebView?,
+                handler: SslErrorHandler?,
+                error: SslError?
+            ) {
+                handler?.proceed()
+            }
+        }
+        webView.loadUrl("https://192.168.1.1/")
+
+        binding.bLogin.setOnClickListener {
+            webView.evaluateJavascript(
+                getLoginScript(
+                    binding.etUsername.text.toString(),
+                    binding.etPassword.text.toString()
+                ), null
+            )
         }
     }
 
-    fun getLoginScript(str: String, str2: String): String {
+    fun getLoginScript(username: String, password: String): String {
         return ("javascript: " +
                 "var delay = ( function() {" +
                 "    var timer = 0;" +
@@ -67,20 +77,38 @@ class MainActivity : AppCompatActivity() {
                 "        timer = setTimeout(callback, ms);" +
                 "    };" +
                 "})();" +
-                "delay(function(){" +
 
-                "if (document.getElementsByName('Password')[0]) { Android.callbackHandle('failed');}" +
-                "else { Android.callbackHandle('succeeded'); }" +
+                // Login into Setup home page
+                "function Login(username , password) {" +
+                "  document.querySelector('#index_username').value=username ;" +
+                "  document.querySelector('#password').value=password;" +
+                "  document.querySelector('#loginbtn').click();" +
+                "}" +
 
-                "}, 5000 ); " +
+                // Enter into WLAN Setup
+                "function WlanSetupSection() {" +
+                "    document.querySelector('.wifi_user_status.text_center').click();" +
+                "}" +
 
-                "document.getElementsByName('Username')[0].value = '$str'; " +
-                "document.getElementsByName('Password')[0].value = '$str2'; " +
-                "document.getElementById('btnLogin').click();")
-}
+                "Login('$username', '$password');" +
+                "Android.callbackHandle('logged in');")
+    }
+
 
     @JavascriptInterface
     public fun callbackHandle(str: String) {
         Toast.makeText(this, str, Toast.LENGTH_LONG).show()
+        when (str) {
+            "logged in" -> startActivity(Intent(this, FeaturesActivity::class.java))
+            "navigate" -> startActivity(Intent(this, RouterDataActivity::class.java))
+            else -> {
+//                finishAffinity()
+//                System.exit(0)
+//                finishAffinity()
+//                System.exit(0)
+//                finishAffinity()
+//                System.exit(0)
+            }
+        }
     }
 }

@@ -2,41 +2,41 @@ package com.example.routerchefdemo
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.webkit.JavascriptInterface
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.routerchefdemo.databinding.ActivityRouterDataBinding
 
 
 class RouterDataActivity : AppCompatActivity() {
 
-    object AndroidJSInterface {
-        @JavascriptInterface
-        fun onClicked() {
-            Log.d("HelpButton", "Help button clicked")
-        }
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityRouterDataBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
-        binding.webView.loadUrl("https://192.168.1.1/")
-        binding.webView.settings.javaScriptEnabled = true
 
-      /*  binding.webView.post {
-            binding.webView.loadUrl(
-                "document.getElementById('index_username').value = admin;\n" +
-                        "                        document.getElementById('password').value = K9114659;\n" +
-                        "                        document.getElementById(\\\"loginbtn\\\").click();\n" +
-                        "[8:51 PM, 8/29/2022] Mona: if (document.getElementById('wizard_wifi_title')) \n" +
-                        "            Android.callbackHandle(JSON.stringify({result:\\\"login_success\\\"}));"
-            )
-        }*/
+        binding.bApply.setOnClickListener {
+            Constants.webview.evaluateJavascript(getChangeDataScript(binding.etSsid.text.toString(), binding.etPassword.text.toString()), null)
+        }
+    }
 
 
+    fun getChangeDataScript(ssid: String, password: String): String {
+        return ("javascript: " +
+                "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').addEventListener('click', function(e){" +
+                "document.querySelector('#home_wifi_access24id_ctrl').addEventListener('change', function(){" +
+                "document.querySelector('#home_wifi_access24id_ctrl').value = '$ssid';" +
+                "});" +
+                "document.querySelector('#hidesharekeyMenu_Password_ctrl').addEventListener('change', function(){" +
+                "document.querySelector('#hidesharekeyMenu_Password_ctrl').value = '$password';" +
+                "});" +
+                "document.querySelector('#home_wifi_access24id_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
+                "document.querySelector('#hidesharekeyMenu_Password_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
+                "});" +
+                "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').click();" +
+                "Android.callbackHandle('wait few seconds till new settings apply');")
     }
 }
