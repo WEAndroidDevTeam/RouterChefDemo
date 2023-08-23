@@ -19,24 +19,37 @@ class RouterDataActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.bApply.setOnClickListener {
-            Constants.webview.evaluateJavascript(getChangeDataScript(binding.etSsid.text.toString(), binding.etPassword.text.toString()), null)
+            Constants.webview.evaluateJavascript(getData("https://192.168.1.1/api/system/deviceinfo", "device info"), null)
+            Constants.webview.evaluateJavascript(getData("https://192.168.1.1/api/ntwk/lan_host", "3"), null)
+        }
+
+        binding.bApplyy.setOnClickListener {
+            Constants.webview.evaluateJavascript(getData("https://192.168.1.1/api/ntwk/lan_host", "3"), null)
         }
     }
 
-
-    fun getChangeDataScript(ssid: String, password: String): String {
+    fun getData(url: String, id: String): String {
         return ("javascript: " +
-                "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').addEventListener('click', function(e){" +
-                "document.querySelector('#home_wifi_access24id_ctrl').addEventListener('change', function(){" +
-                "document.querySelector('#home_wifi_access24id_ctrl').value = '$ssid';" +
-                "});" +
-                "document.querySelector('#hidesharekeyMenu_Password_ctrl').addEventListener('change', function(){" +
-                "document.querySelector('#hidesharekeyMenu_Password_ctrl').value = '$password';" +
-                "});" +
-                "document.querySelector('#home_wifi_access24id_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
-                "document.querySelector('#hidesharekeyMenu_Password_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
-                "});" +
-                "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').click();" +
-                "Android.callbackHandle('wait few seconds till new settings apply');")
+                "var delay = ( function() {" +
+                "    var timer = 0;" +
+                "    return function(callback, ms) {" +
+                "        clearTimeout (timer);" +
+                "        timer = setTimeout(callback, ms);" +
+                "    };" +
+                "})();" +
+                "function getData (){" +
+                "const http = new XMLHttpRequest();" +
+                "http.open('GET', '$url');" +
+                "http.onreadystatechange = function() {" +
+                "if (this.readyState === 4 && this.status === 200) {" +
+                "const text = http.responseText ;" +
+                "const jsonRegex = /\\/\\*(.*?)\\*\\//s;" +
+                "const jsonMatch = text.match(jsonRegex);" +
+                "const jsonData = JSON.parse(jsonMatch[1]);" +
+                "Android.callbackHandle('$id' , JSON.stringify(jsonData));" +
+                "}};" +
+                "http.send();" +
+                "}" +
+                "getData();")
     }
 }

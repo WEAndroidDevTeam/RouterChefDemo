@@ -85,23 +85,25 @@ class MainActivity : AppCompatActivity() {
                 "  document.querySelector('#loginbtn').click();" +
                 "}" +
 
-                // Enter into WLAN Setup
-                "function WlanSetupSection() {" +
-                "    document.querySelector('.wifi_user_status.text_center').click();" +
-                "}" +
+//                // Enter into WLAN Setup
+//                "function WlanSetupSection() {" +
+//                "    document.querySelector('.wifi_user_status.text_center').click();" +
+//                "}" +
 
                 "Login('$username', '$password');" +
-                "Android.callbackHandle('logged in');")
+                "Android.callbackHandle('logged in' , '');")
     }
 
 
     @JavascriptInterface
-    public fun callbackHandle(str: String) {
-        Toast.makeText(this, str, Toast.LENGTH_LONG).show()
+    public fun callbackHandle(str: String, data: String) {
+//        Toast.makeText(this, str, Toast.LENGTH_LONG).show()
         when (str) {
-            "logged in" -> startActivity(Intent(this, FeaturesActivity::class.java))
+            "logged in" -> startActivity(Intent(this, RouterDataActivity::class.java))
+            "device info" -> Toast.makeText(this, data, Toast.LENGTH_LONG).show()
             "navigate" -> startActivity(Intent(this, RouterDataActivity::class.java))
             else -> {
+                Toast.makeText(this, data, Toast.LENGTH_LONG).show()
 //                finishAffinity()
 //                System.exit(0)
 //                finishAffinity()

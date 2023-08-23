@@ -86,4 +86,17 @@
         app:layout_constraintStart_toStartOf="@id/et_ssid"
         app:layout_constraintTop_toBottomOf="@id/et_password" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/b_applyy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/edit_text_background"
+        android:padding="@dimen/_7sdp"
+        android:text="apply"
+        app:backgroundTint="@color/purple"
+        app:layout_constraintEnd_toEndOf="@id/et_ssid"
+        app:layout_constraintStart_toStartOf="@id/et_ssid"
+        app:layout_constraintTop_toBottomOf="@id/b_apply" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

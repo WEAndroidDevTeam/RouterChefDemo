@@ -34,6 +34,6 @@ class FeaturesActivity : AppCompatActivity() {
                 "}" +
 
                 "WlanSetupSection();" +
-                "Android.callbackHandle('navigate');")
+                "Android.callbackHandle('navigate', '');")
     }
 }
