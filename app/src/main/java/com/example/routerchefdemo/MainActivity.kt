@@ -59,12 +59,13 @@ class MainActivity : AppCompatActivity() {
         webView.loadUrl("https://192.168.1.1/")
 
         binding.bLogin.setOnClickListener {
-            webView.evaluateJavascript(
-                getLoginScript(
-                    binding.etUsername.text.toString(),
-                    binding.etPassword.text.toString()
-                ), null
-            )
+            startActivity(Intent(this, RouterDataActivity::class.java))
+//            webView.evaluateJavascript(
+//                getLoginScript(
+//                    binding.etUsername.text.toString(),
+//                    binding.etPassword.text.toString()
+//                ), null
+//            )
         }
     }
 
@@ -95,22 +96,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    @JavascriptInterface
-    public fun callbackHandle(str: String, data: String) {
-//        Toast.makeText(this, str, Toast.LENGTH_LONG).show()
-        when (str) {
-            "logged in" -> startActivity(Intent(this, RouterDataActivity::class.java))
-            "device info" -> Toast.makeText(this, data, Toast.LENGTH_LONG).show()
-            "navigate" -> startActivity(Intent(this, RouterDataActivity::class.java))
-            else -> {
-                Toast.makeText(this, data, Toast.LENGTH_LONG).show()
-//                finishAffinity()
-//                System.exit(0)
-//                finishAffinity()
-//                System.exit(0)
-//                finishAffinity()
-//                System.exit(0)
-            }
-        }
-    }
+
 }
