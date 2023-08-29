@@ -10,16 +10,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.routerchefdemo.databinding.ActivityMainBinding
 import com.example.routerchefdemo.Constants.webview as webView
+@SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
+class MainActivity : BaseActivity(), BaseActivity.WebViewCallback {
 
-class MainActivity : AppCompatActivity() {
 
-    @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
-
+        webViewCallback = this
 
         Constants.webview = WebView(this)
 
@@ -95,6 +95,9 @@ class MainActivity : AppCompatActivity() {
                 "Android.callbackHandle('logged in' , '');")
     }
 
+    override fun onCallback(str: String, data: String) {
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show()
+    }
 
 
 }
