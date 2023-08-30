@@ -1,36 +1,23 @@
 package com.example.routerchefdemo
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.location.LocationManager
-import android.net.Uri
-import android.net.http.SslError
 import android.os.Bundle
-import android.provider.Settings
+import android.os.PersistableBundle
 import android.util.Log
-import android.view.View
-import android.webkit.*
+import android.webkit.JavascriptInterface
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.viewbinding.ViewBinding
 
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
 abstract class BaseActivity : AppCompatActivity() {
-    interface WebViewCallback {
-        fun  onCallback(str: String, data: String)
-    }
 
-    protected var webViewCallback: WebViewCallback? = null
+    abstract fun setCurrentActivity()
+    abstract fun render()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setCurrentActivity()
     }
 
     fun callAPI(url: String, id: String, dummy: String? = null): String {
@@ -63,8 +50,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     @JavascriptInterface
     public fun callbackHandle(str: String, data: String) {
-        // Call the interface method with the received data
-        webViewCallback?.onCallback(str, data)
+        ((applicationContext as MyApp).getCurrentActivity() as BaseActivity).render()
+
         Log.d("CallbackHandle", "CallbackHandle called with str: $str, data: $data")
         when (str) {
             "logged in" -> startActivity(Intent(this, RouterDataActivity::class.java))
