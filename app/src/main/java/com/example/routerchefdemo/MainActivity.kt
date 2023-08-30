@@ -19,10 +19,11 @@ class MainActivity : BaseActivity(), BaseActivity.WebViewCallback {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
-        webViewCallback = this
+
 
         Constants.webview = WebView(this)
-
+// Set the callback for WebView
+        webViewCallback = this
         val settings = webView.settings
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
@@ -59,7 +60,7 @@ class MainActivity : BaseActivity(), BaseActivity.WebViewCallback {
         webView.loadUrl("https://192.168.1.1/")
 
         binding.bLogin.setOnClickListener {
-            startActivity(Intent(this, RouterDataActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
 //            webView.evaluateJavascript(
 //                getLoginScript(
 //                    binding.etUsername.text.toString(),
@@ -96,7 +97,7 @@ class MainActivity : BaseActivity(), BaseActivity.WebViewCallback {
     }
 
     override fun onCallback(str: String, data: String) {
-        Toast.makeText(this, data, Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, data, Toast.LENGTH_LONG).show()
     }
 
 

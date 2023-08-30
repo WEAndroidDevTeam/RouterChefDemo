@@ -23,22 +23,18 @@ import androidx.viewbinding.ViewBinding
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
 abstract class BaseActivity : AppCompatActivity() {
     interface WebViewCallback {
-        fun onCallback(str: String, data: String)
+        fun  onCallback(str: String, data: String)
     }
+
     protected var webViewCallback: WebViewCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
-    fun CallAPI(url: String, id: String): String {
-        val jsonData = """
-        {
-            "key1": "value1",
-            "key2": "value2",
-            "key3": "value3"
-        }
-    """.trimIndent()
+
+    fun callAPI(url: String, id: String, dummy: String? = null): String {
+
         return ("javascript: " +
 //                "var delay = ( function() {" +
 //                "    var timer = 0;" +
@@ -47,23 +43,24 @@ abstract class BaseActivity : AppCompatActivity() {
 //                "        timer = setTimeout(callback, ms);" +
 //                "    };" +
 //                "})();" +
-//                "function getData (){" +
+                "function getData (){" +
 //                "const http = new XMLHttpRequest();" +
-//                "http.open('GET', '$url');" +
+                //             "http.open('GET', '$url');" +
 //                "http.onreadystatechange = function() {" +
 //                "if (this.readyState === 4 && this.status === 200) {" +
 //                "const text = http.responseText ;" +
 //                "const jsonRegex = /\\/\\*(.*?)\\*\\//s;" +
 //                "const jsonMatch = text.match(jsonRegex);" +
-//                "const jsonData = JSON.parse(jsonMatch[1]);" +
-                "Android.callbackHandle('$id' , JSON.stringify(jsonData));" +
-                "}};" +
-                "http.send();" +
+//                "const jsonData = JSON.parse(jsonData);" +
+                "Android.callbackHandle('$id' , JSON.stringify($dummy));" +
+//                "}};" +
+                //               "http.send();" +
                 "}" +
                 "getData();")
 
 
     }
+
     @JavascriptInterface
     public fun callbackHandle(str: String, data: String) {
         // Call the interface method with the received data
@@ -74,7 +71,7 @@ abstract class BaseActivity : AppCompatActivity() {
             "device info" -> Toast.makeText(this, data, Toast.LENGTH_LONG).show()
             "navigate" -> startActivity(Intent(this, RouterDataActivity::class.java))
             else -> {
-                Toast.makeText(this, data, Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, data, Toast.LENGTH_LONG).show()
 //                finishAffinity()
 //                System.exit(0)
 //                finishAffinity()
