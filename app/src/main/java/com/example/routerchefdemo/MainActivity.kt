@@ -92,7 +92,8 @@ class MainActivity : BaseActivity() {
                 "Login('$username', '$password');" +
                 "Android.callbackHandle('logged in' , '');")
     }
-    override fun render() {
+
+    override fun render(str: String, data: String) {
         Toast.makeText(this, "manin", Toast.LENGTH_LONG).show()
     }
 

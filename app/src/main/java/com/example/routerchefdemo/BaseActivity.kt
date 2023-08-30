@@ -3,7 +3,6 @@ package com.example.routerchefdemo
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.webkit.JavascriptInterface
 import android.widget.Toast
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun setCurrentActivity()
-    abstract fun render()
+    abstract fun render(str: String, data: String)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +49,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     @JavascriptInterface
     public fun callbackHandle(str: String, data: String) {
-        ((applicationContext as MyApp).getCurrentActivity() as BaseActivity).render()
+        ((applicationContext as MyApp).getCurrentActivity() as BaseActivity).render(str, data)
 
         Log.d("CallbackHandle", "CallbackHandle called with str: $str, data: $data")
         when (str) {

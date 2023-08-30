@@ -25,7 +25,7 @@ class RouterDataActivity : BaseActivity() {
         }
     }
 
-    override fun render() {
+    override fun render(str: String, data: String) {
         Toast.makeText(this, "dataa", Toast.LENGTH_LONG).show()
     }
 

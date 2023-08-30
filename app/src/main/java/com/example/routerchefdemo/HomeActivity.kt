@@ -1,31 +1,36 @@
 package com.example.routerchefdemo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.example.routerchefdemo.databinding.ActivityHomeBinding
+import org.json.JSONObject
 
 class HomeActivity : BaseActivity() {
+    private lateinit var binding: ActivityHomeBinding
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+
         val view: View = binding.root
 
         setContentView(view)
-        binding.btConnectedDevices.setOnClickListener {
-            Constants.webview.evaluateJavascript(
-                callAPI(
-                    "https://192.168.1.1/api/system/getuserlevel",
-                    "user level",
-                    "{\"isadmin\":true}"
-                ), null
-            )
-        }
+
+        Constants.webview.evaluateJavascript(
+            callAPI(
+                "https://192.168.1.1/api/system/getuserlevel",
+                "user level",
+                "{\"isadmin\":true}"
+            ), null
+        )
+
     }
-     override fun render() {
-        Toast.makeText(this, "hooome", Toast.LENGTH_LONG).show()
+
+    override fun render(str: String, data: String) {
+        val jsonObject = JSONObject(data)
+        val isAdmin = jsonObject.getBoolean("isadmin")
+        if (isAdmin)
+            binding.tvWelcome.text = "WELCOME Admin "
     }
 }
