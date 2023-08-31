@@ -57,9 +57,9 @@ class ConnectedDevicesActivity : BaseActivity() {
 
         val jsonArray = Gson().fromJson(jsonData, Array<Any>::class.java)
         jsonArray.forEach { jsonObject ->
-            val obj = Gson().toJson(jsonObject)
-            val hostName = JsonParser.parseString(obj).getAsJsonObject().get("HostName").toString()
-            val iconType = JsonParser.parseString(obj).getAsJsonObject().get("IconType").toString()
+            val jsonString = Gson().toJson(jsonObject)
+            val hostName = JsonParser.parseString(jsonString).getAsJsonObject().get("HostName").toString()
+            val iconType = JsonParser.parseString(jsonString).getAsJsonObject().get("IconType").toString()
 
             val connectedDevice = ConnectedDevice(hostName, iconType)
             connectedDevicesList.add(connectedDevice)
