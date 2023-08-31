@@ -1,5 +1,6 @@
 package com.example.routerchefdemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityHomeNetworkBinding
@@ -17,9 +18,12 @@ class HomeNetworkActivity : BaseActivity() {
 
         }
         binding.btnLanInterface.setOnClickListener {
-
+            val intent = Intent(this, LANInterfaceActivity::class.java)
+            startActivity(intent)
         }
         binding.btnWlanSettings.setOnClickListener {
+            val intent = Intent(this, WLANSettingsActivity::class.java)
+            startActivity(intent)
 
         }
         binding.btnWlanAccess.setOnClickListener {

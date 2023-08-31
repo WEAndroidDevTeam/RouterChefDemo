@@ -1,6 +1,7 @@
 package com.example.routerchefdemo
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityMaintainBinding
@@ -17,7 +18,8 @@ class MaintainActivity : BaseActivity() {
         setContentView(view)
 
         binding.btnSysInfo.setOnClickListener {
-
+            val intent = Intent(this, SysInformationActivity::class.java)
+            startActivity(intent)
         }
         binding.btnWlanInfo.setOnClickListener {
 
