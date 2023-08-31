@@ -25,9 +25,10 @@ class HomeActivity : BaseActivity() {
                 "{\"isadmin\":true}"
             ), null
         )
-binding.btConnectedDevices.setOnClickListener {
-    startActivity(Intent(this, ConnectedDevicesActivity::class.java))
-}
+        binding.btConnectedDevices.setOnClickListener {
+
+            startActivity(Intent(this, ConnectedDevicesActivity::class.java))
+        }
     }
 
     override fun render(str: String, data: String) {
@@ -35,5 +36,6 @@ binding.btConnectedDevices.setOnClickListener {
         val isAdmin = jsonObject.getBoolean("isadmin")
         if (isAdmin)
             binding.tvWelcome.text = "WELCOME Admin "
+
     }
 }
