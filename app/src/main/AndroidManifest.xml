@@ -18,7 +18,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".HomeActivity"
+            android:name=".HomeNetworkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SysInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MaintainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LANInterfaceActivity"
             android:exported="false" />
         <activity
             android:name=".WLANSettingsActivity"
@@ -37,7 +46,7 @@
         </intent-filter>
         </activity>
         <activity
-            android:name=".LANInterfaceActivity"
+            android:name=".HomeActivity"
             android:exported="true">
 
         </activity>
