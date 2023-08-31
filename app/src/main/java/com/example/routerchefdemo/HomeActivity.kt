@@ -13,10 +13,13 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
-
         val view: View = binding.root
-
         setContentView(view)
+        binding.btMaintain.setOnClickListener {
+            val intent = Intent(this, MaintainActivity::class.java)
+            startActivity(intent)
+
+        }
 
         Constants.webview.evaluateJavascript(
             callAPI(
@@ -27,9 +30,23 @@ class HomeActivity : BaseActivity() {
         )
         binding.btConnectedDevices.setOnClickListener {
 
+
             startActivity(Intent(this, ConnectedDevicesActivity::class.java))
         }
+        binding.btGetDevieInfo.setOnClickListener {
+            val intent = Intent(this, SysInformationActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btHomeNetwork.setOnClickListener {
+            val intent = Intent(this, HomeNetworkActivity::class.java)
+            startActivity(intent)
+
+        }
+        Constants.webview.evaluateJavascript(callAPI("https://192.168.1.1/api/system/getuserlevel", "user level", "{\"isadmin\":true}"), null)
+
     }
+
+
 
     override fun render(str: String, data: String) {
         val jsonObject = JSONObject(data)
