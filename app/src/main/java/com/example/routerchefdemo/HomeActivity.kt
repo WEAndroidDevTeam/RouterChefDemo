@@ -1,5 +1,6 @@
 package com.example.routerchefdemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityHomeBinding
@@ -24,7 +25,9 @@ class HomeActivity : BaseActivity() {
                 "{\"isadmin\":true}"
             ), null
         )
-
+binding.btConnectedDevices.setOnClickListener {
+    startActivity(Intent(this, ConnectedDevicesActivity::class.java))
+}
     }
 
     override fun render(str: String, data: String) {
