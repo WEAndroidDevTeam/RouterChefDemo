@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import org.json.JSONObject
 
 class ConnectedDevicesActivity : BaseActivity() {
     private lateinit var binding: ActivityConnectedDevicesBinding
@@ -19,6 +20,7 @@ class ConnectedDevicesActivity : BaseActivity() {
 
     override fun render(str: String, data: String) {
         Log.e("connectes", data)
+        parseConnectedDevices(data)
 
     }
 
@@ -49,19 +51,20 @@ class ConnectedDevicesActivity : BaseActivity() {
 
 
     }
-//
-//    fun parseConnectedDevices(jsonData: String): List<ConnectedDevice> {
-//        val connectedDevicesList = mutableListOf<ConnectedDevice>()
-//
-//        val jsonArray = Gson().fromJson(jsonData, Array<Any>::class.java)
-//        jsonArray.forEach { jsonObject ->
-//            val hostName = jsonObject.get("HostName").asString
-//            val iconType = jsonObject.get("IconType").asString
-//
-//            val connectedDevice = ConnectedDevice(hostName, iconType)
-//            connectedDevicesList.add(connectedDevice)
-//        }
-//
-//        return connectedDevicesList
-//    }
+
+    fun parseConnectedDevices(jsonData: String): List<ConnectedDevice> {
+        val connectedDevicesList = mutableListOf<ConnectedDevice>()
+
+        val jsonArray = Gson().fromJson(jsonData, Array<Any>::class.java)
+        jsonArray.forEach { jsonObject ->
+            val obj = Gson().toJson(jsonObject)
+            val hostName = JsonParser.parseString(obj).getAsJsonObject().get("HostName").toString()
+            val iconType = JsonParser.parseString(obj).getAsJsonObject().get("IconType").toString()
+
+            val connectedDevice = ConnectedDevice(hostName, iconType)
+            connectedDevicesList.add(connectedDevice)
+        }
+
+        return connectedDevicesList
+    }
 }
