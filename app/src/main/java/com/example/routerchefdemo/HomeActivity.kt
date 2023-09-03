@@ -4,15 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityHomeBinding
+import com.example.routerchefdemo.databinding.ActivityMainBinding
 import org.json.JSONObject
 
-class HomeActivity : BaseActivity() {
-    private lateinit var binding: ActivityHomeBinding
+class HomeActivity : BaseActivity<ActivityHomeBinding>() {
+    override fun getViewBinding() = ActivityHomeBinding.inflate(layoutInflater)
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
         binding.btMaintain.setOnClickListener {
@@ -24,8 +24,7 @@ class HomeActivity : BaseActivity() {
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/system/getuserlevel",
-                "user level",
-                "{\"isadmin\":true}"
+                "user level"
             ), null
         )
         binding.btConnectedDevices.setOnClickListener {
@@ -42,7 +41,7 @@ class HomeActivity : BaseActivity() {
             startActivity(intent)
 
         }
-        Constants.webview.evaluateJavascript(callAPI("https://192.168.1.1/api/system/getuserlevel", "user level", "{\"isadmin\":true}"), null)
+        Constants.webview.evaluateJavascript(callAPI("https://192.168.1.1/api/system/getuserlevel", "user level"), null)
 
     }
 

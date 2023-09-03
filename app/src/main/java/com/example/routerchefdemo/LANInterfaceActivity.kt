@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityLaninterfaceBinding
 
-class LANInterfaceActivity : BaseActivity() {
-    private lateinit var binding: ActivityLaninterfaceBinding
+class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
+    override fun getViewBinding() = ActivityLaninterfaceBinding.inflate(layoutInflater)
 
     private var isConstrainstLayoutVisible = true
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLaninterfaceBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
 

@@ -5,12 +5,12 @@ import android.view.View
 import android.widget.Toast
 import com.example.routerchefdemo.databinding.ActivityRouterDataBinding
 
-class RouterDataActivity : BaseActivity() {
+class RouterDataActivity : BaseActivity<ActivityRouterDataBinding>() {
+    override fun getViewBinding() = ActivityRouterDataBinding.inflate(layoutInflater)
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityRouterDataBinding.inflate(layoutInflater)
         val view: View = binding.root
 
         setContentView(view)

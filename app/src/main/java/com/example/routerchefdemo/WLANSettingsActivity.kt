@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityWlansettingsBinding
 
-class WLANSettingsActivity : BaseActivity() {
-    private lateinit var binding: ActivityWlansettingsBinding
+class WLANSettingsActivity : BaseActivity<ActivityWlansettingsBinding>() {
+    override fun getViewBinding() = ActivityWlansettingsBinding.inflate(layoutInflater)
 
     private var isConstrainstLayoutVisible = true
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityWlansettingsBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
 

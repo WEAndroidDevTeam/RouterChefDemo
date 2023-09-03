@@ -11,12 +11,12 @@ import com.example.routerchefdemo.databinding.ActivityMainBinding
 import com.example.routerchefdemo.Constants.webview as webView
 
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
 
@@ -57,13 +57,13 @@ class MainActivity : BaseActivity() {
         webView.loadUrl("https://192.168.1.1/")
 
         binding.bLogin.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-//            webView.evaluateJavascript(
-//                getLoginScript(
-//                    binding.etUsername.text.toString(),
-//                    binding.etPassword.text.toString()
-//                ), null
-//            )
+//            startActivity(Intent(this, HomeActivity::class.java))
+            webView.evaluateJavascript(
+                getLoginScript(
+                    binding.etUsername.text.toString(),
+                    binding.etPassword.text.toString()
+                ), null
+            )
         }
     }
 
@@ -79,9 +79,11 @@ class MainActivity : BaseActivity() {
 
                 // Login into Setup home page
                 "function Login(username , password) {" +
+                "console.log('dataaaa Loginnnnn' );" +
                 "  document.querySelector('#index_username').value=username ;" +
                 "  document.querySelector('#password').value=password;" +
                 "  document.querySelector('#loginbtn').click();" +
+                "console.log('dataaaa clickeddd' );" +
                 "}" +
 
 //                // Enter into WLAN Setup
@@ -94,7 +96,11 @@ class MainActivity : BaseActivity() {
     }
 
     override fun render(str: String, data: String) {
-        Toast.makeText(this, "manin", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "dataaaa manin", Toast.LENGTH_LONG).show()
+        binding.bLogin.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+//        startActivity(Intent(this, HomeActivity::class.java))
     }
 
 }

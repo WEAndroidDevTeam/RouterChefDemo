@@ -7,16 +7,22 @@ import android.util.Log
 import android.webkit.JavascriptInterface
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
+import org.json.JSONObject
+import java.util.regex.Pattern
 
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
 
+    lateinit var binding: B
+    abstract fun getViewBinding(): B
     abstract fun setCurrentActivity()
     abstract fun render(str: String, data: String)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCurrentActivity()
+        binding = getViewBinding()
     }
 
     fun callAPI(url: String, id: String, dummy: String? = null): String {
@@ -30,17 +36,16 @@ abstract class BaseActivity : AppCompatActivity() {
 //                "    };" +
 //                "})();" +
                 "function getData (){" +
-//                "const http = new XMLHttpRequest();" +
-                //             "http.open('GET', '$url');" +
-//                "http.onreadystatechange = function() {" +
-//                "if (this.readyState === 4 && this.status === 200) {" +
-//                "const text = http.responseText ;" +
-//                "const jsonRegex = /\\/\\*(.*?)\\*\\//s;" +
-//                "const jsonMatch = text.match(jsonRegex);" +
-//                "const jsonData = JSON.parse(jsonData);" +
-                "Android.callbackHandle('$id' , JSON.stringify($dummy));" +
-//                "}};" +
-                //               "http.send();" +
+                "console.log('dataaaa' + '$url' );" +
+                "const http = new XMLHttpRequest();" +
+                "http.open('GET', '$url');" +
+                "http.onreadystatechange = function() {" +
+                "if (this.readyState === 4 && this.status === 200) {" +
+                "const text = http.responseText ;" +
+                "console.log('dataaaa' + text );" +
+                "Android.callbackHandle('$id' , text);" +
+                "}};" +
+                "http.send();" +
                 "}" +
                 "getData();")
 
@@ -48,23 +53,25 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     @JavascriptInterface
-    public fun callbackHandle(str: String, data: String) {
-        ((applicationContext as MyApp).getCurrentActivity() as BaseActivity).render(str, data)
+    public fun callbackHandle(str: String, jsonData: String) {
+        var data = jsonData
+        val pattern = Pattern.compile("/\\*\\{(.*?)\\}\\*/")
+        val matcher = pattern.matcher(data)
 
-        Log.d("CallbackHandle", "CallbackHandle called with str: $str, data: $data")
-        when (str) {
-            "logged in" -> startActivity(Intent(this, RouterDataActivity::class.java))
-            "device info" -> Toast.makeText(this, data, Toast.LENGTH_LONG).show()
-            "navigate" -> startActivity(Intent(this, RouterDataActivity::class.java))
-            else -> {
-//                Toast.makeText(this, data, Toast.LENGTH_LONG).show()
-//                finishAffinity()
-//                System.exit(0)
-//                finishAffinity()
-//                System.exit(0)
-//                finishAffinity()
-//                System.exit(0)
+        try {
+            if (matcher.find()) {
+                data = "{"+matcher.group(1).replace("\"", "")+"}"
             }
+            ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
+                str,
+                data
+            )
+
+        }catch (e: Exception){
+            ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
+                str,
+                data
+            )
         }
     }
 

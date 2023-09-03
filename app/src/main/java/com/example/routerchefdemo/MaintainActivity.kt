@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityMaintainBinding
 
-class MaintainActivity : BaseActivity() {
-    private lateinit var binding: ActivityMaintainBinding
+class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
+    override fun getViewBinding() = ActivityMaintainBinding.inflate(layoutInflater)
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMaintainBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
 
