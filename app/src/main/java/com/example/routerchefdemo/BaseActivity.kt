@@ -36,43 +36,44 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
 //                "    };" +
 //                "})();" +
                 "function getData (){" +
-                "console.log('dataaaa' + '$url' );" +
-                "const http = new XMLHttpRequest();" +
-                "http.open('GET', '$url');" +
-                "http.onreadystatechange = function() {" +
-                "if (this.readyState === 4 && this.status === 200) {" +
-                "const text = http.responseText ;" +
-                "console.log('dataaaa' + text );" +
-                "Android.callbackHandle('$id' , text);" +
-                "}};" +
-                "http.send();" +
+//                "console.log('dataaaa' + '$url' );" +
+//                "const http = new XMLHttpRequest();" +
+//                "http.open('GET', '$url');" +
+//                "http.onreadystatechange = function() {" +
+//                "if (this.readyState === 4 && this.status === 200) {" +
+//                "const text = http.responseText ;" +
+//                "console.log('dataaaa' + text );" +
+                "Android.callbackHandle('$id' , JSON.stringify($dummy));" +
+//                "}};" +
+//                "http.send();" +
                 "}" +
                 "getData();")
 
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     @JavascriptInterface
     public fun callbackHandle(str: String, jsonData: String) {
         var data = jsonData
-        val pattern = Pattern.compile("/\\*\\{(.*?)\\}\\*/")
-        val matcher = pattern.matcher(data)
-
-        try {
-            if (matcher.find()) {
-                data = "{"+matcher.group(1).replace("\"", "")+"}"
-            }
+//        val pattern = Pattern.compile("/\\*\\{(.*?)\\}\\*/")
+//        val matcher = pattern.matcher(data)
+//
+//        try {
+//            if (matcher.find()) {
+//                data = "{"+matcher.group(1).replace("\"", "")+"}"
+//            }
             ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
                 str,
                 data
             )
 
-        }catch (e: Exception){
-            ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
-                str,
-                data
-            )
-        }
+//        }catch (e: Exception){
+//            ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
+//                str,
+//                data
+//            )
+//        }
     }
 
 }

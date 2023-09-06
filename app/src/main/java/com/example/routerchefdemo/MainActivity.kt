@@ -57,13 +57,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         webView.loadUrl("https://192.168.1.1/")
 
         binding.bLogin.setOnClickListener {
-//            startActivity(Intent(this, HomeActivity::class.java))
-            webView.evaluateJavascript(
-                getLoginScript(
-                    binding.etUsername.text.toString(),
-                    binding.etPassword.text.toString()
-                ), null
-            )
+            startActivity(Intent(this, HomeActivity::class.java))
+//            webView.evaluateJavascript(
+//                getLoginScript(
+//                    binding.etUsername.text.toString(),
+//                    binding.etPassword.text.toString()
+//                ), null
+//            )
         }
     }
 
