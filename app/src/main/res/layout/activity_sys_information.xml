@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:background="@color/light_grey"
         android:gravity="center"
-        android:textSize="@dimen/_16ssp"
-        android:text="System Information"
-        android:textStyle="bold"
         android:padding="@dimen/_8sdp"
+        android:text="System Information"
         android:textColor="@color/purple"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,8 +26,8 @@
         android:id="@+id/tV_productType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Product Type:"
         android:layout_marginTop="@dimen/_24sdp"
+        android:text="Product Type:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tV_sysInfo" />
 
@@ -62,8 +62,8 @@
         android:id="@+id/tV_systemTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="System Up time:"
         android:layout_marginTop="@dimen/_24sdp"
+        android:text="System Up time:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/softWareVersion" />
 
@@ -71,7 +71,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DG8045"
+
         app:layout_constraintBottom_toBottomOf="@+id/tV_productType"
         app:layout_constraintStart_toStartOf="@+id/textView3" />
 
@@ -79,7 +79,6 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00E0FC-21530369847SK9119299"
         app:layout_constraintBottom_toBottomOf="@+id/tV_deviceID"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -87,7 +86,6 @@
         android:id="@+id/tv_hardVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="VER.A"
         app:layout_constraintBottom_toBottomOf="@+id/hardwareVersion"
         app:layout_constraintStart_toStartOf="@+id/textView3" />
 
@@ -95,7 +93,6 @@
         android:id="@+id/tV_softVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="V100R019C105B629 TEDATA"
         app:layout_constraintBottom_toBottomOf="@+id/softWareVersion"
         app:layout_constraintStart_toStartOf="@+id/tv_hardVersion"
         app:layout_constraintTop_toTopOf="@+id/softWareVersion" />
@@ -105,7 +102,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingEnd="@dimen/_16sdp"
-        android:text="0 days 0 hours 16 minutes 35 seconds "
         app:layout_constraintBottom_toBottomOf="@+id/tV_systemTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tV_softVersion" />

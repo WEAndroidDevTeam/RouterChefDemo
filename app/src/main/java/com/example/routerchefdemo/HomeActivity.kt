@@ -56,6 +56,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             startActivity(intent)
 
         }
+        binding.btMaintain.setOnClickListener {
+            val intent = Intent(this, MaintainActivity::class.java)
+            startActivity(intent)
+        }
 //        Constants.webview.evaluateJavascript(callAPI("https://192.168.1.1/api/system/getuserlevel", "user level"), null)
 
     }
@@ -67,7 +71,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             val jsonObject = JSONObject(data)
             val isAdmin = jsonObject.getBoolean("isadmin")
             if (isAdmin)
-                binding.tvWelcome.setText( "WELCOME Admin ")
+                binding.tvWelcome.setText("WELCOME Admin ")
         } else if (str == "Connected Devices") {
             connectedDevices = data
         }

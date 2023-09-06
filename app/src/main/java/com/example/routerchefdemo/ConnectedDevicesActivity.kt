@@ -44,6 +44,7 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         binding.rvConnectedDevices.layoutManager = LinearLayoutManager(this)
 
 
+
     }
 
     fun parseConnectedDevices(jsonData: String): List<ConnectedDevice> {
@@ -52,8 +53,10 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         val jsonArray = Gson().fromJson(jsonData, Array<Any>::class.java)
         jsonArray.forEach { jsonObject ->
             val jsonString = Gson().toJson(jsonObject)
-            val hostName = JsonParser.parseString(jsonString).getAsJsonObject().get("HostName").toString()
-            val iconType = JsonParser.parseString(jsonString).getAsJsonObject().get("IconType").toString()
+            val hostName =
+                JsonParser.parseString(jsonString).getAsJsonObject().get("HostName").toString()
+            val iconType =
+                JsonParser.parseString(jsonString).getAsJsonObject().get("IconType").toString()
 
             val connectedDevice = ConnectedDevice(hostName, iconType)
             connectedDevicesList.add(connectedDevice)
