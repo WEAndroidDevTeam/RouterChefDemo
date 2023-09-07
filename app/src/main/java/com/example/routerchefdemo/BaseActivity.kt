@@ -62,6 +62,12 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
 //        try {
 //            if (matcher.find()) {
 //                data = "{"+matcher.group(1).replace("\"", "")+"}"
+//            }else {
+//                val pattern = Pattern.compile("/\\*\\[(.*?)\\]\\*/")
+//                val matcher = pattern.matcher(data)
+//                if (matcher.find()) {
+//                    data = "[" + matcher.group(1).replace("\"", "") + "]"
+//                }
 //            }
             ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
                 str,
