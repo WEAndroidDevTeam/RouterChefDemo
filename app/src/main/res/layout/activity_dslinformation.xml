@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_16sdp"
+    tools:context=".DSLInformationActivity">
+
+    <TextView
+        android:id="@+id/tV_dslInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_grey"
+        android:gravity="center"
+        android:padding="@dimen/_8sdp"
+        android:text="DSL Information"
+        android:textColor="@color/purple"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dslSync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="DSL Synchronization status:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_dslInfo" />
+
+    <TextView
+        android:id="@+id/connectionStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Connection Status:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dslSync" />
+
+    <TextView
+        android:id="@+id/upStreamLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Upstream line rate(kbit/s):"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connectionStatus" />
+
+    <TextView
+        android:id="@+id/tV_downStreamLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Downstream line rate(kbit/s):"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upStreamLine" />
+
+    <TextView
+        android:id="@+id/maxUpRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maximum upstream rate(kbit/s):"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_downStreamLine" />
+
+    <TextView
+        android:id="@+id/maxDownRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Maximum downstream rate(kbit/s):"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/maxUpRate" />
+
+    <TextView
+        android:id="@+id/upNoise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upstream noise safety coefficient(dB):"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/maxDownRate" />
+
+    <TextView
+        android:id="@+id/downNoise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Downstream noise safety coefficient(dB):"
+        android:layout_marginTop="@dimen/_16sdp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upNoise" />
+
+    <TextView
+        android:id="@+id/upAttenuation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upstream line attenuation(dB):"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/downNoise" />
+
+    <TextView
+        android:id="@+id/downAttenuation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Downstream line attenuation(dB):"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upAttenuation" />
+
+    <TextView
+        android:id="@+id/upOutPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upstream output power(dBm):"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/downAttenuation" />
+
+    <TextView
+        android:id="@+id/downOutPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Downstream output power(dBm):"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upOutPower" />
+
+    <TextView
+        android:id="@+id/dslUpTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="DSL up time:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/downOutPower" />
+
+    <TextView
+        android:id="@+id/tV_dslSync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Signal"
+        app:layout_constraintBottom_toBottomOf="@+id/dslSync"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tV_connectionStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IdIe"
+        app:layout_constraintBottom_toBottomOf="@+id/connectionStatus"
+        app:layout_constraintStart_toStartOf="@+id/tV_dslSync" />
+
+    <TextView
+        android:id="@+id/tV_upStreamLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/upStreamLine"
+        app:layout_constraintStart_toStartOf="@+id/tV_connectionStatus" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_downStreamLine"
+        app:layout_constraintStart_toStartOf="@+id/tV_upStreamLine" />
+
+    <TextView
+        android:id="@+id/tV_maxUpRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/maxUpRate"
+        app:layout_constraintStart_toStartOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/tV_maxDownRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/maxDownRate"
+        app:layout_constraintStart_toStartOf="@+id/tV_maxUpRate" />
+
+    <TextView
+        android:id="@+id/tV_upNoise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/upNoise"
+        app:layout_constraintStart_toStartOf="@+id/tV_maxDownRate" />
+
+    <TextView
+        android:id="@+id/tV_downNoise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/downNoise"
+        app:layout_constraintStart_toStartOf="@+id/tV_upNoise" />
+
+    <TextView
+        android:id="@+id/tV_upAttenuation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/upAttenuation"
+        app:layout_constraintStart_toStartOf="@+id/tV_downNoise" />
+
+    <TextView
+        android:id="@+id/tV_downAttenuation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/downAttenuation"
+        app:layout_constraintStart_toStartOf="@+id/tV_upAttenuation" />
+
+    <TextView
+        android:id="@+id/tV_upOutPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/upOutPower"
+        app:layout_constraintStart_toStartOf="@+id/tV_downAttenuation" />
+
+    <TextView
+        android:id="@+id/tV_downOutPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/downOutPower"
+        app:layout_constraintStart_toStartOf="@+id/tV_upOutPower" />
+
+    <TextView
+        android:id="@+id/tV_dslUpTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/dslUpTime"
+        app:layout_constraintStart_toStartOf="@+id/tV_downOutPower" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

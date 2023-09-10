@@ -1,11 +1,21 @@
 package com.example.routerchefdemo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import com.example.routerchefdemo.databinding.ActivityWlaninfoBinding
 
-class WLANInfoActivity : AppCompatActivity() {
+class WLANInfoActivity :BaseActivity<ActivityWlaninfoBinding>() {
+    override fun getViewBinding() = ActivityWlaninfoBinding.inflate(layoutInflater)
+    override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_wlaninfo)
+        val view: View = binding.root
+        setContentView(view)
+
+    }
+
+    override fun render(str: String, data: String) {
+        TODO("Not yet implemented")
     }
 }

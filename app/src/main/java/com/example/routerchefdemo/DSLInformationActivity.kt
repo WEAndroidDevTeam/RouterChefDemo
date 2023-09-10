@@ -2,10 +2,10 @@ package com.example.routerchefdemo
 
 import android.os.Bundle
 import android.view.View
-import com.example.routerchefdemo.databinding.ActivityWlanAccessBinding
+import com.example.routerchefdemo.databinding.ActivityDslinformationBinding
 
-class WlanAccessActivity :BaseActivity<ActivityWlanAccessBinding>() {
-    override fun getViewBinding() = ActivityWlanAccessBinding.inflate(layoutInflater)
+class DSLInformationActivity :BaseActivity<ActivityDslinformationBinding>() {
+    override fun getViewBinding() = ActivityDslinformationBinding.inflate(layoutInflater)
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {

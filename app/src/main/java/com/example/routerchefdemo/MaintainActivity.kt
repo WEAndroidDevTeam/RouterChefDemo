@@ -25,7 +25,8 @@ class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
             startActivity(intent)
         }
         binding.btnDslInfo.setOnClickListener {
-
+            val intent = Intent(this, DSLInformationActivity::class.java)
+            startActivity(intent)
         }
 
     }
