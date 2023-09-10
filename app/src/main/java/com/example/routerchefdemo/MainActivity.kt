@@ -15,6 +15,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
+    private var isLogging = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
@@ -36,13 +37,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+                Toast.makeText(this@MainActivity, "dataaaa login page loaded", Toast.LENGTH_LONG).show()
+
             }
 
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?
             ): Boolean {
-                return false
+                val newUrl = request!!.url.toString()
+                // Check the new URL and decide whether to load it or not
+                // Check the new URL and decide whether to load it or not
+                if(isLogging && newUrl.startsWith("https://192.168.1.1/html/wizard/wizard.html")){
+                    render("logged in", "succeeded")
+                }
+                return true
             }
 
             @SuppressLint("WebViewClientOnReceivedSslError")
@@ -57,46 +66,50 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         webView.loadUrl("https://192.168.1.1/")
 
         binding.bLogin.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-//            webView.evaluateJavascript(
-//                getLoginScript(
-//                    binding.etUsername.text.toString(),
-//                    binding.etPassword.text.toString()
-//                ), null
-//            )
+//            startActivity(Intent(this, HomeActivity::class.java))
+            isLogging = true
+            webView.evaluateJavascript(
+                getLoginScript(
+                    binding.etUsername.text.toString(),
+                    binding.etPassword.text.toString()
+                ), null
+            )
         }
     }
 
     fun getLoginScript(username: String, password: String): String {
         return ("javascript: " +
-                "var delay = ( function() {" +
-                "    var timer = 0;" +
-                "    return function(callback, ms) {" +
-                "        clearTimeout (timer);" +
-                "        timer = setTimeout(callback, ms);" +
-                "    };" +
-                "})();" +
-
                 // Login into Setup home page
-                "function Login(username , password) {" +
-                "console.log('dataaaa Loginnnnn' );" +
-                "  document.querySelector('#index_username').value=username ;" +
-                "  document.querySelector('#password').value=password;" +
-                "  document.querySelector('#loginbtn').click();" +
-                "console.log('dataaaa clickeddd' );" +
+                "function login(user, pass, callback) {" +
+                "  try {" +
+                "    document.querySelector('#index_username').value = user;" +
+                "    document.querySelector('#password').value = pass;" +
+                "    document.querySelector('#loginbtn').click();" +
+                "" +
+                "    setTimeout(function () {" +
+                "      var error = document.querySelector('#errorCategory').textContent;" +
+                "      if (typeof callback === 'function') {" +
+                "        callback(error);" +
+                "      }" +
+                "    }, 5000);" +
+                "  } catch (err) {" +
+                "    if (typeof callback === 'function') {" +
+                "      callback(err.message);" +
+                "    }" +
+                "  }" +
                 "}" +
-
-//                // Enter into WLAN Setup
-//                "function WlanSetupSection() {" +
-//                "    document.querySelector('.wifi_user_status.text_center').click();" +
-//                "}" +
-
-                "Login('$username', '$password');" +
-                "Android.callbackHandle('logged in' , '');")
+                "" +
+                "login('$username', '$password', function(result) {" +
+                "  if (result !== undefined) {" +
+                "Android.callbackHandle('logged in' , result);" +
+                "  }" +
+                "});"
+                )
     }
 
     override fun render(str: String, data: String) {
-        Toast.makeText(this, "dataaaa manin", Toast.LENGTH_LONG).show()
+        isLogging = false
+        Toast.makeText(this, "dataaaa login" + data, Toast.LENGTH_LONG).show()
         binding.bLogin.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }

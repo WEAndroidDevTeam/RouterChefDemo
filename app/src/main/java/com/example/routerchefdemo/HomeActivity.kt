@@ -60,8 +60,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             val intent = Intent(this, MaintainActivity::class.java)
             startActivity(intent)
         }
-//        Constants.webview.evaluateJavascript(callAPI("https://192.168.1.1/api/system/getuserlevel", "user level"), null)
-
     }
 
 
