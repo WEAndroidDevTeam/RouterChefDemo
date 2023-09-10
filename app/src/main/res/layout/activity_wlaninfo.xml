@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_16sdp"
+    tools:context=".WLANInfoActivity">
+
+    <TextView
+        android:id="@+id/tV_wlanInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_grey"
+        android:gravity="center"
+        android:padding="@dimen/_8sdp"
+        android:text="WLAN Information"
+        android:textColor="@color/purple"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tV_SSid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:text="SSID:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_wlanInfo" />
+
+    <TextView
+        android:id="@+id/tV_onOF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:text="ON/OF:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_SSid" />
+
+    <TextView
+        android:id="@+id/tV_macAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:text="MAC Address:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_onOF" />
+
+    <TextView
+        android:id="@+id/tv_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:text="Channel:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_macAddress" />
+
+    <TextView
+        android:id="@+id/tv_transmitPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:text="Transmit Power (Percentage):"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_channel" />
+
+    <TextView
+        android:id="@+id/tV_region"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:text="Region:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_transmitPower" />
+
+    <TextView
+        android:id="@+id/tV_ssidNam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WE2B86A4"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_SSid"
+        app:layout_constraintStart_toStartOf="@+id/tv_macNum" />
+
+    <TextView
+        android:id="@+id/tV_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ON"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_onOF"
+        app:layout_constraintStart_toStartOf="@+id/tv_macNum" />
+
+    <TextView
+        android:id="@+id/tv_macNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="b4:f5:8e:2b:86:ac"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_macAddress"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_channelNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AUTO(1)"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_channel"
+        app:layout_constraintStart_toStartOf="@+id/tv_macNum" />
+
+    <TextView
+        android:id="@+id/tV_transmitNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100%"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_transmitPower"
+        app:layout_constraintStart_toStartOf="@+id/tv_macNum"
+        app:layout_constraintTop_toTopOf="@+id/tv_transmitPower" />
+
+    <TextView
+        android:id="@+id/tV_regionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Egypt"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_region"
+        app:layout_constraintStart_toStartOf="@+id/tv_macNum" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
