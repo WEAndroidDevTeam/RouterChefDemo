@@ -8,4 +8,5 @@ object Constants {
     const val USER_LEVEL = "logged in"
     const val CONNECTED_DEVICES = "logged in"
     const val SYSTEM_INFO = "logged in"
+    const val WLAN_INFO = "Wlan info"
 }
