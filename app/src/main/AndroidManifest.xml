@@ -18,6 +18,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".DSLInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WlanAccessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WLANInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeNetworkActivity"
             android:exported="false" />
         <activity
@@ -38,21 +47,19 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity android:name=".FeaturesActivity" />
         <activity android:name=".RouterDataActivity" />
-        <activity android:name=".ConnectedDevicesActivity"/>
+        <activity android:name=".ConnectedDevicesActivity" />
     </application>
 
 </manifest>

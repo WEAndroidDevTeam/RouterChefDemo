@@ -26,7 +26,8 @@ class HomeNetworkActivity : BaseActivity<ActivityHomeNetworkBinding>() {
 
         }
         binding.btnWlanAccess.setOnClickListener {
-
+            val intent = Intent(this, WlanAccessActivity::class.java)
+            startActivity(intent)
         }
     }
 

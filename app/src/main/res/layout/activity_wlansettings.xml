@@ -187,8 +187,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/sP_transmitPower"
+            <TextView
+                android:id="@+id/tv_transmitPower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/tV_transmitPower"
@@ -213,6 +213,59 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tV_wMM" />
+
+            <TextView
+                android:id="@+id/tV_11nbandWidth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="11 n bandwidth :"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tV_wMM" />
+
+            <TextView
+                android:id="@+id/tv_11nValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/tV_11nbandWidth"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tV_11nbandWidth"
+                app:layout_constraintTop_toTopOf="@+id/tV_11nbandWidth" />
+
+            <TextView
+                android:id="@+id/tV_11nMCS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="11n MCS:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tV_11nbandWidth" />
+
+            <TextView
+                android:id="@+id/tV_11nMCSValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/tV_11nMCS"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tV_11nMCS"
+                app:layout_constraintTop_toTopOf="@+id/tV_11nMCS" />
+            <TextView
+                android:id="@+id/tV_frequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="Frequency :"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tV_11nMCSValue" />
+
+            <TextView
+                android:id="@+id/tV_frequencyValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/tV_frequency"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tV_frequency"
+                app:layout_constraintTop_toTopOf="@+id/tV_frequency" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

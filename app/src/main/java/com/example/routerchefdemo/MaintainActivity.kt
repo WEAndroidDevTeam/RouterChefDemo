@@ -21,10 +21,12 @@ class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
             startActivity(intent)
         }
         binding.btnWlanInfo.setOnClickListener {
-
+            val intent = Intent(this, WLANInfoActivity::class.java)
+            startActivity(intent)
         }
         binding.btnDslInfo.setOnClickListener {
-
+            val intent = Intent(this, DSLInformationActivity::class.java)
+            startActivity(intent)
         }
 
     }
