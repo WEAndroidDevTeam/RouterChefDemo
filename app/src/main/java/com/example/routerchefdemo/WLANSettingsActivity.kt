@@ -67,6 +67,7 @@ class WLANSettingsActivity : BaseActivity<ActivityWlansettingsBinding>() {
     }
 
     override fun render(str: String, data: String) {
+        //TODO
         when (str) {
             "Wlan radio" -> {
                 binding.cBEnableWlan.isChecked = getEnable2G(data)

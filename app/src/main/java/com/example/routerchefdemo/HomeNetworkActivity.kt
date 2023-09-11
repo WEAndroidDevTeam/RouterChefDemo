@@ -14,7 +14,12 @@ class HomeNetworkActivity : BaseActivity<ActivityHomeNetworkBinding>() {
         val view: View = binding.root
         setContentView(view)
         binding.btnLanDevices.setOnClickListener {
-
+            startActivity(
+                Intent(
+                    this,
+                    ConnectedDevicesActivity::class.java
+                )
+            )
         }
         binding.btnLanInterface.setOnClickListener {
             val intent = Intent(this, LANInterfaceActivity::class.java)
