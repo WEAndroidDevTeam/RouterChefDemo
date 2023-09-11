@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/connectionStatus" />
 
     <TextView
-        android:id="@+id/tV_downStreamLine"
+        android:id="@+id/downStreamLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
@@ -64,7 +64,7 @@
         android:text="Maximum upstream rate(kbit/s):"
         android:layout_marginTop="@dimen/_16sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tV_downStreamLine" />
+        app:layout_constraintTop_toBottomOf="@+id/downStreamLine" />
 
     <TextView
         android:id="@+id/maxDownRate"
@@ -143,7 +143,7 @@
         android:id="@+id/tV_dslSync"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Signal"
+        android:text="NoSignal"
         app:layout_constraintBottom_toBottomOf="@+id/dslSync"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -164,11 +164,11 @@
         app:layout_constraintStart_toStartOf="@+id/tV_connectionStatus" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/tV_DownStreamLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        app:layout_constraintBottom_toBottomOf="@+id/tV_downStreamLine"
+        app:layout_constraintBottom_toBottomOf="@+id/downStreamLine"
         app:layout_constraintStart_toStartOf="@+id/tV_upStreamLine" />
 
     <TextView
@@ -177,7 +177,7 @@
         android:layout_height="wrap_content"
         android:text="0"
         app:layout_constraintBottom_toBottomOf="@+id/maxUpRate"
-        app:layout_constraintStart_toStartOf="@+id/textView16" />
+        app:layout_constraintStart_toStartOf="@+id/tV_DownStreamLine" />
 
     <TextView
         android:id="@+id/tV_maxDownRate"
