@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.*
 import android.widget.Toast
@@ -46,8 +47,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 request: WebResourceRequest?
             ): Boolean {
                 val newUrl = request!!.url.toString()
-                // Check the new URL and decide whether to load it or not
-                // Check the new URL and decide whether to load it or not
                 if(isLogging && newUrl.startsWith("https://192.168.1.1/html/wizard/wizard.html")){
                     render("logged in", "succeeded")
                 }
@@ -108,11 +107,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun render(str: String, data: String) {
+        if(data == "succeeded")
+            startActivity(Intent(this, HomeActivity::class.java))
         isLogging = false
         Toast.makeText(this, "dataaaa login" + data, Toast.LENGTH_LONG).show()
-        binding.bLogin.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-        }
 //        startActivity(Intent(this, HomeActivity::class.java))
     }
 

@@ -31,18 +31,35 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
                 "function getData (){" +
                 "console.log('dataaaa' + '$url' );" +
                 "const http = new XMLHttpRequest();" +
-                "http.open('POST', '$url');" +
+                "http.open('GET', '$url');" +
+//                "    const timeoutDuration = 5;" +
+//                "http.timeout = timeoutDuration;" +
+//                "    http.ontimeout = function() {" +
+//                "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
+//                "    };" +
                 "http.onreadystatechange = function() {" +
                 "if (this.readyState === 4) {" +
                 "            if (this.status === 200) {" +
                 "                const text = http.responseText;" +
                 "                Android.callbackHandle('$id', text);" +
                 "            } else {" +
+                "                console.log('fail');" +
                 "                console.log('Request failed with status: ' + this.status);" +
-                "                Android.callbackHandle('$id', 'errorrrrrrrrr');" +
+                "                try {" +
+                "                    const errorResponse = JSON.parse(http.responseText);" +
+                "                    if (errorResponse && errorResponse.message) {" +
+                "                        console.log('Error Message: ' + errorResponse.message);" +
+                "                Android.callbackHandle('$id', errorResponse.message);" +
+                "                    } else {" +
+                "                        console.log('Error Message: Unknown');" +
+                "                    }" +
+                "                } catch (error) {" +
+                "                    console.log('Error parsing API response:', error);" +
+                "                    console.log('Error Message: Unknown');" +
+                "                }" +
                 "            }" +
-                "        }"+
-                "    };"+
+                "        }" +
+                "    };" +
                 "http.send();" +
                 "}" +
                 "getData();")
