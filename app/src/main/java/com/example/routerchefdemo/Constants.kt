@@ -9,4 +9,11 @@ object Constants {
     const val CONNECTED_DEVICES = "logged in"
     const val SYSTEM_INFO = "logged in"
     const val WLAN_INFO = "Wlan info"
+    const val DSL_INFO = "DSL info"
+    const val LAN_INTERFACE_STATUS = "Lan Interface status"
+    const val LAN_INTERFACE_DHCP_SERVER = "dhcp server"
+    const val LAN_INTERFACE_RA = "Lan Interface RA"
+    const val LAN_INTERFACE_IPV6 = "Lan Interface IPV6"
+    const val LAN_INTERFACE_UPNP = "Lan Interface upnp"
+    const val LAN_INTERFACE_TR064 = "Lan Interface tr064"
 }

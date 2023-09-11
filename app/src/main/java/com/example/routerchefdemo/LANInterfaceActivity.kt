@@ -2,6 +2,12 @@ package com.example.routerchefdemo
 
 import android.os.Bundle
 import android.view.View
+import com.example.routerchefdemo.Constants.LAN_INTERFACE_DHCP_SERVER
+import com.example.routerchefdemo.Constants.LAN_INTERFACE_IPV6
+import com.example.routerchefdemo.Constants.LAN_INTERFACE_RA
+import com.example.routerchefdemo.Constants.LAN_INTERFACE_STATUS
+import com.example.routerchefdemo.Constants.LAN_INTERFACE_TR064
+import com.example.routerchefdemo.Constants.LAN_INTERFACE_UPNP
 import com.example.routerchefdemo.databinding.ActivityLaninterfaceBinding
 import org.json.JSONObject
 
@@ -17,43 +23,43 @@ class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
         setContentView(view)
         Constants.webview.evaluateJavascript(
             callAPI(
-                "https://192.168.1.1/api/system/deviceinfo",
-                "Lan Interface status",
+                "https://192.168.1.1/api/ntwk/lan_host",
+                LAN_INTERFACE_STATUS,
                 "{\"SecLanEnable\":false,\"SecondIP\":\"\",\"SecondMac\":\"\",\"MACAddress\":\"B4:F5:8E:2B:86:A4\",\"DevName\":\"mediarouter\",\"ID\":\"InternetGatewayDevice.LANDevice.1.LANHostConfigManagement.IPInterface.1.\",\"ShowLanDomainEnable\":false,\"FirstEnable\":true,\"FristIP\":\"192.168.1.1\",\"FirstMac\":\"255.255.255.0\",\"DomainName\":\"home\"}"
             ), null
         )
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/lan_server",
-                "dhcp server",
+                LAN_INTERFACE_DHCP_SERVER,
                 "{\"PassthroughMACAddress\":\"\",\"MinIP\":\"192.168.1.2\",\"UseAllocatedWAN\":\"Normal\",\"dnsmode\":\"true\",\"DNSServerone\":\"192.168.1.1\",\"PassthroughLease\":60,\"ServerEnable\":true,\"DHCPLeaseTime\":86400,\"ID\":\"InternetGatewayDevice.LANDevice.1.LANHostConfigManagement.\",\"AssociatedConnection\":\"\",\"DNSServertwo\":\"192.168.1.1\",\"MaxIP\":\"192.168.1.65\"}"
             ), null
         )
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/lan_radvd",
-                "Lan Interface RA",
+                LAN_INTERFACE_RA,
                 "{\"UseAllocatedWAN\":\"UseAllocatedSubnet\",\"ULAPreferredlifetime\":3600,\"NDProxyFlag\":\"\",\"DefaultLifetime\":\"\",\"Prefix\":\"\",\"RetransTimer\":\"\",\"ID\":\"InternetGatewayDevice.LANDevice.1.LANHostConfigManagement.X_SLAAC.\",\"MinRtrAdvInterval\":\"\",\"Validlifetime\":7200,\"Interface\":\"\",\"PreferredRouterFlag\":\"\",\"PrefixLength\":64,\"ULAAllocatedMode\":\"ULAAuto\",\"CurHopLimit\":\"\",\"ULAPrefix\":\"\",\"ULAValidlifetime\":7200,\"MobileAgentFlag\":\"\",\"RouterAdvertisementEnable\":true,\"OtherConfigFlag\":0,\"MaxRtrAdvInterval\":\"\",\"ReachableTime\":\"\",\"ManagedFlag\":0,\"ULAPrefixLength\":64,\"Preferredlifetime\":3600,\"LinkMTU\":\"\",\"MOFlagAutoMode\":1}"
             ), null
         )
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/lan_dhcp6s",
-                "Lan Interface IPV6",
+                LAN_INTERFACE_IPV6,
                 "{\"PrefixLength\":64,\"UseAllocatedWAN\":\"UseAllocatedSubnet\",\"DHCPServerEnable\":true,\"Prefix\":\"\",\"Preferredlifetime\":3600,\"Dhcp6sDNSServerone\":\"\",\"ID\":\"InternetGatewayDevice.LANDevice.1.LANHostConfigManagement.X_DHCPv6.\",\"Dhcp6sDNSServertwo\":\"\",\"Validlifetime\":7200,\"DomainName\":\"\"}"
             ), null
         )
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/lan_upnp",
-                "Lan Interface upnp",
+                LAN_INTERFACE_UPNP,
                 "{\"enable\":false}"
             ), null
         )
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/lan_tr064",
-                "Lan Interface tr064",
+                LAN_INTERFACE_TR064,
                 "{\"enable\":false}"
             ), null
         )
@@ -127,7 +133,7 @@ class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
 
     override fun render(str: String, data: String) {
         when (str) {
-            "Lan Interface status" -> {
+            LAN_INTERFACE_STATUS -> {
                 val deviceDetails: DeviceDetails = parseDeviceDetails(data)
                 with(binding) {
                     tVMacNum.text = deviceDetails.macAddress
@@ -138,7 +144,7 @@ class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
                     tVNAme.text = deviceDetails.devName
                 }
             }
-            "dhcp server" -> {
+            LAN_INTERFACE_DHCP_SERVER -> {
                 val dhcpServerJson = parseDHCPServerJson(data)
                 with(binding) {
                     cBDhcpEnable.isChecked = dhcpServerJson["ServerEnable"] as Boolean
@@ -147,16 +153,16 @@ class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
                     rBDnsMode.isChecked = dhcpServerJson["dnsmode"] as Boolean
                 }
             }
-            "Lan Interface RA" -> {
+            LAN_INTERFACE_RA -> {
                 binding.cBRaEnable.isChecked = getRouterAdvertisementEnable(data)
             }
-            "Lan Interface IPV6" -> {
+            LAN_INTERFACE_IPV6 -> {
                 binding.cBIpv6Enable.isChecked = getDHCPServerEnable(data)
             }
-            "Lan Interface upnp" -> {
+            LAN_INTERFACE_UPNP -> {
                 binding.cBUpnpEnable.isChecked = getEnableUPNP(data)
             }
-            "Lan Interface tr064" -> {
+            LAN_INTERFACE_TR064 -> {
                 binding.cBTr064Enable.isChecked = getEnableTr064(data)
             }
         }
