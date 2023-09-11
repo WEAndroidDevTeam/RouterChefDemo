@@ -6,8 +6,9 @@ import com.example.routerchefdemo.ConnectedDevice
 import com.example.routerchefdemo.R
 import com.example.routerchefdemo.databinding.ConnectedDevicesListItemBinding
 
-class ConnectedDevicesAdapter(private val deviceList: List<ConnectedDevice>) :
+class ConnectedDevicesAdapter() :
     RecyclerView.Adapter<ConnectedDevicesAdapter.DeviceViewHolder>() {
+    private val deviceList: MutableList<ConnectedDevice> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
         val binding = ConnectedDevicesListItemBinding.inflate(
@@ -25,6 +26,20 @@ class ConnectedDevicesAdapter(private val deviceList: List<ConnectedDevice>) :
 
     override fun getItemCount(): Int {
         return deviceList.size
+    }
+
+    fun submitList(devices: MutableList<ConnectedDevice>?) {
+        clear()
+        devices?.let {
+            deviceList.addAll(it)
+            notifyDataSetChanged()
+        }
+    }
+
+    @Suppress("unused")
+    fun clear() {
+        deviceList.clear()
+        notifyDataSetChanged()
     }
 
     inner class DeviceViewHolder(private val binding: ConnectedDevicesListItemBinding) :

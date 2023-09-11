@@ -4,6 +4,7 @@ package com.example.routerchefdemo
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.example.routerchefdemo.Constants.SYSTEM_INFO
 import com.example.routerchefdemo.databinding.ActivityHomeBinding
 import com.example.routerchefdemo.databinding.ActivitySysInformationBinding
 import org.json.JSONObject
@@ -20,7 +21,7 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/system/deviceinfo",
-                "system info",
+                SYSTEM_INFO,
                 "{\"DeviceName\":\"DG8045\",\"SerialNumber\":\"21530369847SK9119299\",\"ManufacturerOUI\":\"00E0FC\",\"UpTime\":10638,\"SoftwareVersion\":\"V100R019C105B629 TEDATA\",\"HardwareVersion\":\"VER.A\"}"
             ), null
         )
@@ -28,6 +29,9 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
     }
 
     override fun render(str: String, data: String) {
+        if(str != SYSTEM_INFO)
+            return
+
         var deviceInfo: DeviceInfo = parseDeviceInfo(data)
         binding.textView2.text = deviceInfo.deviceName
         binding.textView3.text = deviceInfo.serialNumber

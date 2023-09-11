@@ -3,12 +3,9 @@ package com.example.routerchefdemo
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.webkit.JavascriptInterface
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import org.json.JSONObject
 import java.util.regex.Pattern
 
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
@@ -56,6 +53,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
                 "                } catch (error) {" +
                 "                    console.log('Error parsing API response:', error);" +
                 "                    console.log('Error Message: Unknown');" +
+                "                Android.callbackHandle('$id', 'relogin');" +
                 "                }" +
                 "            }" +
                 "        }" +
@@ -70,11 +68,18 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
     @SuppressLint("SuspiciousIndentation")
     @JavascriptInterface
     public fun callbackHandle(str: String, jsonData: String) {
+        if(jsonData == "relogin"){
+            startActivity(Intent(this@BaseActivity, MainActivity::class.java))
+            return
+        }
+        if(jsonData.isNullOrEmpty())
+            return
+
         var data = jsonData
-        val pattern = Pattern.compile("/\\*\\{(.*?)\\}\\*/")
-        val matcher = pattern.matcher(data)
 
         try {
+            val pattern = Pattern.compile("/\\*\\{(.*?)\\}\\*/")
+            val matcher = pattern.matcher(data)
             if (matcher.find()) {
                 data = "{"+matcher.group(1)+"}"
             }else {
@@ -84,16 +89,14 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
                     data = "[" + matcher.group(1)+ "]"
                 }
             }
-            ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
-                str,
-                data
-            )
-
         }catch (e: Exception){
-            ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
-                str,
-                data
-            )
+        }finally {
+            runOnUiThread {
+                ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
+                    str,
+                    data
+                )
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.webkit.*
 import android.widget.Toast
+import com.example.routerchefdemo.Constants.LOGIN
 import com.example.routerchefdemo.databinding.ActivityMainBinding
 import com.example.routerchefdemo.Constants.webview as webView
 
@@ -38,8 +39,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                Toast.makeText(this@MainActivity, "dataaaa login page loaded", Toast.LENGTH_LONG).show()
-
+                binding.progressCircular.visibility = View.GONE
             }
 
             override fun shouldOverrideUrlLoading(
@@ -48,7 +48,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             ): Boolean {
                 val newUrl = request!!.url.toString()
                 if(isLogging && newUrl.startsWith("https://192.168.1.1/html/wizard/wizard.html")){
-                    render("logged in", "succeeded")
+                    render(LOGIN, "succeeded")
                 }
                 return true
             }
@@ -65,7 +65,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         webView.loadUrl("https://192.168.1.1/")
 
         binding.bLogin.setOnClickListener {
-//            startActivity(Intent(this, HomeActivity::class.java))
             isLogging = true
             webView.evaluateJavascript(
                 getLoginScript(
@@ -78,7 +77,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     fun getLoginScript(username: String, password: String): String {
         return ("javascript: " +
-                // Login into Setup home page
                 "function login(user, pass, callback) {" +
                 "  try {" +
                 "    document.querySelector('#index_username').value = user;" +
@@ -107,11 +105,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun render(str: String, data: String) {
+        if(str != LOGIN)
+            return
         if(data == "succeeded")
             startActivity(Intent(this, HomeActivity::class.java))
+        else
+            Toast.makeText(this, "login failed $data", Toast.LENGTH_LONG).show()
         isLogging = false
-        Toast.makeText(this, "dataaaa login" + data, Toast.LENGTH_LONG).show()
-//        startActivity(Intent(this, HomeActivity::class.java))
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
 }
