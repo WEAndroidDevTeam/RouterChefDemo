@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:visibility="gone"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tV_lanStatus">
@@ -107,8 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tV_lanSettings">
 
@@ -172,9 +173,9 @@
                     android:id="@+id/cB_secLAN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:clickable="false"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/tV_secondaryLan"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tV_subnetMaskNum" />
 
                 <TextView
@@ -209,8 +210,8 @@
                 android:id="@+id/cl_dhcpServer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_margin="@dimen/_16sdp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tV_dhcbServer">
@@ -256,9 +257,12 @@
                     android:id="@+id/cB_dhcpEnable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="@+id/tV_enableDHCB"
-                    app:layout_constraintStart_toStartOf="@+id/tV_minIP"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -285,10 +289,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-
+                    android:clickable="false"
                     android:text="CPE acts as the DNS Proxy"
                     app:layout_constraintBottom_toBottomOf="@+id/tV_dnsMode"
-                    app:layout_constraintStart_toStartOf="@+id/tV_maxIP"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tV_dnsMode" />
 
 
@@ -332,10 +336,10 @@
 
                 <CheckBox
                     android:id="@+id/cB_raEnable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginTop="@dimen/_8sdp"
-
+                    android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tV_enableRA"
@@ -381,6 +385,7 @@
                     android:id="@+id/cB_ipv6Enable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tV_enableIPV6"
@@ -395,7 +400,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_8sdp"
                 android:background="@color/light_grey"
-                android:clickable="true"
                 android:focusable="true"
                 android:padding="@dimen/_8sdp"
                 android:text="UPnP"
@@ -429,6 +433,7 @@
                     android:id="@+id/cB_upnpEnable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tV_enableUpnp"
@@ -459,9 +464,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tV_tr064">
 
@@ -479,6 +485,7 @@
                     android:id="@+id/cB_tr064Enable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tV_enableTr064"
