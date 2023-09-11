@@ -80,7 +80,6 @@
         android:id="@+id/tV_ssidNam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WE2B86A4"
         app:layout_constraintBottom_toBottomOf="@+id/tV_SSid"
         app:layout_constraintStart_toStartOf="@+id/tv_macNum" />
 
@@ -88,7 +87,7 @@
         android:id="@+id/tV_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ON"
+        android:text="OFF"
         app:layout_constraintBottom_toBottomOf="@+id/tV_onOF"
         app:layout_constraintStart_toStartOf="@+id/tv_macNum" />
 
@@ -96,7 +95,6 @@
         android:id="@+id/tv_macNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="b4:f5:8e:2b:86:ac"
         app:layout_constraintBottom_toBottomOf="@+id/tV_macAddress"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -104,7 +102,6 @@
         android:id="@+id/tv_channelNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AUTO(1)"
         app:layout_constraintBottom_toBottomOf="@+id/tv_channel"
         app:layout_constraintStart_toStartOf="@+id/tv_macNum" />
 
@@ -112,7 +109,6 @@
         android:id="@+id/tV_transmitNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="100%"
         app:layout_constraintBottom_toBottomOf="@+id/tv_transmitPower"
         app:layout_constraintStart_toStartOf="@+id/tv_macNum"
         app:layout_constraintTop_toTopOf="@+id/tv_transmitPower" />
@@ -121,7 +117,6 @@
         android:id="@+id/tV_regionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Egypt"
         app:layout_constraintBottom_toBottomOf="@+id/tV_region"
         app:layout_constraintStart_toStartOf="@+id/tv_macNum" />
 
