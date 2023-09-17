@@ -58,7 +58,7 @@
             android:name=".HomeActivity"
             android:exported="true" />
         <activity android:name=".FeaturesActivity" />
-        <activity android:name=".RouterDataActivity" />
+        <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".ConnectedDevicesActivity" />
     </application>
 
