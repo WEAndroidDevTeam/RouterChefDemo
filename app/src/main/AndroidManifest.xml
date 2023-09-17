@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.routerchefdemo">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,9 +14,37 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.RouterChefDemo"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".DSLInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WlanAccessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WLANInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeNetworkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SysInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MaintainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LANInterfaceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WLANSettingsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -25,11 +55,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FeaturesActivity">
-        </activity>
-        <activity
-            android:name=".RouterDataActivity">
-        </activity>
+            android:name=".HomeActivity"
+            android:exported="true" />
+        <activity android:name=".FeaturesActivity" />
+        <activity android:name=".RouterDataActivity" />
+        <activity android:name=".ConnectedDevicesActivity" />
     </application>
 
 </manifest>

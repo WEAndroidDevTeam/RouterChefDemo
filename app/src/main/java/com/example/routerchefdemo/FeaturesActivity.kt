@@ -1,23 +1,19 @@
 package com.example.routerchefdemo
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.http.SslError
 import android.os.Bundle
 import android.view.View
-import android.webkit.*
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.example.routerchefdemo.databinding.ActivityFeaturesBinding
-import com.example.routerchefdemo.databinding.ActivityMainBinding
+import org.json.JSONObject
 import com.example.routerchefdemo.Constants.webview as webView
 
-class FeaturesActivity : AppCompatActivity() {
+class FeaturesActivity : BaseActivity<ActivityFeaturesBinding>() {
+    override fun getViewBinding() = ActivityFeaturesBinding.inflate(layoutInflater)
+    override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityFeaturesBinding.inflate(layoutInflater)
         val view: View = binding.root
         setContentView(view)
 
@@ -35,5 +31,9 @@ class FeaturesActivity : AppCompatActivity() {
 
                 "WlanSetupSection();" +
                 "Android.callbackHandle('navigate', '');")
+    }
+
+    override fun render(str: String, data: String) {
+        val jsonObject = JSONObject(data)
     }
 }

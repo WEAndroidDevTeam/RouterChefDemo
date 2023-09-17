@@ -3,4 +3,6 @@
     <string name="user_name">username</string>
     <string name="password">password</string>
     <string name="enter">Enter</string>
+    <string name="Question">what`s this?</string>
+    <string name="MaxClientsNum">32</string>
 </resources>
