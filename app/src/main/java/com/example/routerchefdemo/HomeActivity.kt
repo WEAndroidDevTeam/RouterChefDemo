@@ -25,10 +25,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             ), null
         )
 
-        binding.btMaintain.setOnClickListener {
-            val intent = Intent(this, MaintainActivity::class.java)
-            startActivity(intent)
-        }
         binding.btConnectedDevices.setOnClickListener {
             startActivity(
                 Intent(
@@ -50,7 +46,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             val intent = Intent(this, MaintainActivity::class.java)
             startActivity(intent)
         }
-    }
+        binding.btLogout.setOnClickListener {
+            Constants.webview.evaluateJavascript("javascript: " +
+                    "function LogOut(){" +
+                    "    try{" +
+                    "       document.querySelector('#signout_ctrl').click();" +
+                    "       Android.callbackHandle('logout' , 'relogin');" +
+                    "    }catch(err){" +
+                    "       Android.callbackHandle('logout' , 'relogin');" +
+                    "        return err.message;" +
+                    "    }" +
+                    "}" +
+                    "LogOut();" , null
+            )
+            }
+        }
 
 
     override fun render(str: String, data: String) {

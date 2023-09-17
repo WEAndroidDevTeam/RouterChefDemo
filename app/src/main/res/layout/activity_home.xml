@@ -66,4 +66,15 @@
         app:layout_constraintTop_toBottomOf="@id/bt_homeNetwork"
         android:layout_margin="@dimen/_15sdp"
         />
+    />
+    <Button
+        android:id="@+id/bt_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_changePassword"
+        android:layout_margin="@dimen/_15sdp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
