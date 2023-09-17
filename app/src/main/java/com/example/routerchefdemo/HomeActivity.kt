@@ -46,6 +46,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             val intent = Intent(this, MaintainActivity::class.java)
             startActivity(intent)
         }
+        binding.btChangePassword.setOnClickListener {
+            val intent = Intent(this, ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
         binding.btLogout.setOnClickListener {
             Constants.webview.evaluateJavascript("javascript: " +
                     "function LogOut(){" +

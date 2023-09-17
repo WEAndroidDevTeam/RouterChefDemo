@@ -1,5 +1,6 @@
 package com.example.routerchefdemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -29,12 +30,13 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
                     "document.querySelector('#hidesharekeyMenu_Password_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
                     "});" +
                     "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').click();" +
-                    "Android.callbackHandle('change password' , 'success');", null)
+                    "Android.callbackHandle('change password' , 'wait until success');", null)
         }
     }
 
     override fun render(str: String, data: String) {
         Toast.makeText(this, "dataa $data", Toast.LENGTH_LONG).show()
+        startActivity(Intent(this@ChangePasswordActivity, MainActivity::class.java))
     }
 
 }
