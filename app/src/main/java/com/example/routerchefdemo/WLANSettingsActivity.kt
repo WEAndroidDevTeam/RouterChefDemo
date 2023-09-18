@@ -16,27 +16,7 @@ class WLANSettingsActivity : BaseActivity<ActivityWlansettingsBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
-        Constants.webview.evaluateJavascript(
-            callAPI(
-                "https://192.168.1.1/api/ntwk/wlanradio",
-                "Wlan radio",
-                "{\"Enable2G\":true}"
-            ), null
-        )
-        Constants.webview.evaluateJavascript(
-            callAPI(
-                "https://192.168.1.1/api/ntwk/wlan_common",
-                "Wlan Common",
-                "{\"CountryCode\":\"EG\",\"TransmitPower\":100,\"Rate\":0,\"WMMStatus\":true,\"GIControl\":\"long\",\"Channel\":0,\"Mode\":\"b/g/n\",\"Bandwidth\":\"20/40\",\"Mcs\":33}"
-            ), null
-        )
-        Constants.webview.evaluateJavascript(
-            callAPI(
-                "https://192.168.1.1/api/ntwk/wlan_ssids?showpass=true",
-                "Wlan frequency",
-                "[{\"WpaIEEEEncModes\":\"AESEncryption\",\"WpaPreSharedKey\":\"********\",\"Enable\":false,\"IsolateControl\":false,\"ID\":\"InternetGatewayDevice.LANDevice.1.WLANConfiguration.2.\",\"SecMode\":\"Basic\",\"WepKeys\":{\"1\":\"********\",\"4\":\"********\",\"3\":\"********\",\"2\":\"********\"},\"WpaMixEncModes\":\"TKIPEncryption\",\"Ssid\":\"SSID-2\",\"WpaEncModes\":\"TKIPEncryption\",\"BasicAuthMode\":\"None\",\"X_AssociateDeviceNum\":32,\"Name\":\"SSID2\",\"HideBroadcast\":false,\"WepEncLevel\":\"104-bit\",\"WepKeyIndex\":1,\"Frequency\":\"2.4GHz\"}]"
-            ), null
-        )
+
         binding.tVBasicSettings.setOnClickListener {
             if (isConstrainstLayoutVisible) {
                 binding.cLBasicSettings.visibility = View.VISIBLE
@@ -64,10 +44,30 @@ class WLANSettingsActivity : BaseActivity<ActivityWlansettingsBinding>() {
                 binding.clAdvancedSettings.visibility = View.GONE
             }
         }
+        Constants.webview.evaluateJavascript(
+            callAPI(
+                "https://192.168.1.1/api/ntwk/wlanradio",
+                "Wlan radio",
+                "{\"Enable2G\":true}"
+            ), null
+        )
+        Constants.webview.evaluateJavascript(
+            callAPI(
+                "https://192.168.1.1/api/ntwk/wlan_common",
+                "Wlan Common",
+                "{\"CountryCode\":\"EG\",\"TransmitPower\":100,\"Rate\":0,\"WMMStatus\":true,\"GIControl\":\"long\",\"Channel\":0,\"Mode\":\"b/g/n\",\"Bandwidth\":\"20/40\",\"Mcs\":33}"
+            ), null
+        )
+        Constants.webview.evaluateJavascript(
+            callAPI(
+                "https://192.168.1.1/api/ntwk/wlan_ssids?showpass=true",
+                "Wlan frequency",
+                "[{\"WpaIEEEEncModes\":\"AESEncryption\",\"WpaPreSharedKey\":\"********\",\"Enable\":false,\"IsolateControl\":false,\"ID\":\"InternetGatewayDevice.LANDevice.1.WLANConfiguration.2.\",\"SecMode\":\"Basic\",\"WepKeys\":{\"1\":\"********\",\"4\":\"********\",\"3\":\"********\",\"2\":\"********\"},\"WpaMixEncModes\":\"TKIPEncryption\",\"Ssid\":\"SSID-2\",\"WpaEncModes\":\"TKIPEncryption\",\"BasicAuthMode\":\"None\",\"X_AssociateDeviceNum\":32,\"Name\":\"SSID2\",\"HideBroadcast\":false,\"WepEncLevel\":\"104-bit\",\"WepKeyIndex\":1,\"Frequency\":\"2.4GHz\"}]"
+            ), null
+        )
     }
 
     override fun render(str: String, data: String) {
-        //TODO
         when (str) {
             "Wlan radio" -> {
                 binding.cBEnableWlan.isChecked = getEnable2G(data)
