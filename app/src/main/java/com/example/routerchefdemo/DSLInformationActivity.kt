@@ -28,7 +28,7 @@ class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
     override fun render(str: String, data: String) {
         if(str != DSL_INFO)
             return
-
+        binding.progressCircular.visibility = View.GONE
         var dslDetails = extractDslDetails(data)
         binding.tVDslSync.text = dslDetails.status
         binding.tVConnectionStatus.text = dslDetails.modulation

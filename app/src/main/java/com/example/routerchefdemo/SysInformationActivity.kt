@@ -31,7 +31,7 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
     override fun render(str: String, data: String) {
         if(str != SYSTEM_INFO)
             return
-
+        binding.progressCircular.visibility = View.GONE
         var deviceInfo: DeviceInfo = parseDeviceInfo(data)
         binding.textView2.text = deviceInfo.deviceName
         binding.textView3.text = deviceInfo.serialNumber

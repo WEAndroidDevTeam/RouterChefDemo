@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Maintain"
+        android:fontFamily="@font/montserrat_bold"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         android:background="@color/light_grey"
@@ -28,7 +29,7 @@
         android:layout_margin="@dimen/_16sdp"
         android:text="System information"
         android:textAllCaps="false"
-
+        android:fontFamily="@font/montserrat_semi_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tV_Maintain" />
@@ -39,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
         android:text="WLAN Information"
-
+        android:fontFamily="@font/montserrat_semi_bold"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,6 +53,7 @@
         android:layout_margin="@dimen/_16sdp"
         android:text="DSL Information"
         android:textAllCaps="false"
+        android:fontFamily="@font/montserrat_semi_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_wlanInfo" />

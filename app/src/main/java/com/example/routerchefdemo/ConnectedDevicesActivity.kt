@@ -4,6 +4,7 @@ import ConnectedDevicesAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routerchefdemo.Constants.CONNECTED_DEVICES
 import com.example.routerchefdemo.databinding.ActivityConnectedDevicesBinding
@@ -33,7 +34,7 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         if (str != CONNECTED_DEVICES) {
             return
         }
-
+        binding.progressCircular.visibility = View.GONE
         deviceList = parseConnectedDevices(data) // Assign parsed list to deviceList
         Log.d("ConnectedDevices", "List size: ${deviceList.size}")
         binding.rvConnectedDevices.layoutManager = LinearLayoutManager(this)

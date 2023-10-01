@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_40sdp"
         android:text="@string/user_name"
+        android:fontFamily="@font/montserrat_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline" />
 
@@ -51,6 +52,8 @@
         android:layout_marginHorizontal="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:text="@string/password"
+        android:fontFamily="@font/montserrat_medium"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_username" />
 
@@ -65,7 +68,7 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="@dimen/_6sdp"
-        android:text="K9119299"
+        android:text="KA154627"
         android:textAlignment="viewStart"
         android:textColorHint="@color/black"
         android:textSize="@dimen/_14ssp"
@@ -81,6 +84,8 @@
         android:layout_marginTop="@dimen/_30sdp"
         android:background="@drawable/edit_text_background"
         android:padding="@dimen/_7sdp"
+        android:fontFamily="@font/montserrat_bold"
+
         android:text="login"
         app:backgroundTint="@color/purple"
         app:layout_constraintEnd_toEndOf="@id/et_username"
@@ -89,8 +94,8 @@
 
     <ProgressBar
         android:id="@+id/progress_circular"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:progressTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

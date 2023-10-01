@@ -27,7 +27,7 @@ class WLANInfoActivity : BaseActivity<ActivityWlaninfoBinding>() {
     override fun render(str: String, data: String) {
         if (str != WLAN_INFO)
             return
-
+        binding.progressCircular.visibility = View.GONE
         var wifiDetails = extractWifiDetails(data)
         binding.tVSsidNam.text = wifiDetails.ssid
         if (wifiDetails.enable == 1)

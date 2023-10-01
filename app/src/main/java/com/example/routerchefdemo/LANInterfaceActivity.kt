@@ -132,6 +132,7 @@ class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
     }
 
     override fun render(str: String, data: String) {
+        binding.progressCircular.visibility = View.GONE
         when (str) {
             LAN_INTERFACE_STATUS -> {
                 val deviceDetails: DeviceDetails = parseDeviceDetails(data)

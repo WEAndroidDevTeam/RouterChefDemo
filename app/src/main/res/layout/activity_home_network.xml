@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Home Network"
+        android:fontFamily="@font/montserrat_semi_bold"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         android:background="@color/light_grey"
@@ -30,6 +31,7 @@
         android:layout_margin="@dimen/_16sdp"
         android:layout_marginTop="2dp"
         android:text="LAN Devices"
+        android:fontFamily="@font/montserrat_medium"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +43,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
         android:text="LAN Interface"
+        android:fontFamily="@font/montserrat_medium"
+
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,6 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
         android:text="WLAN Settings"
+        android:fontFamily="@font/montserrat_medium"
+
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
         android:text="WLAN Access"
+        android:fontFamily="@font/montserrat_medium"
+
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

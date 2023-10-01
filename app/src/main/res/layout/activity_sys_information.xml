@@ -16,6 +16,7 @@
         android:background="@color/light_grey"
         android:gravity="center"
         android:padding="@dimen/_8sdp"
+        android:fontFamily="@font/montserrat_bold"
         android:text="System Information"
         android:textColor="@color/purple"
         android:textSize="@dimen/_16ssp"
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_24sdp"
         android:text="Product Type:"
+        android:fontFamily="@font/montserrat_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tV_sysInfo" />
 
@@ -38,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_24sdp"
         android:text="Device ID:"
+        android:fontFamily="@font/montserrat_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tV_productType" />
 
@@ -46,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_24sdp"
+        android:fontFamily="@font/montserrat_medium"
         android:text="Hardware Version:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tV_deviceID" />
@@ -55,6 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_24sdp"
+        android:fontFamily="@font/montserrat_medium"
         android:text="Software Version:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hardwareVersion" />
@@ -64,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_24sdp"
+        android:fontFamily="@font/montserrat_medium"
         android:text="System Up time:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/softWareVersion" />
@@ -72,7 +78,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:fontFamily="@font/montserrat_medium"
         app:layout_constraintBottom_toBottomOf="@+id/tV_productType"
         app:layout_constraintStart_toStartOf="@+id/textView3" />
 
@@ -80,6 +86,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
         app:layout_constraintBottom_toBottomOf="@+id/tV_deviceID"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -87,6 +94,7 @@
         android:id="@+id/tv_hardVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
         app:layout_constraintBottom_toBottomOf="@+id/hardwareVersion"
         app:layout_constraintStart_toStartOf="@+id/textView3" />
 
@@ -94,6 +102,7 @@
         android:id="@+id/tV_softVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
         app:layout_constraintBottom_toBottomOf="@+id/softWareVersion"
         app:layout_constraintStart_toStartOf="@+id/tv_hardVersion"
         app:layout_constraintTop_toTopOf="@+id/softWareVersion" />
@@ -102,10 +111,20 @@
         android:id="@+id/tV_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
         android:paddingEnd="@dimen/_16sdp"
         app:layout_constraintBottom_toBottomOf="@+id/tV_systemTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tV_softVersion" />
-
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

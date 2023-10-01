@@ -19,6 +19,7 @@
         android:layout_marginStart="@dimen/_12ssp"
         android:text="Mobile12233"
         android:textSize="@dimen/_10sdp"
+        android:fontFamily="@font/montserrat_medium"
         app:layout_constraintStart_toEndOf="@id/iv_deviceIcon"
         app:layout_constraintTop_toTopOf="@id/iv_deviceIcon" />
 
