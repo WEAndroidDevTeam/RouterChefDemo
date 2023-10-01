@@ -9,7 +9,7 @@ class WlanAccessActivity : BaseActivity<ActivityWlanAccessBinding>() {
     override fun getViewBinding() = ActivityWlanAccessBinding.inflate(layoutInflater)
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
-    override fun onCreate(sausvedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
