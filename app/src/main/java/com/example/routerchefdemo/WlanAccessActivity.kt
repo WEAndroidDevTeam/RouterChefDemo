@@ -13,6 +13,8 @@ class WlanAccessActivity : BaseActivity<ActivityWlanAccessBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "WLAN Access")
+
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/wlanfilter?frequency=2.4GHz",

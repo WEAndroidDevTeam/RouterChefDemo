@@ -14,6 +14,8 @@ class WLANInfoActivity : BaseActivity<ActivityWlaninfoBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "WLAN Info")
+
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/system/diagnose_wlan_basic?type=1",

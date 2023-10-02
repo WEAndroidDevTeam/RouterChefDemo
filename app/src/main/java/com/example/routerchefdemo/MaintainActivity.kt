@@ -15,6 +15,7 @@ class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "Maintain")
 
         binding.btnSysInfo.setOnClickListener {
             val intent = Intent(this, SysInformationActivity::class.java)

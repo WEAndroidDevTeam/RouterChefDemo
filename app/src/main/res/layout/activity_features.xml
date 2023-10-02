@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar">
+    </include>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -23,8 +28,8 @@
         android:fontFamily="@font/montserrat_bold"
         app:backgroundTint="@color/purple"
         android:padding="@dimen/_7sdp"
-        android:layout_marginTop="@dimen/_30sdp"
         android:background="@drawable/edit_text_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_marginTop="@dimen/_10sdp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

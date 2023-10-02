@@ -2,9 +2,11 @@ package com.example.routerchefdemo
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.webkit.JavascriptInterface
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 import java.util.regex.Pattern
 
@@ -19,7 +21,30 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCurrentActivity()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = getViewBinding()
+        setSupportActionBar(binding.root.findViewById(R.id.toolbar))
+        binding.root.findViewById<Toolbar>(R.id.toolbar)?.setNavigationOnClickListener{onBackPressed()}
+    }
+
+    //region toolbar//
+    @SuppressLint("ResourceAsColor")
+    fun setupToolbar(titleResId: Int, isLight: Boolean = false, showUp: Boolean = true, show: Boolean = true) {
+        setupToolbar(getString(titleResId), isLight, showUp, show)
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun setupToolbar(title: String, isLight: Boolean = false, showUp: Boolean = true, show: Boolean = true) {
+        when (show) {
+            true -> {
+                supportActionBar?.show()
+                supportActionBar?.title = title
+                supportActionBar?.setDisplayHomeAsUpEnabled(showUp)
+//                if (isLight) {
+//                }
+            }
+            false -> supportActionBar?.hide()
+        }
     }
 
     fun callAPI(url: String, id: String, dummy: String? = null): String {

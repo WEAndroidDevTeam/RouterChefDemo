@@ -1,0 +1,13 @@
+<!-- gray_checkbox_background.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#CCCCCC" /> <!-- Set the gray color here -->
+        </shape>
+    </item>
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#CCCCCC" /> <!-- Set the same gray color for checked state -->
+        </shape>
+    </item>
+</selector>

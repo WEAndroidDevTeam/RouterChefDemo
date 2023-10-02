@@ -15,6 +15,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "Router App", showUp = false)
 
         Constants.webview.evaluateJavascript(
             callAPI(

@@ -13,6 +13,8 @@ class HomeNetworkActivity : BaseActivity<ActivityHomeNetworkBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "Home Network")
+
         binding.btnLanDevices.setOnClickListener {
             startActivity(
                 Intent(

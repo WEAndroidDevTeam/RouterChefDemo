@@ -21,6 +21,8 @@ class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "LAN Interface")
+
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/lan_host",

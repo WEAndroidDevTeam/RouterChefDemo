@@ -18,6 +18,8 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
 
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "System Info")
+
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/system/deviceinfo",
@@ -37,7 +39,7 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         binding.textView3.text = deviceInfo.serialNumber
         binding.tvHardVersion.text = deviceInfo.hardwareVersion
         binding.tVSoftVersion.text = deviceInfo.softwareVersion
-        binding.tVTime.text = deviceInfo.uptime.toString()
+        binding.tVTime.text = formatMillisecondsToDuration(deviceInfo.uptime.toLong())
 
 
     }
@@ -52,4 +54,15 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
 
         return DeviceInfo(deviceName, serialNumber, softwareVersion, hardwareVersion, uptime)
     }
+
+    fun formatMillisecondsToDuration(milliseconds: Long): String {
+        val seconds = (milliseconds / 1000).toInt()
+        val days = seconds / 86400
+        val hours = (seconds % 86400) / 3600
+        val minutes = (seconds % 3600) / 60
+        val remainingSeconds = seconds % 60
+
+        return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, remainingSeconds)
+    }
+
 }

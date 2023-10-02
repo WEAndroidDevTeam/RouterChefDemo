@@ -22,6 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "Router App", showUp = false)
 
         Constants.webview = WebView(this)
         val settings = webView.settings

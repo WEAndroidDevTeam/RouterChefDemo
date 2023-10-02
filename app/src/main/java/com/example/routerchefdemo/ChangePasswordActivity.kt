@@ -15,6 +15,8 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
         val view: View = binding.root
 
         setContentView(view)
+
+        setupToolbar(title = "change password")
         Constants.webview.loadUrl("https://192.168.1.1/html/wizard/wifi.html")
 
         binding.bApply.setOnClickListener {

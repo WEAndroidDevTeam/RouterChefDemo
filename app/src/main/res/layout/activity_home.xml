@@ -5,83 +5,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
-<TextView
-    android:id="@+id/tv_welcome"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toTopOf="parent"
-    android:text="WELCOME"
-    android:fontFamily="@font/montserrat_semi_bold"
-    android:textSize="@dimen/_30sdp"
-    android:layout_marginTop="@dimen/_30sdp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
-</TextView>
-<Button
-    android:id="@+id/bt_connectedDevices"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    android:text="Connected Devices"
-    android:fontFamily="@font/montserrat_semi_bold"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_welcome"
-    android:layout_margin="@dimen/_15sdp"
-    />
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"></include>
+
+    <TextView
+        android:id="@+id/tv_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:text="WELCOME"
+        android:textSize="@dimen/_30sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    <Button
+        android:id="@+id/bt_connectedDevices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_15sdp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:text="Connected Devices"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
+
     <Button
         android:id="@+id/bt_maintain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="Maintain"
-        android:fontFamily="@font/montserrat_semi_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bt_connectedDevices"
         android:layout_margin="@dimen/_15sdp"
-        />
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:text="Maintain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_connectedDevices" />
+
     <Button
         android:id="@+id/bt_getDevieInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="get device info"
-        android:fontFamily="@font/montserrat_semi_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bt_maintain"
         android:layout_margin="@dimen/_15sdp"
-        />
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:text="get device info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_maintain" />
+
     <Button
         android:id="@+id/bt_homeNetwork"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="home network"
-        android:fontFamily="@font/montserrat_semi_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bt_getDevieInfo"
         android:layout_margin="@dimen/_15sdp"
-        />
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:text="home network"
+        android:backgroundTint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_getDevieInfo" />
+
     <Button
         android:id="@+id/bt_changePassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="change password"
-        android:fontFamily="@font/montserrat_semi_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bt_homeNetwork"
         android:layout_margin="@dimen/_15sdp"
-        />
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:text="change password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_homeNetwork" />
     />
+
     <Button
         android:id="@+id/bt_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="logout"
-        android:fontFamily="@font/montserrat_semi_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bt_changePassword"
         android:layout_margin="@dimen/_15sdp"
-        />
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:text="logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_changePassword" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "DSL Info")
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/dslinfo",

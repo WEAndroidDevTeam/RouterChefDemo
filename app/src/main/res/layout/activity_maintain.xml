@@ -6,30 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".MaintainActivity">
 
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"></include>
+
     <TextView
         android:id="@+id/tV_Maintain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Maintain"
+        android:layout_margin="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/light_grey"
         android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
+        android:padding="@dimen/_16sdp"
+        android:text="Maintain"
+        android:textColor="@color/purple"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
-        android:background="@color/light_grey"
-        android:textColor="@color/purple"
-        android:padding="@dimen/_16sdp"
-        android:gravity="center"
-        android:layout_margin="@dimen/_16sdp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <Button
         android:id="@+id/btn_sysInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat_semi_bold"
         android:text="System information"
         android:textAllCaps="false"
-        android:fontFamily="@font/montserrat_semi_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tV_Maintain" />
@@ -39,8 +47,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
-        android:text="WLAN Information"
+        android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/montserrat_semi_bold"
+        android:text="WLAN Information"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,9 +60,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat_semi_bold"
         android:text="DSL Information"
         android:textAllCaps="false"
-        android:fontFamily="@font/montserrat_semi_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_wlanInfo" />

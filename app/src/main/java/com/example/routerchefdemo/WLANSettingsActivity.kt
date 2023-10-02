@@ -16,6 +16,7 @@ class WLANSettingsActivity : BaseActivity<ActivityWlansettingsBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        setupToolbar(title = "WLAN Settings")
 
         binding.tVBasicSettings.setOnClickListener {
             if (isConstrainstLayoutVisible) {

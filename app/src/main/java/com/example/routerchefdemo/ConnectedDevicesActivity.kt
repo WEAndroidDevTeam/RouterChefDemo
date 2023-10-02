@@ -20,6 +20,7 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setupToolbar(title = "Connected Devices")
 
         Constants.webview.evaluateJavascript(
             callAPI(
