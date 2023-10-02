@@ -5,5 +5,5 @@ data class DeviceInfo(
     val serialNumber: String,
     val softwareVersion: String,
     val hardwareVersion: String,
-    val uptime: Int
+    val uptime: Long
 )

@@ -39,7 +39,7 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         binding.textView3.text = deviceInfo.serialNumber
         binding.tvHardVersion.text = deviceInfo.hardwareVersion
         binding.tVSoftVersion.text = deviceInfo.softwareVersion
-        binding.tVTime.text = formatMillisecondsToDuration(deviceInfo.uptime.toLong())
+        binding.tVTime.text = formatMillisecondsToDuration(deviceInfo.uptime)
 
 
     }
@@ -50,7 +50,7 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         val serialNumber = jsonObject.getString("SerialNumber")
         val softwareVersion = jsonObject.getString("SoftwareVersion")
         val hardwareVersion = jsonObject.getString("HardwareVersion")
-        val uptime = jsonObject.getInt("UpTime")
+        val uptime = jsonObject.getLong("UpTime")
 
         return DeviceInfo(deviceName, serialNumber, softwareVersion, hardwareVersion, uptime)
     }
