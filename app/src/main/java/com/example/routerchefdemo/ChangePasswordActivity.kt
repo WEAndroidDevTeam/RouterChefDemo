@@ -37,7 +37,7 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
     }
 
     override fun render(str: String, data: String) {
-        Toast.makeText(this, "dataa $data", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "$data", Toast.LENGTH_LONG).show()
         startActivity(Intent(this@ChangePasswordActivity, MainActivity::class.java))
     }
 

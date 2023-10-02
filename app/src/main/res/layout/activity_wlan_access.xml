@@ -51,7 +51,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:clickable="false"
-        android:background="@drawable/gray_checkbox_background"
         app:layout_constraintBottom_toBottomOf="@+id/tV_wlanWPS"
         app:layout_constraintEnd_toStartOf="@+id/tV_enableWPS"
         app:layout_constraintStart_toEndOf="@+id/tV_wlanWPS"
