@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".WLANSettingsActivity">
 
 
@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cL_Parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/_8sdp"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_marginTop="@dimen/_10sdp">

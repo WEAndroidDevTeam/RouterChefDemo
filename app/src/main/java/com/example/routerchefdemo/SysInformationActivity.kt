@@ -56,6 +56,7 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
     }
 
     fun formatMillisecondsToDuration(milliseconds: Long): String {
+        var milliseconds = milliseconds * 1000
         val seconds = (milliseconds / 1000).toInt()
         val days = seconds / 86400
         val hours = (seconds % 86400) / 3600

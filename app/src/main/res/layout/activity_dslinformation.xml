@@ -95,7 +95,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:fontFamily="@font/montserrat_medium"
 
-        android:text="Maximum downstream rate(kbit/s):"
+        android:text="Maximum downstream rate(kbit/s):      "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/maxUpRate" />
 
@@ -179,7 +179,7 @@
         android:text="NoSignal"
         android:fontFamily="@font/montserrat_medium"
         app:layout_constraintBottom_toBottomOf="@+id/dslSync"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/maxDownRate" />
 
     <TextView
         android:id="@+id/tV_connectionStatus"
