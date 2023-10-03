@@ -9,14 +9,13 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar">
-    </include>
+        layout="@layout/toolbar"></include>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:layout_marginTop="@dimen/_10sdp">
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,8 +29,8 @@
                 android:background="@color/light_grey"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="@dimen/_8sdp"
                 android:fontFamily="@font/montserrat_medium"
+                android:padding="@dimen/_8sdp"
                 android:text="LAN Interface Status"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
@@ -101,8 +100,8 @@
                 android:background="@color/light_grey"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="@dimen/_8sdp"
                 android:fontFamily="@font/montserrat_medium"
+                android:padding="@dimen/_8sdp"
                 android:text="LAN Interface Settings"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
@@ -115,9 +114,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:fontFamily="@font/montserrat_medium"
                 android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tV_lanSettings">
 
@@ -126,8 +125,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:text="IP address"
                     android:fontFamily="@font/montserrat_medium"
+                    android:text="IP address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -147,8 +146,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:text="Secondary LAN"
                     android:fontFamily="@font/montserrat_medium"
+                    android:text="Secondary LAN"
                     app:layout_constraintBottom_toBottomOf="@+id/cB_secLAN"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tV_subnetMask" />
@@ -157,8 +156,8 @@
                     android:id="@+id/tV_deviceName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Device NAme"
                     android:fontFamily="@font/montserrat_medium"
+                    android:text="Device NAme"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tV_secondaryLan" />
 
@@ -184,9 +183,12 @@
 
                 <CheckBox
                     android:id="@+id/cB_secLAN"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:background="@drawable/gray_checkbox_background"
+                    android:button="@drawable/gray_checkbox_background"
                     android:clickable="false"
+
                     android:fontFamily="@font/montserrat_medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -212,9 +214,9 @@
                 android:background="@color/light_grey"
                 android:clickable="true"
                 android:focusable="true"
+                android:fontFamily="@font/montserrat_medium"
                 android:padding="@dimen/_8sdp"
                 android:text="DHCP Server"
-                android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -226,8 +228,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
-                android:visibility="gone"
                 android:fontFamily="@font/montserrat_medium"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tV_dhcbServer">
@@ -237,8 +239,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:text="DHCP Server:"
                     android:fontFamily="@font/montserrat_medium"
+                    android:text="DHCP Server:"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -247,8 +249,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:text="Start IP address:"
                     android:fontFamily="@font/montserrat_medium"
+                    android:text="Start IP address:"
                     app:layout_constraintStart_toStartOf="@+id/tV_enableDHCB"
                     app:layout_constraintTop_toBottomOf="@+id/tV_enableDHCB" />
 
@@ -267,19 +269,21 @@
                     android:id="@+id/tV_dnsMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DNS Mode"
                     android:fontFamily="@font/montserrat_medium"
+                    android:text="DNS Mode"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tV_endIP" />
 
                 <CheckBox
                     android:id="@+id/cB_dhcpEnable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/gray_checkbox_background"
+                    android:button="@drawable/gray_checkbox_background"
                     android:clickable="false"
+                    android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="@+id/tV_enableDHCB"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -308,15 +312,29 @@
 
                 <RadioButton
                     android:id="@+id/rB_dnsMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/radiobutton_gray_background"
+                    android:button="@drawable/radiobutton_gray_background"
                     android:clickable="false"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:text="CPE acts as the DNS Proxy"
                     app:layout_constraintBottom_toBottomOf="@+id/tV_dnsMode"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tV_dnsMode" />
+
+                <TextView
+                    android:id="@+id/tv_proxy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:text="CPE acts as the DNS proxy"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/rB_dnsMode"
+                    app:layout_constraintTop_toTopOf="@+id/rB_dnsMode" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -329,8 +347,8 @@
                 android:background="@color/light_grey"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="@dimen/_8sdp"
                 android:fontFamily="@font/montserrat_medium"
+                android:padding="@dimen/_8sdp"
                 android:text="RA Settings"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
@@ -353,17 +371,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:text="Enable RA:"
                     android:fontFamily="@font/montserrat_medium"
+                    android:text="Enable RA:"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
                     android:id="@+id/cB_raEnable"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/gray_checkbox_background"
+                    android:button="@drawable/gray_checkbox_background"
                     android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -380,8 +400,8 @@
                 android:background="@color/light_grey"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="@dimen/_8sdp"
                 android:fontFamily="@font/montserrat_medium"
+                android:padding="@dimen/_8sdp"
                 android:text="IPV6 DHCP Server"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
@@ -410,8 +430,10 @@
 
                 <CheckBox
                     android:id="@+id/cB_ipv6Enable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:background="@drawable/gray_checkbox_background"
+                    android:button="@drawable/gray_checkbox_background"
                     android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -428,8 +450,8 @@
                 android:layout_margin="@dimen/_8sdp"
                 android:background="@color/light_grey"
                 android:focusable="true"
-                android:padding="@dimen/_8sdp"
                 android:fontFamily="@font/montserrat_medium"
+                android:padding="@dimen/_8sdp"
                 android:text="UPnP"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
@@ -460,8 +482,10 @@
 
                 <CheckBox
                     android:id="@+id/cB_upnpEnable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:background="@drawable/gray_checkbox_background"
+                    android:button="@drawable/gray_checkbox_background"
                     android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -479,9 +503,9 @@
                 android:background="@color/light_grey"
                 android:clickable="true"
                 android:focusable="true"
+                android:fontFamily="@font/montserrat_medium"
                 android:padding="@dimen/_8sdp"
                 android:text="TR064"
-                android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/purple"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -494,9 +518,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tV_tr064">
@@ -514,8 +538,10 @@
 
                 <CheckBox
                     android:id="@+id/cB_tr064Enable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:background="@drawable/gray_checkbox_background"
+                    android:button="@drawable/gray_checkbox_background"
                     android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -524,18 +550,17 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progressTint="@color/black"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
 
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:progressTint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="visible" />
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
