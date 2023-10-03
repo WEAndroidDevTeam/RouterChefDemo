@@ -69,6 +69,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:clickable="false"
+                style="@style/GrayCheckboxStyle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,6 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
+                style="@style/GrayCheckboxStyle"
                 app:layout_constraintBottom_toBottomOf="@+id/tV_enSSid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -222,6 +224,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
+                style="@style/GrayCheckboxStyle"
                 app:layout_constraintBottom_toBottomOf="@+id/tV_wMM"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

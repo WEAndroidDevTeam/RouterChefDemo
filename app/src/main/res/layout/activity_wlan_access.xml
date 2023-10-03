@@ -34,7 +34,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:layout_marginTop="@dimen/_10sdp" />
+        android:layout_marginTop="@dimen/_10sdp"
+        tools:ignore="NotSibling" />
 
     <TextView
         android:id="@+id/tV_wlanWPS"
@@ -51,6 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:clickable="false"
+        style="@style/GrayCheckboxStyle"
         app:layout_constraintBottom_toBottomOf="@+id/tV_wlanWPS"
         app:layout_constraintEnd_toStartOf="@+id/tV_enableWPS"
         app:layout_constraintStart_toEndOf="@+id/tV_wlanWPS"

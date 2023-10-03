@@ -78,7 +78,7 @@
         android:layout_margin="@dimen/_15sdp"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/montserrat_semi_bold"
-        android:text="change SSID/Password"
+        android:text="change SSID Name/Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bt_homeNetwork" />

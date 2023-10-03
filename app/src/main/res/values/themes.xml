@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/purple</item>
         <item name="colorSecondaryVariant">@color/purple_200</item>
@@ -19,5 +19,11 @@
         <item name="android:fontFamily">@font/montserrat_bold</item>
 
     </style>
+    <style name="GrayCheckboxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:buttonTint">@color/gray</item>
+    </style>
 
+    <style name="GrayRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:buttonTint">@color/gray</item>
+    </style>
 </resources>
