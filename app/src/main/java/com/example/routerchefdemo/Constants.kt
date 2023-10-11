@@ -16,4 +16,6 @@ object Constants {
     const val LAN_INTERFACE_IPV6 = "Lan Interface IPV6"
     const val LAN_INTERFACE_UPNP = "Lan Interface upnp"
     const val LAN_INTERFACE_TR064 = "Lan Interface tr064"
+    var Router_Model = "hh"
+
 }

@@ -17,7 +17,8 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
     abstract fun getViewBinding(): B
     abstract fun setCurrentActivity()
     abstract fun render(str: String, data: String)
-
+    protected val router: Router
+        get() = Router.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCurrentActivity()
@@ -25,6 +26,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
         binding = getViewBinding()
         setSupportActionBar(binding.root.findViewById(R.id.toolbar))
         binding.root.findViewById<Toolbar>(R.id.toolbar)?.setNavigationOnClickListener{onBackPressed()}
+
     }
 
     //region toolbar//

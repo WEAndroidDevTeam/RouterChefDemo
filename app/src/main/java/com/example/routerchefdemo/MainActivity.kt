@@ -48,12 +48,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     binding.bLogin.visibility = View.GONE
 
                 } else {
+                    if (selectedItem == "Huawei DG8045") {
+                        val routerModelName = "Huawei DG8045"
+                        Router.createRouterModel(routerModelName)
+
+                    }
                     binding.guideline.visibility = View.VISIBLE
                     binding.etPassword.visibility = View.VISIBLE
                     binding.tvPassword.visibility = View.VISIBLE
                     binding.etUsername.visibility = View.VISIBLE
                     binding.tvUsername.visibility = View.VISIBLE
                     binding.bLogin.visibility = View.VISIBLE
+
                 }
             }
 
