@@ -5,4 +5,10 @@
     <string name="enter">Enter</string>
     <string name="Question">what`s this?</string>
     <string name="MaxClientsNum">32</string>
+
+    <string-array name="router_models_array">
+        <item>Select Router Model</item>
+        <item>Huawei DG8045</item>
+        <item>ZTE H188A</item>
+    </string-array>
 </resources>

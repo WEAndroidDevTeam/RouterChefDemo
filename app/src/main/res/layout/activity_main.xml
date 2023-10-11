@@ -9,7 +9,19 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar">
+
     </include>
+
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/montserrat_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -23,8 +35,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_40sdp"
-        android:text="@string/user_name"
         android:fontFamily="@font/montserrat_medium"
+        android:text="@string/user_name"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline" />
 
@@ -35,16 +48,17 @@
         android:layout_marginStart="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_40sdp"
-        android:padding="@dimen/_6sdp"
         android:background="@drawable/edit_text_background"
         android:backgroundTint="@color/light_grey"
         android:hint="@string/user_name"
         android:inputType="text"
         android:maxLines="1"
+        android:padding="@dimen/_6sdp"
         android:text="admin"
         android:textAlignment="viewStart"
         android:textColorHint="@color/black"
         android:textSize="@dimen/_14ssp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_username"
@@ -56,9 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:text="@string/password"
         android:fontFamily="@font/montserrat_medium"
-
+        android:text="@string/password"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_username" />
 
@@ -71,6 +85,7 @@
         android:background="@drawable/edit_text_background"
         android:backgroundTint="@color/light_grey"
         android:hint="@string/password"
+        android:visibility="gone"
         android:inputType="textPassword"
         android:padding="@dimen/_6sdp"
         android:text="KA154627"
@@ -88,8 +103,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
         android:background="@drawable/edit_text_background"
-        android:padding="@dimen/_7sdp"
         android:fontFamily="@font/montserrat_bold"
+        android:padding="@dimen/_7sdp"
 
         android:text="login"
         app:backgroundTint="@color/purple"
@@ -97,15 +112,16 @@
         app:layout_constraintStart_toStartOf="@id/et_username"
         app:layout_constraintTop_toBottomOf="@id/et_password" />
 
+
     <ProgressBar
         android:id="@+id/progress_circular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:progressTint="@color/black"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

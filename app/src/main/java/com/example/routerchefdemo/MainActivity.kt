@@ -4,9 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.webkit.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.routerchefdemo.Constants.LOGIN
 import com.example.routerchefdemo.databinding.ActivityMainBinding
@@ -22,6 +23,47 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.router_models_array,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        binding.spinner.adapter = adapter
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedItem = parent?.getItemAtPosition(position).toString()
+                if (selectedItem == "Select Router Model") {
+                    binding.guideline.visibility = View.GONE
+                    binding.etPassword.visibility = View.GONE
+                    binding.tvPassword.visibility = View.GONE
+                    binding.etUsername.visibility = View.GONE
+                    binding.tvUsername.visibility = View.GONE
+                    binding.bLogin.visibility = View.GONE
+
+                } else {
+                    binding.guideline.visibility = View.VISIBLE
+                    binding.etPassword.visibility = View.VISIBLE
+                    binding.tvPassword.visibility = View.VISIBLE
+                    binding.etUsername.visibility = View.VISIBLE
+                    binding.tvUsername.visibility = View.VISIBLE
+                    binding.bLogin.visibility = View.VISIBLE
+                }
+            }
+
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+
+            }
+        }
+
         setupToolbar(title = "Router App", showUp = false)
 
         Constants.webview = WebView(this)
@@ -34,13 +76,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
         settings.setAppCacheEnabled(false)
-
         webView.addJavascriptInterface(this, "Android")
 
+
         webView.webViewClient = object : WebViewClient() {
+
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+
                 binding.progressCircular.visibility = View.GONE
+
             }
 
             override fun shouldOverrideUrlLoading(
@@ -48,7 +93,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 request: WebResourceRequest?
             ): Boolean {
                 val newUrl = request!!.url.toString()
-                if(isLogging && newUrl.startsWith("https://192.168.1.1/html/wizard/wizard.html")){
+                if (isLogging && newUrl.startsWith("https://192.168.1.1/html/wizard/wizard.html")) {
                     render(LOGIN, "succeeded")
                 }
                 return true
@@ -63,6 +108,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 handler?.proceed()
             }
         }
+
+
         webView.loadUrl("https://192.168.1.1/")
 
         binding.bLogin.setOnClickListener {
@@ -106,9 +153,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun render(str: String, data: String) {
-        if(str != LOGIN)
+
+
+        if (str != LOGIN)
             return
-        if(data == "succeeded")
+        if (data == "succeeded")
             startActivity(Intent(this, HomeActivity::class.java))
         else
             Toast.makeText(this, "login failed $data", Toast.LENGTH_LONG).show()
