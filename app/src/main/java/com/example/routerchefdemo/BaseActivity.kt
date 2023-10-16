@@ -2,6 +2,7 @@ package com.example.routerchefdemo
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.webkit.JavascriptInterface
@@ -9,10 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
 abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
-
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
     lateinit var binding: B
     abstract fun getViewBinding(): B
     abstract fun setCurrentActivity()
@@ -24,17 +27,28 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = getViewBinding()
         setSupportActionBar(binding.root.findViewById(R.id.toolbar))
-        binding.root.findViewById<Toolbar>(R.id.toolbar)?.setNavigationOnClickListener{onBackPressed()}
+        binding.root.findViewById<Toolbar>(R.id.toolbar)
+            ?.setNavigationOnClickListener { onBackPressed() }
     }
 
     //region toolbar//
     @SuppressLint("ResourceAsColor")
-    fun setupToolbar(titleResId: Int, isLight: Boolean = false, showUp: Boolean = true, show: Boolean = true) {
+    fun setupToolbar(
+        titleResId: Int,
+        isLight: Boolean = false,
+        showUp: Boolean = true,
+        show: Boolean = true
+    ) {
         setupToolbar(getString(titleResId), isLight, showUp, show)
     }
 
     @SuppressLint("ResourceAsColor")
-    fun setupToolbar(title: String, isLight: Boolean = false, showUp: Boolean = true, show: Boolean = true) {
+    fun setupToolbar(
+        title: String,
+        isLight: Boolean = false,
+        showUp: Boolean = true,
+        show: Boolean = true
+    ) {
         when (show) {
             true -> {
                 supportActionBar?.show()
@@ -43,6 +57,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
 //                if (isLight) {
 //                }
             }
+
             false -> supportActionBar?.hide()
         }
     }
@@ -93,11 +108,11 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
     @SuppressLint("SuspiciousIndentation")
     @JavascriptInterface
     public fun callbackHandle(str: String, jsonData: String) {
-        if(jsonData == "relogin"){
+        if (jsonData == "relogin") {
             startActivity(Intent(this@BaseActivity, MainActivity::class.java))
             return
         }
-        if(jsonData.isNullOrEmpty())
+        if (jsonData.isNullOrEmpty())
             return
 
         var data = jsonData
@@ -106,16 +121,16 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
             val pattern = Pattern.compile("/\\*\\{(.*?)\\}\\*/")
             val matcher = pattern.matcher(data)
             if (matcher.find()) {
-                data = "{"+matcher.group(1)+"}"
-            }else {
+                data = "{" + matcher.group(1) + "}"
+            } else {
                 val pattern = Pattern.compile("/\\*\\[(.*?)\\]\\*/")
                 val matcher = pattern.matcher(data)
                 if (matcher.find()) {
-                    data = "[" + matcher.group(1)+ "]"
+                    data = "[" + matcher.group(1) + "]"
                 }
             }
-        }catch (e: Exception){
-        }finally {
+        } catch (e: Exception) {
+        } finally {
             runOnUiThread {
                 ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
                     str,

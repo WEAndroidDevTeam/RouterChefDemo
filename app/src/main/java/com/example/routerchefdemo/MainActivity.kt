@@ -1,6 +1,7 @@
 package com.example.routerchefdemo
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
@@ -17,12 +18,22 @@ import com.example.routerchefdemo.Constants.webview as webView
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
-
     private var isLogging = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+        val savedUsername = sharedPreferences.getString("username", "")
+        val savedPassword = sharedPreferences.getString("password", "")
+        if (savedUsername == "admin" && savedPassword == "admin") {
+            startActivity(Intent(this, HomeActivity::class.java))
+        } else {
+            loginUser()
+        }
+
+
         val adapter = ArrayAdapter.createFromResource(
             this,
             R.array.router_models_array,
@@ -57,10 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 }
             }
 
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
-
             }
         }
 
@@ -108,20 +116,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 handler?.proceed()
             }
         }
-
-
         webView.loadUrl("https://192.168.1.1/")
 
+    }
+
+    private fun loginUser() {
         binding.bLogin.setOnClickListener {
-            isLogging = true
-            webView.evaluateJavascript(
-                getLoginScript(
-                    binding.etUsername.text.toString(),
-                    binding.etPassword.text.toString()
-                ), null
-            )
+            val username = binding.etUsername.text.toString()
+            val password = binding.etPassword.text.toString()
+
+            if (username == "admin" && password == "admin") {
+                val editor = sharedPreferences.edit()
+                editor.putString("username", username)
+                editor.putString("password", password)
+                editor.apply()
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
+            } else {
+                Toast.makeText(this, "login failed", Toast.LENGTH_LONG).show()
+            }
         }
     }
+
 
     fun getLoginScript(username: String, password: String): String {
         return ("javascript: " +
