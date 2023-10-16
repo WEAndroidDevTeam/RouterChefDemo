@@ -16,7 +16,7 @@ class HuaweiRouterModel : Router() {
             val iconType =
                 JsonParser.parseString(jsonString).getAsJsonObject().get("IconType").toString()
 
-            val connectedDevice = ConnectedDevice(hostName, iconType)
+            val connectedDevice = ConnectedDevice(hostName)
             connectedDevicesList.add(connectedDevice)
         }
 

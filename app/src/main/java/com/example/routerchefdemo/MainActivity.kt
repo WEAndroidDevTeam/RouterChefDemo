@@ -52,6 +52,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         val routerModelName = "Huawei DG8045"
                         Router.createRouterModel(routerModelName)
 
+                    } else if (selectedItem == "ZTE H188A"){
+                        val routerModelName = "ZTE H188A"
+                        Router.createRouterModel(routerModelName)
                     }
                     binding.guideline.visibility = View.VISIBLE
                     binding.etPassword.visibility = View.VISIBLE

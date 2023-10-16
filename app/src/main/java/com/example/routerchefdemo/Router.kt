@@ -19,6 +19,7 @@ abstract class Router {
         fun createRouterModel(routerModelName: String) {
             instance = when (routerModelName) {
                 "Huawei DG8045" -> HuaweiRouterModel()
+                "ZTE H188A"-> ZTERouterModel()
                 // Add more cases for other router models if needed
                 else -> throw IllegalArgumentException("Invalid router model: $routerModelName")
             }
