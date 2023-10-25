@@ -3,6 +3,7 @@ package com.example.routerchefdemo
 abstract class Router {
 
     abstract fun parseConnectedDevices(jsonData: String): List<ConnectedDevice>
+    abstract fun getLoginScript(username: String, password: String): String
     abstract var urlForConnectedDevices: String
     abstract var idForConnectedDevices:String
     abstract var dummyForConnectedDevices:String
