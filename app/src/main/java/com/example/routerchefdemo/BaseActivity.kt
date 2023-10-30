@@ -8,6 +8,7 @@ import android.webkit.JavascriptInterface
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
+import com.example.routerchefdemo.Constants.RESPONSE_TYPE_JSON
 import java.util.regex.Pattern
 
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
@@ -49,7 +50,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
         }
     }
 
-    fun callAPI(url: String, id: String, dummy: String? = null): String {
+    fun callAPI(url: String, id: String, dummy: String? = null, responseType: String? = RESPONSE_TYPE_JSON): String {
 
         return ("javascript: " +
                 "function getData (){" +
@@ -94,7 +95,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
 
     @SuppressLint("SuspiciousIndentation")
     @JavascriptInterface
-    public fun callbackHandle(str: String, jsonData: String) {
+    public fun callbackHandle(str: String, jsonData: String, responseType: String? = RESPONSE_TYPE_JSON) {
         if(jsonData == "relogin"){
             startActivity(Intent(this@BaseActivity, MainActivity::class.java))
             return

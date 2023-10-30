@@ -23,8 +23,8 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         Constants.webview.evaluateJavascript(
             callAPI(
                 router.urlForConnectedDevices,
-                router.idForConnectedDevices,
-                router.dummyForConnectedDevices
+                Constants.CONNECTED_DEVICES,
+                ""
             ), null
         )
     }

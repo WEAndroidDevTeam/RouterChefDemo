@@ -20,8 +20,7 @@
         android:textSize="@dimen/_30sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toBottomOf="@id/toolbar"></TextView>
 
     <Button
         android:id="@+id/bt_connectedDevices"
