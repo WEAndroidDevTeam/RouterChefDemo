@@ -21,7 +21,6 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupToolbar(title = "Connected Devices")
-        Constants.webview.loadUrl("https://192.168.1.1/")
         Constants.webview.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/getpage.lua?pid=1005&nextpage=home_wlanDevice_lua.lua&InstNum=5",

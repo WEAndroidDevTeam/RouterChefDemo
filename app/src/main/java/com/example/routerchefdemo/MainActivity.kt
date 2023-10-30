@@ -64,6 +64,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
 
+        binding.spinner.setSelection(2)
         setupToolbar(title = "Router App", showUp = false)
 
         Constants.webview = WebView(this)
@@ -126,26 +127,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     fun getLoginScript(username: String, password: String): String {
         return ("javascript: " +
                 "function login(user, pass, callback) {" +
-                "  try {" +
+//                "  try {" +
                 "    document.querySelector('#Frm_Username').value = user;" +
                 "    document.querySelector('#Frm_Password').value = pass;" +
                 "    document.querySelector('#LoginId').click();" +
                 "" +
-                "    setTimeout(function () {" +
-                "      var error = document.querySelector('#errorCategory').textContent;" +
-                "      if (typeof callback === 'function') {" +
-                "        callback(error);" +
-                "      }" +
-                "    }, 5000);" +
-                "  } catch (err) {" +
-                "    if (typeof callback === 'function') {" +
-                "      callback(err.message);" +
-                "    }" +
-                "  }" +
+//                "    setTimeout(function () {" +
+//                "      var error = document.querySelector('#errorCategory').textContent;" +
+//                "      if (typeof callback === 'function') {" +
+//                "        callback(error);" +
+//                "      }" +
+//                "    }, 5000);" +
+//                "  } catch (err) {" +
+//                "    if (typeof callback === 'function') {" +
+//                "      callback(err.message);" +
+//                "    }" +
+//                "  }" +
                 "}" +
                 "" +
                 "login('$username', '$password', function(result) {" +
                 "  if (result !== undefined) {" +
+                "console.log('result ====  ' + result);" +
                 "Android.callbackHandle('logged in' , result);" +
                 "  }" +
                 "});"

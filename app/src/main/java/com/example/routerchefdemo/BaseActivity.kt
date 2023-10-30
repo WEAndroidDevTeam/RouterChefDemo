@@ -63,6 +63,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
                 "if (this.readyState === 4) {" +
                 "            if (this.status === 200) {" +
                 "                const text = http.responseText;" +
+                "                console.log('httpresponseText ' + text);" +
                 "                Android.callbackHandle('$id', text);" +
                 "            } else {" +
                 "                console.log('fail');" +

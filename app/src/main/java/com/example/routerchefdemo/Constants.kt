@@ -10,6 +10,7 @@ object Constants {
     const val SYSTEM_INFO = "system info"
     const val WLAN_INFO = "Wlan info"
     const val DSL_INFO = "DSL info"
+    const val CHANGE_PASSWORD = "change password"
     const val LAN_INTERFACE_STATUS = "Lan Interface status"
     const val LAN_INTERFACE_DHCP_SERVER = "dhcp server"
     const val LAN_INTERFACE_RA = "Lan Interface RA"

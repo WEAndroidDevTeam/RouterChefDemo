@@ -17,6 +17,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         setContentView(view)
         setupToolbar(title = "Router App", showUp = false)
 
+        Constants.webview.loadUrl("https://192.168.1.1/")
 //        Constants.webview.evaluateJavascript(
 //            callAPI(
 //                "https://192.168.1.1/api/system/getuserlevel",

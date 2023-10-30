@@ -88,7 +88,7 @@
         android:visibility="gone"
         android:inputType="textPassword"
         android:padding="@dimen/_6sdp"
-        android:text="KA154627"
+        android:text="123@Pass"
         android:textAlignment="viewStart"
         android:textColorHint="@color/black"
         android:textSize="@dimen/_14ssp"
