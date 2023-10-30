@@ -17,14 +17,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         setContentView(view)
         setupToolbar(title = "Router App", showUp = false)
 
-        Constants.webview.evaluateJavascript(
-            callAPI(
-                "https://192.168.1.1/api/system/getuserlevel",
-                USER_LEVEL,
-                "{\"isadmin\":true}"
-
-            ), null
-        )
+//        Constants.webview.evaluateJavascript(
+//            callAPI(
+//                "https://192.168.1.1/api/system/getuserlevel",
+//                USER_LEVEL,
+//                "{\"isadmin\":true}"
+//
+//            ), null
+//        )
 
         binding.btConnectedDevices.setOnClickListener {
             startActivity(

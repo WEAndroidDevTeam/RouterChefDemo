@@ -93,7 +93,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 request: WebResourceRequest?
             ): Boolean {
                 val newUrl = request!!.url.toString()
-                if (isLogging && newUrl.startsWith("https://192.168.1.1/html/wizard/wizard.html")) {
+                if (isLogging) {
                     render(LOGIN, "succeeded")
                 }
                 return true
@@ -127,9 +127,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         return ("javascript: " +
                 "function login(user, pass, callback) {" +
                 "  try {" +
-                "    document.querySelector('#index_username').value = user;" +
-                "    document.querySelector('#password').value = pass;" +
-                "    document.querySelector('#loginbtn').click();" +
+                "    document.querySelector('#Frm_Username').value = user;" +
+                "    document.querySelector('#Frm_Password').value = pass;" +
+                "    document.querySelector('#LoginId').click();" +
                 "" +
                 "    setTimeout(function () {" +
                 "      var error = document.querySelector('#errorCategory').textContent;" +

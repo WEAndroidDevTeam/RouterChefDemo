@@ -5,9 +5,9 @@ import android.webkit.WebView
 object Constants {
     lateinit var webview: WebView
     const val LOGIN = "logged in"
-    const val USER_LEVEL = "logged in"
-    const val CONNECTED_DEVICES = "logged in"
-    const val SYSTEM_INFO = "logged in"
+    const val USER_LEVEL = "user level"
+    const val CONNECTED_DEVICES = "connected devices"
+    const val SYSTEM_INFO = "system info"
     const val WLAN_INFO = "Wlan info"
     const val DSL_INFO = "DSL info"
     const val LAN_INTERFACE_STATUS = "Lan Interface status"
