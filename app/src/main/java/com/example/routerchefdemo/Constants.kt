@@ -6,7 +6,7 @@ object Constants {
     lateinit var webview: WebView
     const val LOGIN = "logged in"
     const val USER_LEVEL = "logged in"
-    const val CONNECTED_DEVICES = "logged in"
+    const val CONNECTED_DEVICES = "Connected Devices"
     const val SYSTEM_INFO = "logged in"
     const val WLAN_INFO = "Wlan info"
     const val DSL_INFO = "DSL info"

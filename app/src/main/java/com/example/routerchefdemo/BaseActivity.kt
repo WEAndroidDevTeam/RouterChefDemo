@@ -51,48 +51,59 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
     }
 
     fun callAPI(url: String, id: String, dummy: String? = null, responseType: String? = RESPONSE_TYPE_JSON): String {
-
         return ("javascript: " +
                 "function getData (){" +
                 "console.log('dataaaa' + '$url' );" +
                 "const http = new XMLHttpRequest();" +
                 "http.open('GET', '$url');" +
-//                "    const timeoutDuration = 5;" +
-//                "http.timeout = timeoutDuration;" +
-//                "    http.ontimeout = function() {" +
-//                "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
-//                "    };" +
                 "http.onreadystatechange = function() {" +
-                "if (this.readyState === 4) {" +
-                "            if (this.status === 200) {" +
-                "                const text = http.responseText;" +
-                "                Android.callbackHandle('$id', text);" +
-                "            } else {" +
-                "                console.log('fail');" +
-                "                console.log('Request failed with status: ' + this.status);" +
-                "                try {" +
-                "                    const errorResponse = JSON.parse(http.responseText);" +
+                "    if (this.readyState === 4) {" +
+                "        if (this.status === 200) {" +
+                "            const response = http.responseText;"+
+                "                   console.log('logrsponse: ' + response);" +
+                "            Android.callbackHandle('$id', response);" +
+                "        } else {" +
+                "            console.log('Request failed with status: ' + this.status);" +
+                "            try {" +
+                "                const response = http.responseText;" +
+                "                const contentType = http.getResponseHeader('Content-Type');" +
+                "                if ('$responseType' === 'JSON') {" +
+                "                    const errorResponse = JSON.parse(response);" +
                 "                    if (errorResponse && errorResponse.message) {" +
                 "                        console.log('Error Message: ' + errorResponse.message);" +
-                "                Android.callbackHandle('$id', errorResponse.message);" +
+                "                       Android.callbackHandle('$id', errorResponse.message);" +
                 "                    } else {" +
                 "                        console.log('Error Message: Unknown');" +
                 "                    }" +
-                "                } catch (error) {" +
-                "                    console.log('Error parsing API response:', error);" +
+                "                } else if ('$responseType' === 'XML') {" +
+                "                    const parser = new DOMParser();" +
+                "                    const xmlDoc = parser.parseFromString(response, 'text/xml');" +
+                "                    const errorElement = xmlDoc.querySelector('IF_ERRORSTR');" +
+                "                    if (errorElement) {" +
+                "                        const errorMessage = errorElement.textContent;" +
+                "                        console.log('Error Message: ' + errorMessage);" +
+                "                       Android.callbackHandle('$id', errorMessage);" +
+                "                    } else {" +
+                "                        console.log('Error Message: Unknown');" +
+                "                    }" +
+                "                } else {" +
+                "                    console.log('Unsupported Content-Type: ' + contentType);" +
                 "                    console.log('Error Message: Unknown');" +
-                "                Android.callbackHandle('$id', 'relogin');" +
+                "                    console.log('Content-Type:', contentType);" +
+                "                    console.log('Response:', response);" +
                 "                }" +
+                "            } catch (error) {" +
+                "                console.log('Error parsing API response:', error);" +
+                "                console.log('Error Message: Unknown');" +
+                "                Android.callbackHandle('$id', 'relogin');" +
                 "            }" +
                 "        }" +
-                "    };" +
+                "    }" +
+                "};" +
                 "http.send();" +
                 "}" +
                 "getData();")
-
-
     }
-
     @SuppressLint("SuspiciousIndentation")
     @JavascriptInterface
     public fun callbackHandle(str: String, jsonData: String, responseType: String? = RESPONSE_TYPE_JSON) {

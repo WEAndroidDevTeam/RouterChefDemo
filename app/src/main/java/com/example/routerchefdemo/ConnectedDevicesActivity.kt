@@ -23,8 +23,9 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         Constants.webview.evaluateJavascript(
             callAPI(
                 router.urlForConnectedDevices,
-                Constants.CONNECTED_DEVICES,
-                ""
+                CONNECTED_DEVICES,
+               "",
+                responseType = Constants.RESPONSE_TYPE_XML
             ), null
         )
     }
@@ -33,6 +34,8 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         if (str != CONNECTED_DEVICES) {
             return
         }
+        Log.d("dataComes",  data)
+
         binding.progressCircular.visibility = View.GONE
         deviceList = router.parseConnectedDevices(data) // Assign parsed list to deviceList
         Log.d("ConnectedDevices", "List size: ${deviceList.size}")
