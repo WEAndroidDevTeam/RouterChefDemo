@@ -56,7 +56,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             Constants.webview.evaluateJavascript("javascript: " +
                     "function LogOut(){" +
                     "    try{" +
-                    "       document.querySelector('#signout_ctrl').click();" +
+                    "       document.querySelector('#logOff').click();" +
                     "       Android.callbackHandle('logout' , 'relogin');" +
                     "    }catch(err){" +
                     "       Android.callbackHandle('logout' , 'relogin');" +
