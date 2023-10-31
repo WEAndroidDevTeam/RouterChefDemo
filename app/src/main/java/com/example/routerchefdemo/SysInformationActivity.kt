@@ -3,11 +3,14 @@ package com.example.routerchefdemo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Xml
 import android.view.View
 import com.example.routerchefdemo.Constants.SYSTEM_INFO
 import com.example.routerchefdemo.databinding.ActivityHomeBinding
 import com.example.routerchefdemo.databinding.ActivitySysInformationBinding
 import org.json.JSONObject
+import org.xmlpull.v1.XmlPullParser
+import java.io.StringReader
 
 class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
     override fun getViewBinding() = ActivitySysInformationBinding.inflate(layoutInflater)
@@ -20,9 +23,10 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         setContentView(view)
         setupToolbar(title = "System Info")
 
+//        Constants.webview.loadUrl("https://192.168.1.1/getpage.lua?pid=123&nextpage=ManagDiag_StatusManag_t.lp&Menu3Location=0")
         Constants.webview.evaluateJavascript(
             callAPI(
-                "https://192.168.1.1/api/system/deviceinfo",
+                "https://192.168.1.1/common_page/ManagReg_lua.lua",
                 SYSTEM_INFO,
                 "{\"DeviceName\":\"DG8045\",\"SerialNumber\":\"21530369847SK9119299\",\"ManufacturerOUI\":\"00E0FC\",\"UpTime\":10638,\"SoftwareVersion\":\"V100R019C105B629 TEDATA\",\"HardwareVersion\":\"VER.A\"}"
             ), null
@@ -45,14 +49,47 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
     }
 
     fun parseDeviceInfo(jsonString: String): DeviceInfo {
-        val jsonObject = JSONObject(jsonString)
-        val deviceName = jsonObject.getString("DeviceName")
-        val serialNumber = jsonObject.getString("SerialNumber")
-        val softwareVersion = jsonObject.getString("SoftwareVersion")
-        val hardwareVersion = jsonObject.getString("HardwareVersion")
-        val uptime = jsonObject.getLong("UpTime")
+        var deviceInfo: DeviceInfo? = null
+        val deviceName: String
+        val serialNumber: String
+        var softwareVersion: String? = ""
+        val hardwareVersion: String
+        val uptime : String
 
-        return DeviceInfo(deviceName, serialNumber, softwareVersion, hardwareVersion, uptime)
+///////////////////////////
+        val parser: XmlPullParser = Xml.newPullParser()
+        parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+        parser.setInput(StringReader(jsonString))
+
+        var eventType = parser.eventType
+
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            when (eventType) {
+                XmlPullParser.START_TAG -> {
+                    if (parser.name == "ParaName" && parser.nextText() == "SoftwareVer") {
+                        while (parser.next() != XmlPullParser.END_TAG) {
+                            if (parser.eventType != XmlPullParser.START_TAG) {
+                                continue
+                            }
+
+                            if (parser.name == "ParaValue") {
+                                softwareVersion = parser.nextText()
+                                break
+                            }
+                        }
+                    }
+                }
+                XmlPullParser.END_TAG -> {
+                    if (parser.name == "Instance" && !softwareVersion.isNullOrBlank()) {
+                        deviceInfo = DeviceInfo("nameee", "S/N", softwareVersion, "HWW", 9L)
+                    }
+                }
+            }
+
+            eventType = parser.next()
+        }
+
+        return deviceInfo!!
     }
 
     fun formatMillisecondsToDuration(milliseconds: Long): String {

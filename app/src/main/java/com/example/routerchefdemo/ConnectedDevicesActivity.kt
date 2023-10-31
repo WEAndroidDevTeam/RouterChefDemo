@@ -4,12 +4,15 @@ import ConnectedDevicesAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Xml
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routerchefdemo.Constants.CONNECTED_DEVICES
 import com.example.routerchefdemo.databinding.ActivityConnectedDevicesBinding
 import com.google.gson.Gson
 import com.google.gson.JsonParser
+import org.xmlpull.v1.XmlPullParser
+import java.io.StringReader
 
 class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>() {
     override fun getViewBinding() = ActivityConnectedDevicesBinding.inflate(layoutInflater)
@@ -42,21 +45,61 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         (binding.rvConnectedDevices.adapter as ConnectedDevicesAdapter).submitList(deviceList.toMutableList())
     }
 
-    fun parseConnectedDevices(jsonData: String): List<ConnectedDevice> {
-        val connectedDevicesList = mutableListOf<ConnectedDevice>()
+    fun parseConnectedDevices(xmlString: String): List<ConnectedDevice> {
+        val connectedDevices = mutableListOf<ConnectedDevice>()
 
-        val jsonArray = Gson().fromJson(jsonData, Array<Any>::class.java)
-        jsonArray.forEach { jsonObject ->
-            val jsonString = Gson().toJson(jsonObject)
-            val hostName =
-                JsonParser.parseString(jsonString).getAsJsonObject().get("HostName").toString()
-            val iconType =
-                JsonParser.parseString(jsonString).getAsJsonObject().get("IconType").toString()
+        val parser: XmlPullParser = Xml.newPullParser()
+        parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+        parser.setInput(StringReader(xmlString))
 
-            val connectedDevice = ConnectedDevice(hostName, iconType)
-            connectedDevicesList.add(connectedDevice)
+        var eventType = parser.eventType
+        var currentHostName: String? = null
+
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            when (eventType) {
+                XmlPullParser.START_TAG -> {
+                    if (parser.name == "ParaName" && parser.nextText() == "HostName") {
+                        while (parser.next() != XmlPullParser.END_TAG) {
+                            if (parser.eventType != XmlPullParser.START_TAG) {
+                                continue
+                            }
+
+                            if (parser.name == "ParaValue") {
+                                currentHostName = parser.nextText()
+                                break
+                            }
+                        }
+                    }
+                }
+                XmlPullParser.END_TAG -> {
+                    if (parser.name == "Instance" && currentHostName != null) {
+                        connectedDevices.add(ConnectedDevice(currentHostName, ""))
+                        currentHostName = null
+                    }
+                }
+            }
+
+            eventType = parser.next()
         }
 
-        return connectedDevicesList
+        return connectedDevices
     }
+
+//    fun parseConnectedDevices(jsonData: String): List<ConnectedDevice> {
+//        val connectedDevicesList = mutableListOf<ConnectedDevice>()
+//
+//        val jsonArray = Gson().fromJson(jsonData, Array<Any>::class.java)
+//        jsonArray.forEach { jsonObject ->
+//            val jsonString = Gson().toJson(jsonObject)
+//            val hostName =
+//                JsonParser.parseString(jsonString).getAsJsonObject().get("HostName").toString()
+//            val iconType =
+//                JsonParser.parseString(jsonString).getAsJsonObject().get("IconType").toString()
+//
+//            val connectedDevice = ConnectedDevice(hostName, iconType)
+//            connectedDevicesList.add(connectedDevice)
+//        }
+//
+//        return connectedDevicesList
+//    }
 }

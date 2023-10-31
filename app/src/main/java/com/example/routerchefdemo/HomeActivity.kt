@@ -17,7 +17,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         setContentView(view)
         setupToolbar(title = "Router App", showUp = false)
 
-        Constants.webview.loadUrl("https://192.168.1.1/")
+        Constants.webview.loadUrl("https://192.168.1.1/getpage.lua?pid=123&nextpage=ManagDiag_StatusManag_t.lp&Menu3Location=0")
 //        Constants.webview.evaluateJavascript(
 //            callAPI(
 //                "https://192.168.1.1/api/system/getuserlevel",

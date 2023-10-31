@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_medium"
             app:layout_constraintBottom_toBottomOf="@+id/softWareVersion"
-            app:layout_constraintStart_toStartOf="@+id/tv_hardVersion"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/softWareVersion" />
 
         <TextView
