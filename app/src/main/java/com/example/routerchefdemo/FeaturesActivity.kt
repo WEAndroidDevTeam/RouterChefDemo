@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityFeaturesBinding
 import org.json.JSONObject
-import com.example.routerchefdemo.Constants.webview as webView
 
 class FeaturesActivity : BaseActivity<ActivityFeaturesBinding>() {
     override fun getViewBinding() = ActivityFeaturesBinding.inflate(layoutInflater)
@@ -18,7 +17,7 @@ class FeaturesActivity : BaseActivity<ActivityFeaturesBinding>() {
         setContentView(view)
 
         binding.bWifiSettings.setOnClickListener {
-            webView.evaluateJavascript(getNavigationScript(), null)
+            (applicationContext as MyApp).webView.evaluateJavascript(getNavigationScript(), null)
         }
     }
 

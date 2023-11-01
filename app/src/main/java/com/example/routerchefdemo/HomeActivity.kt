@@ -17,7 +17,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         setContentView(view)
         setupToolbar(title = "Router App", showUp = false)
 
-//        Constants.webview.evaluateJavascript(
+//        (applicationContext as MyApp).webView.evaluateJavascript(
 //            callAPI(
 //                "https://192.168.1.1/api/system/getuserlevel",
 //                USER_LEVEL,
@@ -52,7 +52,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             startActivity(intent)
         }
         binding.btLogout.setOnClickListener {
-            Constants.webview.evaluateJavascript("javascript: " +
+            (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
                     "function LogOut(){" +
                     "    try{" +
                     "       document.querySelector('#signout_ctrl').click();" +

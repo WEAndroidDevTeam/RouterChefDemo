@@ -1,24 +1,19 @@
 package com.example.routerchefdemo
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.http.SslError
 import android.os.Bundle
 import android.view.View
-import android.webkit.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.routerchefdemo.Constants.LOGIN
 import com.example.routerchefdemo.databinding.ActivityMainBinding
-import com.example.routerchefdemo.Constants.webview as webView
+import com.example.routerchefdemo.routerModels.RouterModel
 
-@SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
     override fun setCurrentActivity() = (applicationContext as MyApp).setCurrentActivity(this)
 
-    private var isLogging = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
@@ -26,8 +21,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         setupToolbar(title = "Router App", showUp = false)
         initializeViews()
-
-        initializeWebview()
     }
 
     private fun initializeViews() {
@@ -64,7 +57,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     binding.tvUsername.visibility = View.VISIBLE
                     binding.bLogin.visibility = View.VISIBLE
 
-                    BaseRouter.createRouterModel(selectedItem)
+                    RouterModel.createRouterModel(selectedItem)
                 }
             }
 
@@ -74,11 +67,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.spinner.setSelection(2)
 
         binding.bLogin.setOnClickListener {
-            isLogging = true
+            (applicationContext as MyApp).isLogging = true
             binding.progressCircular.visibility = View.VISIBLE
 
-            webView.evaluateJavascript("javascript: " +
-                BaseRouter.getInstance().login(
+            (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
+                    RouterModel.getInstance().login(
                     binding.etUsername.text.toString(),
                     binding.etPassword.text.toString()
                 ), null
@@ -86,50 +79,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-
-    private fun initializeWebview() {
-        Constants.webview = WebView(this)
-        val settings = webView.settings
-        settings.javaScriptEnabled = true
-        settings.domStorageEnabled = true
-        settings.databaseEnabled = true
-        settings.mixedContentMode = 0
-        settings.builtInZoomControls = true
-        settings.loadWithOverviewMode = true
-        settings.useWideViewPort = true
-        settings.setAppCacheEnabled(false)
-        WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
-        webView.addJavascriptInterface(this, "Android")
-        webView.webViewClient = object : WebViewClient() {
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                binding.progressCircular.visibility = View.GONE
-            }
-
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                val newUrl = request!!.url.toString()
-                if (isLogging) {
-                    render(LOGIN, "succeeded")
-                }
-                return true
-            }
-
-            @SuppressLint("WebViewClientOnReceivedSslError")
-            override fun onReceivedSslError(
-                view: WebView?,
-                handler: SslErrorHandler?,
-                error: SslError?
-            ) {
-                handler?.proceed()
-            }
-        }
-
-        webView.loadUrl("https://192.168.1.1/")
-    }
 //    fun getLoginScript(username: String, password: String): String {
 //        return ("javascript: " +
 //                "function login(user, pass, callback) {" +
@@ -166,7 +115,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             startActivity(Intent(this, HomeActivity::class.java))
         else
             Toast.makeText(this, "login failed $data", Toast.LENGTH_LONG).show()
-        isLogging = false
+        (applicationContext as MyApp).isLogging = false
     }
 
 

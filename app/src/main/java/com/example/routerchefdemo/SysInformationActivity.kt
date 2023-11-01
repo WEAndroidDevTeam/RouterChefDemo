@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.Constants.SYSTEM_INFO
 import com.example.routerchefdemo.databinding.ActivitySysInformationBinding
+import com.example.routerchefdemo.routerModels.RouterModel
 import org.json.JSONObject
 
 class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
@@ -18,8 +19,8 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         setContentView(view)
         setupToolbar(title = "System Info")
 
-        Constants.webview.evaluateJavascript("javascript: " +
-                BaseRouter.getInstance().getSystemInfo(), null
+        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
+                RouterModel.getInstance().getSystemInfo(), null
         )
     }
 

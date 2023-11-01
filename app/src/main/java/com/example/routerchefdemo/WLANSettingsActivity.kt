@@ -45,21 +45,21 @@ class WLANSettingsActivity : BaseActivity<ActivityWlansettingsBinding>() {
                 binding.clAdvancedSettings.visibility = View.GONE
             }
         }
-        Constants.webview.evaluateJavascript(
+        (applicationContext as MyApp).webView.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/wlanradio",
                 "Wlan radio",
                 "{\"Enable2G\":true}"
             ), null
         )
-        Constants.webview.evaluateJavascript(
+        (applicationContext as MyApp).webView.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/wlan_common",
                 "Wlan Common",
                 "{\"CountryCode\":\"EG\",\"TransmitPower\":100,\"Rate\":0,\"WMMStatus\":true,\"GIControl\":\"long\",\"Channel\":0,\"Mode\":\"b/g/n\",\"Bandwidth\":\"20/40\",\"Mcs\":33}"
             ), null
         )
-        Constants.webview.evaluateJavascript(
+        (applicationContext as MyApp).webView.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/wlan_ssids?showpass=true",
                 "Wlan frequency",

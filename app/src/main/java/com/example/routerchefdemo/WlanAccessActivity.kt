@@ -15,7 +15,7 @@ class WlanAccessActivity : BaseActivity<ActivityWlanAccessBinding>() {
         setContentView(view)
         setupToolbar(title = "WLAN Access")
 
-        Constants.webview.evaluateJavascript(
+        (applicationContext as MyApp).webView.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/ntwk/wlanfilter?frequency=2.4GHz",
                 "Wlan access",

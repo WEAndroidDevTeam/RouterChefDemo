@@ -165,14 +165,12 @@ class ZTERouterModel : RouterModel() {
     override fun getDslInfo(): String {
         return "function getDslInfo(){" +
                 "let id = '${Constants.DSL_INFO}' ;" +
-                "let temp;" +
                 "let exit = setTimeout(() => {" +
                 "    clearInterval(temp);" +
                 "    clearTimeout(exit);" +
                 "    Android.callbackHandle(id, 'timeout');" +
                 "}, 100000);" +
-                "" +
-                "temp = setInterval(() => {" +
+                "let temp = setInterval(() => {" +
                 "    try {" +
                 "        if (document.getElementsByClassName('emFont loginTitle')[0]) {" +
                 "            clearInterval(temp);" +
@@ -180,7 +178,6 @@ class ZTERouterModel : RouterModel() {
                 "            Android.callbackHandle(id, 'need_login');" +
                 "" +
                 "        } else {" +
-                "            Android.callbackHandle(id, 'showing_info');" +
                 "            let lineRate = document.getElementById('crate:0').innerText;" +
                 "            let upload = (Number(lineRate.split('/')[0]) / 1024).toFixed(1);" +
                 "            let download = (Number(lineRate.split('/')[1].split('k')[0]) / 1024).toFixed(1);" +
@@ -214,7 +211,7 @@ class ZTERouterModel : RouterModel() {
                 "                    crc: document.getElementById('ccrc:0').innerText," +
                 "                    fec: document.getElementById('cfec:0').innerText," +
                 "                    upTime: document.getElementById('cststart:0').innerText" +
-                "                }" +
+                "                };" +
                 "" +
                 "                clearInterval(temp);" +
                 "                clearTimeout(exit);" +
@@ -222,8 +219,10 @@ class ZTERouterModel : RouterModel() {
                 "            }" +
                 "        }" +
                 "    } catch (err){ }" +
-                "}, 500);" +
+                "}, 5000);" +
+                "" +
                 "}" +
+                "" +
                 "getDslInfo();"
     }
 

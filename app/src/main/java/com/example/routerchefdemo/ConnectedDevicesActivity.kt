@@ -17,7 +17,7 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupToolbar(title = "Connected Devices")
-        Constants.webview.evaluateJavascript(router.getConnectedDevices(), null)
+        (applicationContext as MyApp).webView.evaluateJavascript(router.getConnectedDevices(), null)
     }
 
     override fun render(id: String, data: String) {

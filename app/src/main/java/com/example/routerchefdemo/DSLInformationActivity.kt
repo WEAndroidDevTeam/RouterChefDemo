@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.Constants.DSL_INFO
 import com.example.routerchefdemo.databinding.ActivityDslinformationBinding
+import com.example.routerchefdemo.routerModels.RouterModel
 import org.json.JSONObject
 
 class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
@@ -16,11 +17,11 @@ class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
         setContentView(view)
         setupToolbar(title = "DSL Info")
 
-        Constants.webview.evaluateJavascript("javascript: " +
-                BaseRouter.getInstance().getDslInfo(), null
+        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
+                RouterModel.getInstance().getDslInfo(), null
         )
 
-//        Constants.webview.evaluateJavascript(
+//        (applicationContext as MyApp).webView.evaluateJavascript(
 //            callAPI(
 //                "https://192.168.1.1/api/ntwk/dslinfo",
 //                DSL_INFO,

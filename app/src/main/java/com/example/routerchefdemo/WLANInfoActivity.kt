@@ -16,7 +16,7 @@ class WLANInfoActivity : BaseActivity<ActivityWlaninfoBinding>() {
         setContentView(view)
         setupToolbar(title = "WLAN Info")
 
-        Constants.webview.evaluateJavascript(
+        (applicationContext as MyApp).webView.evaluateJavascript(
             callAPI(
                 "https://192.168.1.1/api/system/diagnose_wlan_basic?type=1",
                 WLAN_INFO,

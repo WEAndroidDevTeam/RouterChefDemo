@@ -1,24 +1,21 @@
 package com.example.routerchefdemo
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.webkit.JavascriptInterface
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
-import java.util.regex.Pattern
+import com.example.routerchefdemo.routerModels.RouterModel
 
-@SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
 abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
 
     lateinit var binding: B
     abstract fun getViewBinding(): B
     abstract fun setCurrentActivity()
     abstract fun render(id: String, data: String)
-    protected val router: BaseRouter
-        get() = BaseRouter.getInstance()
+    protected val router: RouterModel
+        get() = RouterModel.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCurrentActivity()
@@ -88,43 +85,5 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
                 "http.send();" +
                 "}" +
                 "getData();")
-
-
     }
-
-    @SuppressLint("SuspiciousIndentation")
-    @JavascriptInterface
-    public fun callbackHandle(id: String, jsonData: String) {
-        if(jsonData == "relogin"){
-            startActivity(Intent(this@BaseActivity, MainActivity::class.java))
-            return
-        }
-        if(jsonData.isNullOrEmpty())
-            return
-
-        var data = jsonData
-
-        try {
-            val pattern = Pattern.compile("/\\*\\{(.*?)\\}\\*/")
-            val matcher = pattern.matcher(data)
-            if (matcher.find()) {
-                data = "{"+matcher.group(1)+"}"
-            }else {
-                val pattern = Pattern.compile("/\\*\\[(.*?)\\]\\*/")
-                val matcher = pattern.matcher(data)
-                if (matcher.find()) {
-                    data = "[" + matcher.group(1)+ "]"
-                }
-            }
-        }catch (e: Exception){
-        }finally {
-            runOnUiThread {
-                ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
-                    id,
-                    data
-                )
-            }
-        }
-    }
-
 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityMaintainBinding
+import com.example.routerchefdemo.routerModels.RouterModel
 
 class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
     override fun getViewBinding() = ActivityMaintainBinding.inflate(layoutInflater)
@@ -17,7 +18,7 @@ class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
         setContentView(view)
         setupToolbar(title = "Maintain")
 
-        Constants.webview.loadUrl(BaseRouter.getInstance().dslInfoPath)
+        (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().dslInfoPath)
         binding.btnSysInfo.setOnClickListener {
             val intent = Intent(this, SysInformationActivity::class.java)
             startActivity(intent)

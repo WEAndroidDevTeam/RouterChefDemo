@@ -17,10 +17,10 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
         setContentView(view)
 
         setupToolbar(title = "change password")
-        Constants.webview.loadUrl("https://192.168.1.1/html/wizard/wifi.html")
+        (applicationContext as MyApp).webView.loadUrl("https://192.168.1.1/html/wizard/wifi.html")
 
         binding.bApply.setOnClickListener {
-            Constants.webview.evaluateJavascript("javascript: " +
+            (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
                     "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').addEventListener('click', function(e){" +
                     "document.querySelector('#home_wifi_access24id_ctrl').addEventListener('change', function(){" +
                     "document.querySelector('#home_wifi_access24id_ctrl').value = '${binding.etSsid.text.toString()}';" +
