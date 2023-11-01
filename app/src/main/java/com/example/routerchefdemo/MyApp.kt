@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.net.http.SslError
+import android.util.Log
 import android.view.View
 import android.webkit.*
 import android.widget.ProgressBar
@@ -28,7 +29,8 @@ class MyApp : Application() {
         super.onCreate()
         initializeWebview()
     }
-    private fun initializeWebview() {
+
+    public fun initializeWebview() {
 //        webView = (mCurrentActivity as BaseActivity<ViewBinding>).binding.root.findViewById<WebView>(R.id.webview)
         webView = WebView(this)
         val settings = webView.settings
@@ -47,6 +49,7 @@ class MyApp : Application() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 (mCurrentActivity as BaseActivity<ViewBinding>).binding.root.findViewById<ProgressBar>(R.id.progress_circular)?.visibility = View.GONE
+                (mCurrentActivity as BaseActivity<ViewBinding>).onPageLoaded(Constants.LOGIN)
             }
 
             override fun shouldOverrideUrlLoading(
@@ -70,7 +73,6 @@ class MyApp : Application() {
             }
         }
 
-        webView.loadUrl("https://192.168.1.1/")
     }
 
 
@@ -78,6 +80,7 @@ class MyApp : Application() {
     @SuppressLint("SuspiciousIndentation")
     @JavascriptInterface
     public fun callbackHandle(id: String, jsonData: String) {
+        Log.i("ROUTER", "$id $jsonData")
         if(jsonData == "relogin"){
             startActivity(Intent(this, MainActivity::class.java))
             return

@@ -21,6 +21,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         setupToolbar(title = "Router App", showUp = false)
         initializeViews()
+
+        (applicationContext as MyApp).webView.loadUrl("https://192.168.1.1/")
     }
 
     private fun initializeViews() {
@@ -107,6 +109,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //                "});"
 //                )
 //    }
+
+    override fun onPageLoaded(id: String) {
+        if (id != LOGIN)
+            return
+    }
 
     override fun render(id: String, data: String) {
         if (id != LOGIN)

@@ -36,6 +36,11 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
         }
     }
 
+    override fun onPageLoaded(id: String) {
+        if (id != Constants.CHANGE_PASSWORD)
+            return
+    }
+
     override fun render(id: String, data: String) {
         Toast.makeText(this, "$data", Toast.LENGTH_LONG).show()
         startActivity(Intent(this@ChangePasswordActivity, MainActivity::class.java))

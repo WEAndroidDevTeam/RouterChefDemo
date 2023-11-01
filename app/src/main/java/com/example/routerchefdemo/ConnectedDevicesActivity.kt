@@ -20,6 +20,11 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         (applicationContext as MyApp).webView.evaluateJavascript(router.getConnectedDevices(), null)
     }
 
+    override fun onPageLoaded(id: String) {
+        if (id != Constants.CONNECTED_DEVICES)
+            return
+    }
+
     override fun render(id: String, data: String) {
         if (id != CONNECTED_DEVICES) {
             return

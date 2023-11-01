@@ -30,6 +30,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         }, 3000)
     }
 
+
+    override fun onPageLoaded(id: String) {
+    }
+
     override fun render(id: String, data: String) {
         TODO("Not yet implemented")
     }

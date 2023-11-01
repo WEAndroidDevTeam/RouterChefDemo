@@ -26,6 +26,12 @@ class WLANInfoActivity : BaseActivity<ActivityWlaninfoBinding>() {
 
     }
 
+
+    override fun onPageLoaded(id: String) {
+        if (id != Constants.WLAN_INFO)
+            return
+    }
+
     override fun render(id: String, data: String) {
         if (id != WLAN_INFO)
             return

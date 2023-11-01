@@ -18,7 +18,6 @@ class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
         setContentView(view)
         setupToolbar(title = "Maintain")
 
-        (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().dslInfoPath)
         binding.btnSysInfo.setOnClickListener {
             val intent = Intent(this, SysInformationActivity::class.java)
             startActivity(intent)
@@ -32,6 +31,10 @@ class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
             startActivity(intent)
         }
 
+    }
+
+
+    override fun onPageLoaded(id: String) {
     }
 
     override fun render(id: String, data: String) {

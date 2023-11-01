@@ -32,6 +32,12 @@ class FeaturesActivity : BaseActivity<ActivityFeaturesBinding>() {
                 "Android.callbackHandle('navigate', '');")
     }
 
+
+    override fun onPageLoaded(id: String) {
+        if (id != Constants.CONNECTED_DEVICES)
+            return
+    }
+
     override fun render(id: String, data: String) {
         val jsonObject = JSONObject(data)
     }

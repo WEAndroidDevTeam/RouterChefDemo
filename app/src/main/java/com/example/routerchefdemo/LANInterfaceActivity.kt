@@ -133,6 +133,10 @@ class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
         }
     }
 
+
+    override fun onPageLoaded(id: String) {
+    }
+
     override fun render(id: String, data: String) {
         binding.progressCircular.visibility = View.GONE
         when (id) {

@@ -13,6 +13,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
     lateinit var binding: B
     abstract fun getViewBinding(): B
     abstract fun setCurrentActivity()
+    abstract fun onPageLoaded(id: String)
     abstract fun render(id: String, data: String)
     protected val router: RouterModel
         get() = RouterModel.getInstance()

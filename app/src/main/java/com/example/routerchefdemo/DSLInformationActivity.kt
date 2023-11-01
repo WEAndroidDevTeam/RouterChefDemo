@@ -17,9 +17,7 @@ class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
         setContentView(view)
         setupToolbar(title = "DSL Info")
 
-        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
-                RouterModel.getInstance().getDslInfo(), null
-        )
+        (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().dslInfoPath)
 
 //        (applicationContext as MyApp).webView.evaluateJavascript(
 //            callAPI(
@@ -31,6 +29,12 @@ class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
 
     }
 
+
+    override fun onPageLoaded(id: String) {
+        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
+                RouterModel.getInstance().getDslInfo(), null
+        )
+    }
 
     override fun render(id: String, data: String) {
         if (id != DSL_INFO)

@@ -24,6 +24,12 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         )
     }
 
+
+    override fun onPageLoaded(id: String) {
+        if (id != SYSTEM_INFO)
+            return
+    }
+
     override fun render(id: String, data: String) {
         if(id != SYSTEM_INFO)
             return

@@ -68,6 +68,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
 
 
+
+    override fun onPageLoaded(id: String) {
+        if (id != USER_LEVEL)
+            return
+    }
+
     override fun render(id: String, data: String) {
         if (id == USER_LEVEL) {
             Log.e("data", data)
