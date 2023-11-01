@@ -6,7 +6,7 @@ object Constants {
     lateinit var webview: WebView
     const val LOGIN = "logged in"
     const val USER_LEVEL = "logged in"
-    const val CONNECTED_DEVICES = "logged in"
+    const val CONNECTED_DEVICES = "Connected Devices"
     const val SYSTEM_INFO = "logged in"
     const val WLAN_INFO = "Wlan info"
     const val DSL_INFO = "DSL info"
@@ -18,6 +18,9 @@ object Constants {
     const val LAN_INTERFACE_IPV6 = "Lan Interface IPV6"
     const val LAN_INTERFACE_UPNP = "Lan Interface upnp"
     const val LAN_INTERFACE_TR064 = "Lan Interface tr064"
+
+    const val RESPONSE_TYPE_XML = "XML"
+    const val RESPONSE_TYPE_JSON = "JSON"
     var Router_Model = "hh"
 
 }

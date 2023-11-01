@@ -48,10 +48,10 @@ class ConnectedDevicesAdapter() :
         fun bind(device: ConnectedDevice) {
             binding.tVDeviceName.text = device.hostName
 
-            if(device.IconType == "\"\"")
-                binding.ivDeviceIcon.setImageResource(R.drawable.monitor_9561573)
-            else
-                binding.ivDeviceIcon.setImageResource(R.drawable.smartphone_1434518)
+//            if(device.IconType == "\"\"")
+//                binding.ivDeviceIcon.setImageResource(R.drawable.monitor_9561573)
+//            else
+//                binding.ivDeviceIcon.setImageResource(R.drawable.smartphone_1434518)
         }
     }
 }
