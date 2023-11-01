@@ -38,6 +38,6 @@ class HomeNetworkActivity : BaseActivity<ActivityHomeNetworkBinding>() {
         }
     }
 
-    override fun render(str: String, data: String) {
+    override fun render(id: String, data: String) {
     }
 }

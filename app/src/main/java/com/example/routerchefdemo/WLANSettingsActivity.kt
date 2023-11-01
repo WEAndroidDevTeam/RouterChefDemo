@@ -68,9 +68,9 @@ class WLANSettingsActivity : BaseActivity<ActivityWlansettingsBinding>() {
         )
     }
 
-    override fun render(str: String, data: String) {
+    override fun render(id: String, data: String) {
         binding.progressCircular.visibility = View.GONE
-        when (str) {
+        when (id) {
             "Wlan radio" -> {
                 binding.cBEnableWlan.isChecked = getEnable2G(data)
             }

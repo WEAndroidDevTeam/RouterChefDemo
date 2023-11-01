@@ -15,19 +15,24 @@ class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
         val view: View = binding.root
         setContentView(view)
         setupToolbar(title = "DSL Info")
-        Constants.webview.evaluateJavascript(
-            callAPI(
-                "https://192.168.1.1/api/ntwk/dslinfo",
-                DSL_INFO,
-                "{\"DownPower\":0,\"Modulation\":\"\",\"UpCurrRate\":0,\"ShowtimeStart\":0,\"DownstreamMaxBitRate\":0,\"DownAttenuation\":0,\"Status\":\"NoSignal\",\"DataPath\":\"\",\"UpstreamMaxBitRate\":0,\"UpPower\":0,\"ImpulsoNoiseProUs\":0,\"ImpulsoNoiseProDs\":0,\"InterleaveDelayDs\":0,\"UpAttenuation\":0,\"DownMargin\":0,\"InterleaveDelayUs\":0,\"UpMargin\":0,\"DownCurrRate\":0,\"UpDepth\":0,\"DownDepth\":0}"
-            ), null
+
+        Constants.webview.evaluateJavascript("javascript: " +
+                BaseRouter.getInstance().getDslInfo(), null
         )
+
+//        Constants.webview.evaluateJavascript(
+//            callAPI(
+//                "https://192.168.1.1/api/ntwk/dslinfo",
+//                DSL_INFO,
+//                "{\"DownPower\":0,\"Modulation\":\"\",\"UpCurrRate\":0,\"ShowtimeStart\":0,\"DownstreamMaxBitRate\":0,\"DownAttenuation\":0,\"Status\":\"NoSignal\",\"DataPath\":\"\",\"UpstreamMaxBitRate\":0,\"UpPower\":0,\"ImpulsoNoiseProUs\":0,\"ImpulsoNoiseProDs\":0,\"InterleaveDelayDs\":0,\"UpAttenuation\":0,\"DownMargin\":0,\"InterleaveDelayUs\":0,\"UpMargin\":0,\"DownCurrRate\":0,\"UpDepth\":0,\"DownDepth\":0}"
+//            ), null
+//        )
 
     }
 
 
-    override fun render(str: String, data: String) {
-        if (str != DSL_INFO)
+    override fun render(id: String, data: String) {
+        if (id != DSL_INFO)
             return
         binding.progressCircular.visibility = View.GONE
         var dslDetails = extractDslDetails(data)

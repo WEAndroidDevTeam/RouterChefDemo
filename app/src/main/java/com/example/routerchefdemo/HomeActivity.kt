@@ -17,14 +17,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         setContentView(view)
         setupToolbar(title = "Router App", showUp = false)
 
-        Constants.webview.evaluateJavascript(
-            callAPI(
-                "https://192.168.1.1/api/system/getuserlevel",
-                USER_LEVEL,
-                "{\"isadmin\":true}"
-
-            ), null
-        )
+//        Constants.webview.evaluateJavascript(
+//            callAPI(
+//                "https://192.168.1.1/api/system/getuserlevel",
+//                USER_LEVEL,
+//                "{\"isadmin\":true}"
+//
+//            ), null
+//        )
 
         binding.btConnectedDevices.setOnClickListener {
             startActivity(
@@ -68,8 +68,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
 
 
-    override fun render(str: String, data: String) {
-        if (str == USER_LEVEL) {
+    override fun render(id: String, data: String) {
+        if (id == USER_LEVEL) {
             Log.e("data", data)
             val jsonObject = JSONObject(data)
             val isAdmin = jsonObject.getBoolean("isadmin")

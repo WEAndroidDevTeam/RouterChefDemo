@@ -1,15 +1,12 @@
 package com.example.routerchefdemo
 
 import ConnectedDevicesAdapter
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routerchefdemo.Constants.CONNECTED_DEVICES
 import com.example.routerchefdemo.databinding.ActivityConnectedDevicesBinding
-import com.google.gson.Gson
-import com.google.gson.JsonParser
 
 class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>() {
     override fun getViewBinding() = ActivityConnectedDevicesBinding.inflate(layoutInflater)
@@ -20,21 +17,15 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupToolbar(title = "Connected Devices")
-        Constants.webview.evaluateJavascript(
-            callAPI(
-                router.urlForConnectedDevices,
-                router.idForConnectedDevices,
-                router.dummyForConnectedDevices
-            ), null
-        )
+        Constants.webview.evaluateJavascript(router.getConnectedDevices(), null)
     }
 
-    override fun render(str: String, data: String) {
-        if (str != CONNECTED_DEVICES) {
+    override fun render(id: String, data: String) {
+        if (id != CONNECTED_DEVICES) {
             return
         }
         binding.progressCircular.visibility = View.GONE
-        deviceList = router.parseConnectedDevices(data) // Assign parsed list to deviceList
+//        deviceList = router.parseConnectedDevices(data) // Assign parsed list to deviceList
         Log.d("ConnectedDevices", "List size: ${deviceList.size}")
         binding.rvConnectedDevices.layoutManager = LinearLayoutManager(this)
         binding.rvConnectedDevices.adapter = ConnectedDevicesAdapter()

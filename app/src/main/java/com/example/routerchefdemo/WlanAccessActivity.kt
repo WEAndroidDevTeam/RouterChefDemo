@@ -25,9 +25,9 @@ class WlanAccessActivity : BaseActivity<ActivityWlanAccessBinding>() {
     }
 
 
-    override fun render(str: String, data: String) {
+    override fun render(id: String, data: String) {
         binding.progressCircular.visibility = View.GONE
-        if (str == "Wlan access")
+        if (id == "Wlan access")
             binding.cBWPS.isChecked = extractWpsEnable(data)
 
     }

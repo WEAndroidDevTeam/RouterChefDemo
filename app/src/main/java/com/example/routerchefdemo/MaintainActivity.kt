@@ -17,6 +17,7 @@ class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
         setContentView(view)
         setupToolbar(title = "Maintain")
 
+        Constants.webview.loadUrl(BaseRouter.getInstance().dslInfoPath)
         binding.btnSysInfo.setOnClickListener {
             val intent = Intent(this, SysInformationActivity::class.java)
             startActivity(intent)
@@ -32,7 +33,7 @@ class MaintainActivity : BaseActivity<ActivityMaintainBinding>() {
 
     }
 
-    override fun render(str: String, data: String) {
+    override fun render(id: String, data: String) {
         TODO("Not yet implemented")
     }
 

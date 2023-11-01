@@ -16,9 +16,9 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
     lateinit var binding: B
     abstract fun getViewBinding(): B
     abstract fun setCurrentActivity()
-    abstract fun render(str: String, data: String)
-    protected val router: Router
-        get() = Router.getInstance()
+    abstract fun render(id: String, data: String)
+    protected val router: BaseRouter
+        get() = BaseRouter.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCurrentActivity()
@@ -94,7 +94,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
 
     @SuppressLint("SuspiciousIndentation")
     @JavascriptInterface
-    public fun callbackHandle(str: String, jsonData: String) {
+    public fun callbackHandle(id: String, jsonData: String) {
         if(jsonData == "relogin"){
             startActivity(Intent(this@BaseActivity, MainActivity::class.java))
             return
@@ -120,7 +120,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
         }finally {
             runOnUiThread {
                 ((applicationContext as MyApp).getCurrentActivity() as BaseActivity<ViewBinding>).render(
-                    str,
+                    id,
                     data
                 )
             }

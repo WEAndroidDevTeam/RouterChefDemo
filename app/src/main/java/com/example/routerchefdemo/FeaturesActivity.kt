@@ -33,7 +33,7 @@ class FeaturesActivity : BaseActivity<ActivityFeaturesBinding>() {
                 "Android.callbackHandle('navigate', '');")
     }
 
-    override fun render(str: String, data: String) {
+    override fun render(id: String, data: String) {
         val jsonObject = JSONObject(data)
     }
 }

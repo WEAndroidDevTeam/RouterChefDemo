@@ -1,11 +1,9 @@
 package com.example.routerchefdemo
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.Constants.SYSTEM_INFO
-import com.example.routerchefdemo.databinding.ActivityHomeBinding
 import com.example.routerchefdemo.databinding.ActivitySysInformationBinding
 import org.json.JSONObject
 
@@ -20,18 +18,13 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         setContentView(view)
         setupToolbar(title = "System Info")
 
-        Constants.webview.evaluateJavascript(
-            callAPI(
-                "https://192.168.1.1/api/system/deviceinfo",
-                SYSTEM_INFO,
-                "{\"DeviceName\":\"DG8045\",\"SerialNumber\":\"21530369847SK9119299\",\"ManufacturerOUI\":\"00E0FC\",\"UpTime\":10638,\"SoftwareVersion\":\"V100R019C105B629 TEDATA\",\"HardwareVersion\":\"VER.A\"}"
-            ), null
+        Constants.webview.evaluateJavascript("javascript: " +
+                BaseRouter.getInstance().getSystemInfo(), null
         )
-
     }
 
-    override fun render(str: String, data: String) {
-        if(str != SYSTEM_INFO)
+    override fun render(id: String, data: String) {
+        if(id != SYSTEM_INFO)
             return
         binding.progressCircular.visibility = View.GONE
         var deviceInfo: DeviceInfo = parseDeviceInfo(data)

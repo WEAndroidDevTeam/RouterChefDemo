@@ -23,6 +23,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         val view: View = binding.root
         setContentView(view)
+
+        setupToolbar(title = "Router App", showUp = false)
+        initializeViews()
+
+        initializeWebview()
+    }
+
+    private fun initializeViews() {
+
         val adapter = ArrayAdapter.createFromResource(
             this,
             R.array.router_models_array,
@@ -48,11 +57,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     binding.bLogin.visibility = View.GONE
 
                 } else {
-                    if (selectedItem == "Huawei DG8045") {
-                        val routerModelName = "Huawei DG8045"
-                        Router.createRouterModel(routerModelName)
-
-                    }
                     binding.guideline.visibility = View.VISIBLE
                     binding.etPassword.visibility = View.VISIBLE
                     binding.tvPassword.visibility = View.VISIBLE
@@ -60,18 +64,30 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     binding.tvUsername.visibility = View.VISIBLE
                     binding.bLogin.visibility = View.VISIBLE
 
+                    BaseRouter.createRouterModel(selectedItem)
                 }
             }
 
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
-
             }
         }
+        binding.spinner.setSelection(2)
 
-        setupToolbar(title = "Router App", showUp = false)
+        binding.bLogin.setOnClickListener {
+            isLogging = true
+            binding.progressCircular.visibility = View.VISIBLE
 
+            webView.evaluateJavascript("javascript: " +
+                BaseRouter.getInstance().login(
+                    binding.etUsername.text.toString(),
+                    binding.etPassword.text.toString()
+                ), null
+            )
+        }
+    }
+
+
+    private fun initializeWebview() {
         Constants.webview = WebView(this)
         val settings = webView.settings
         settings.javaScriptEnabled = true
@@ -82,16 +98,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
         settings.setAppCacheEnabled(false)
+        WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
         webView.addJavascriptInterface(this, "Android")
-
-
         webView.webViewClient = object : WebViewClient() {
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-
                 binding.progressCircular.visibility = View.GONE
-
             }
 
             override fun shouldOverrideUrlLoading(
@@ -99,7 +112,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 request: WebResourceRequest?
             ): Boolean {
                 val newUrl = request!!.url.toString()
-                if (isLogging && newUrl.startsWith("https://192.168.1.1/html/wizard/wizard.html")) {
+                if (isLogging) {
                     render(LOGIN, "succeeded")
                 }
                 return true
@@ -115,53 +128,39 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
 
-
         webView.loadUrl("https://192.168.1.1/")
-
-        binding.bLogin.setOnClickListener {
-            isLogging = true
-            webView.evaluateJavascript(
-                getLoginScript(
-                    binding.etUsername.text.toString(),
-                    binding.etPassword.text.toString()
-                ), null
-            )
-        }
     }
+//    fun getLoginScript(username: String, password: String): String {
+//        return ("javascript: " +
+//                "function login(user, pass, callback) {" +
+//                "  try {" +
+//                "    document.querySelector('#index_username').value = user;" +
+//                "    document.querySelector('#password').value = pass;" +
+//                "    document.querySelector('#loginbtn').click();" +
+//                "" +
+//                "    setTimeout(function () {" +
+//                "      var error = document.querySelector('#errorCategory').textContent;" +
+//                "      if (typeof callback === 'function') {" +
+//                "        callback(error);" +
+//                "      }" +
+//                "    }, 5000);" +
+//                "  } catch (err) {" +
+//                "    if (typeof callback === 'function') {" +
+//                "      callback(err.message);" +
+//                "    }" +
+//                "  }" +
+//                "}" +
+//                "" +
+//                "login('$username', '$password', function(result) {" +
+//                "  if (result !== undefined) {" +
+//                "Android.callbackHandle('logged in' , result);" +
+//                "  }" +
+//                "});"
+//                )
+//    }
 
-    fun getLoginScript(username: String, password: String): String {
-        return ("javascript: " +
-                "function login(user, pass, callback) {" +
-                "  try {" +
-                "    document.querySelector('#index_username').value = user;" +
-                "    document.querySelector('#password').value = pass;" +
-                "    document.querySelector('#loginbtn').click();" +
-                "" +
-                "    setTimeout(function () {" +
-                "      var error = document.querySelector('#errorCategory').textContent;" +
-                "      if (typeof callback === 'function') {" +
-                "        callback(error);" +
-                "      }" +
-                "    }, 5000);" +
-                "  } catch (err) {" +
-                "    if (typeof callback === 'function') {" +
-                "      callback(err.message);" +
-                "    }" +
-                "  }" +
-                "}" +
-                "" +
-                "login('$username', '$password', function(result) {" +
-                "  if (result !== undefined) {" +
-                "Android.callbackHandle('logged in' , result);" +
-                "  }" +
-                "});"
-                )
-    }
-
-    override fun render(str: String, data: String) {
-
-
-        if (str != LOGIN)
+    override fun render(id: String, data: String) {
+        if (id != LOGIN)
             return
         if (data == "succeeded")
             startActivity(Intent(this, HomeActivity::class.java))
