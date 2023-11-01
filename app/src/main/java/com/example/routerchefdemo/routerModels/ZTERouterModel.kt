@@ -215,7 +215,7 @@ class ZTERouterModel : RouterModel() {
                 "" +
                 "                clearInterval(temp);" +
                 "                clearTimeout(exit);" +
-                "                Android.callbackHandle(id, 'info');" +
+                "                Android.callbackHandle(id, JSON.stringify(info));" +
                 "            }" +
                 "        }" +
                 "    } catch (err){ }" +
