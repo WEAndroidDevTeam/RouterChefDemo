@@ -16,17 +16,16 @@ class WLANInfoActivity : BaseActivity<ActivityWlaninfoBinding>() {
         val view: View = binding.root
         setContentView(view)
         setupToolbar(title = "WLAN Info")
+        (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().wlanInfoPath)
 
-        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
-                RouterModel.getInstance().getWlanInfo(), null
-        )
 
     }
 
 
     override fun onPageLoaded(id: String) {
-        if (id != Constants.WLAN_INFO)
-            return
+        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
+                RouterModel.getInstance().getWlanInfo(), null
+        )
     }
 
     override fun render(id: String, data: String) {

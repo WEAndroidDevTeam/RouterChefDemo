@@ -7,6 +7,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.routerchefdemo.Constants.CONNECTED_DEVICES
 import com.example.routerchefdemo.databinding.ActivityConnectedDevicesBinding
+import com.example.routerchefdemo.routerModels.RouterModel
 
 class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>() {
     override fun getViewBinding() = ActivityConnectedDevicesBinding.inflate(layoutInflater)
@@ -17,12 +18,13 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupToolbar(title = "Connected Devices")
-        (applicationContext as MyApp).webView.evaluateJavascript(router.getConnectedDevices(), null)
+        (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().connectedDevicesPath)
     }
 
     override fun onPageLoaded(id: String) {
-        if (id != Constants.CONNECTED_DEVICES)
-            return
+        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
+                RouterModel.getInstance().getConnectedDevices(), null
+        )
     }
 
     override fun render(id: String, data: String) {

@@ -1,9 +1,6 @@
 package com.example.routerchefdemo.routerModels
 
-import com.example.routerchefdemo.ConnectedDevice
-import com.example.routerchefdemo.Constants
-import com.example.routerchefdemo.DeviceInfo
-import com.example.routerchefdemo.WifiDetails
+import com.example.routerchefdemo.*
 
 class ZTERouterModel : RouterModel() {
 
@@ -376,6 +373,10 @@ class ZTERouterModel : RouterModel() {
     }
 
     override fun extractWifiDetails(data: String): WifiDetails {
+        TODO("Not yet implemented")
+    }
+
+    override fun extractDslDetails(data: String): DslDetails {
         TODO("Not yet implemented")
     }
 

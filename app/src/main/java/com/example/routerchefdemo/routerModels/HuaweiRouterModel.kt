@@ -1,9 +1,6 @@
 package com.example.routerchefdemo.routerModels
 
-import com.example.routerchefdemo.ConnectedDevice
-import com.example.routerchefdemo.Constants
-import com.example.routerchefdemo.DeviceInfo
-import com.example.routerchefdemo.WifiDetails
+import com.example.routerchefdemo.*
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import org.json.JSONObject
@@ -13,7 +10,7 @@ class HuaweiRouterModel : RouterModel() {
     override var routerModel: String = "Huawei DG8045"
     override var loginPath: String = "https://192.168.1.1/"
     override var systemInfoPath: String = "https://192.168.1.1/api/system/deviceinfo"
-    override var dslInfoPath: String = "https://192.168.1.1/api/system/HostInfot"
+    override var dslInfoPath: String = "https://192.168.1.1/api/ntwk/dslinfo"
     override var wlanSettingsPath: String = "https://192.168.1.1/html/advance.html#wlan"
     override var connectedDevicesPath: String = "https://192.168.1.1/api/system/HostInfo"
     override var rebootPath: String = "https://192.168.1.1/html/advance.html#device_mngt"
@@ -84,13 +81,14 @@ class HuaweiRouterModel : RouterModel() {
                 "    };" +
                 "    http.send();" +
                 "}" +
-                "getData();"    }
+                "getData();"
+    }
 
     override fun getDslInfo(): String {
-        return    "function getData (){" +
-                "    console.log('dataaaa' + '$dslInfoPath' );" +
+        return "function getData(){" +
+                "    console.log('dataaaa' + '${this.dslInfoPath}');" +
                 "    const http = new XMLHttpRequest();" +
-                "    http.open('GET', '$dslInfoPath');" +
+                "    http.open('GET', '${this.dslInfoPath}');" +
                 // "    const timeoutDuration = 5;" +
                 // "    http.timeout = timeoutDuration;" +
                 // "    http.ontimeout = function() {" +
@@ -100,6 +98,7 @@ class HuaweiRouterModel : RouterModel() {
                 "        if (this.readyState === 4) {" +
                 "            if (this.status === 200) {" +
                 "                const text = http.responseText;" +
+                "                console.log('DSL Info: ' + text);" +
                 "                Android.callbackHandle('${Constants.DSL_INFO}', text);" +
                 "            } else {" +
                 "                console.log('fail');" +
@@ -122,7 +121,39 @@ class HuaweiRouterModel : RouterModel() {
                 "    };" +
                 "    http.send();" +
                 "}" +
-                "getData();";
+                "getData();"
+    }
+    override fun extractDslDetails(jsonData: String): DslDetails {
+        val data = JSONObject(jsonData)
+        val status = data.optString("Status")
+        val modulation = data.optString("Modulation")
+        val upCurrRate = data.optInt("UpCurrRate")
+        val downCurrRate = data.optInt("DownCurrRate")
+        val downstreamMaxBitRate = data.optInt("DownstreamMaxBitRate")
+        val upstreamMaxBitRate = data.optInt("UpstreamMaxBitRate")
+        val impulsoNoiseProUs = data.optInt("ImpulsoNoiseProUs")
+        val impulsoNoiseProDs = data.optInt("ImpulsoNoiseProDs")
+        val downAttenuation = data.optInt("DownAttenuation")
+        val upAttenuation = data.optInt("UpAttenuation")
+        val upPower = data.optInt("UpPower")
+        val downPower = data.optInt("DownPower")
+        val dslUpTime = data.optInt("ShowtimeStart") //TODO
+
+        return DslDetails(
+            status,
+            modulation,
+            upCurrRate,
+            downCurrRate,
+            downstreamMaxBitRate,
+            upstreamMaxBitRate,
+            impulsoNoiseProUs,
+            impulsoNoiseProDs,
+            downAttenuation,
+            upAttenuation,
+            upPower,
+            downPower,
+            dslUpTime
+        )
     }
 
     override fun changeSSID(
@@ -144,7 +175,9 @@ class HuaweiRouterModel : RouterModel() {
         sb.append(isOpen)
         sb.append(";\nlet maxClients = \"")
         sb.append(maxClients)
-        sb.append("\";\n\nlet applied = false;\n\nlet exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({ result: \"timeout\" }));\n}, 10000);\n\nlet temp = setInterval(() => {\n    try {\n        if (document.getElementById('login_window')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"need_login\" }));\n        } else {\n            Android.callbackHandle(JSON.stringify({ result: \"applying_settings\" }));\n\n            if (!document.getElementById(\"wlan_wifi_mi_ssid2_4GHz1_ctrl\")) {\n                (new Array(...document.getElementsByClassName(\"pull-left third_menu_font paddingtop_5 marginleft_3\"))).filter(item => item.innerText.includes(\"WLAN\"))[0].click()\n            } else if (document.getElementById(\"wlan_enc_view_data_submitstatusview_failview\")) {\n                clearInterval(temp);\n                clearTimeout(exit);\n                Android.callbackHandle(JSON.stringify({ result: \"complex_wlan_password_needed\" }));\n            }\n            else if (applied) {\n                clearInterval(temp);\n                clearTimeout(exit);\n                Android.callbackHandle(JSON.stringify({ result: \"executed\" }));\n            }\n            else {\n                Atp.WlanSendSettingsController.content[0].WifiSsid = ssid;\n                Atp.WlanSendSettingsController.content[0].X_AssociateDeviceNum = maxClients\n                Atp.WlanSendSettingsController.content[0].WifiHideBroadcast = hidden;\n\n                if (!open) {\n                    Atp.WlanSendSettingsController.content[0].BeaconType = \"WPAand11i\"\n                    password && (Atp.WlanSendSettingsController.content[0].WpaPreSharedKey = password);\n                } else {\n                    Atp.WlanSendSettingsController.content[0].BeaconType = \"None\";\n                }\n                if (document.getElementById(\"AllSsidSettings_submitbutton\")) {\n                    document.getElementById(\"AllSsidSettings_submitbutton\").click();\n                    applied=true;    \n                }\n            }\n        }\n    } catch (err){ }\n}, 1000);")
+        sb.append(
+            "\";\n\nlet applied = false;\n\nlet exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({ result: \"timeout\" }));\n}, 10000);\n\nlet temp = setInterval(() => {\n    try {\n        if (document.getElementById('login_window')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"need_login\" }));\n        } else {\n            Android.callbackHandle(JSON.stringify({ result: \"applying_settings\" }));\n\n            if (!document.getElementById(\"wlan_wifi_mi_ssid2_4GHz1_ctrl\")) {\n                (new Array(...document.getElementsByClassName(\"pull-left third_menu_font paddingtop_5 marginleft_3\"))).filter(item => item.innerText.includes(\"WLAN\"))[0].click()\n            } else if (document.getElementById(\"wlan_enc_view_data_submitstatusview_failview\")) {\n                clearInterval(temp);\n                clearTimeout(exit);\n                Android.callbackHandle(JSON.stringify({ result: \"complex_wlan_password_needed\" }));\n            }\n            else if (applied) {\n                clearInterval(temp);\n                clearTimeout(exit);\n                Android.callbackHandle(JSON.stringify({ result: \"executed\" }));\n            }\n            else {\n                Atp.WlanSendSettingsController.content[0].WifiSsid = ssid;\n                Atp.WlanSendSettingsController.content[0].X_AssociateDeviceNum = maxClients\n                Atp.WlanSendSettingsController.content[0].WifiHideBroadcast = hidden;\n\n                if (!open) {\n                    Atp.WlanSendSettingsController.content[0].BeaconType = \"WPAand11i\"\n                    password && (Atp.WlanSendSettingsController.content[0].WpaPreSharedKey = password);\n                } else {\n                    Atp.WlanSendSettingsController.content[0].BeaconType = \"None\";\n                }\n                if (document.getElementById(\"AllSsidSettings_submitbutton\")) {\n                    document.getElementById(\"AllSsidSettings_submitbutton\").click();\n                    applied=true;    \n                }\n            }\n        }\n    } catch (err){ }\n}, 1000);"
+        )
         return sb.toString()
     }
 
@@ -208,6 +241,7 @@ class HuaweiRouterModel : RouterModel() {
 
         return connectedDevicesList
     }
+
     override fun parseDeviceInfo(jsonString: String): DeviceInfo {
         val jsonObject = JSONObject(jsonString)
         val deviceName = jsonObject.getString("DeviceName")
@@ -257,6 +291,7 @@ class HuaweiRouterModel : RouterModel() {
                 "}" +
                 "getData();"
     }
+
     override fun extractWifiDetails(jsonData: String): WifiDetails {
         val data = JSONObject(jsonData)
         val ssid = data.optString("SSID")

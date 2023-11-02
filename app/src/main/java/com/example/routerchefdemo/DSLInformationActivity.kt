@@ -40,7 +40,7 @@ class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
         if (id != DSL_INFO)
             return
         binding.progressCircular.visibility = View.GONE
-        var dslDetails = extractDslDetails(data)
+        var dslDetails:DslDetails = router.extractDslDetails(data)
         binding.tVDslSync.text = dslDetails.status
         binding.tVConnectionStatus.text = dslDetails.modulation
         binding.tVUpStreamLine.text = dslDetails.upCurrRate.toString()
@@ -56,38 +56,6 @@ class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
         binding.tVDslUpTime.text = formatMillisecondsToDuration(dslDetails.dslUpTime)
     }
 
-    fun extractDslDetails(jsonData: String): DslDetails {
-        val data = JSONObject(jsonData)
-        val status = data.optString("Status")
-        val modulation = data.optString("Modulation")
-        val upCurrRate = data.optInt("UpCurrRate")
-        val downCurrRate = data.optInt("DownCurrRate")
-        val downstreamMaxBitRate = data.optInt("DownstreamMaxBitRate")
-        val upstreamMaxBitRate = data.optInt("UpstreamMaxBitRate")
-        val impulsoNoiseProUs = data.optInt("ImpulsoNoiseProUs")
-        val impulsoNoiseProDs = data.optInt("ImpulsoNoiseProDs")
-        val downAttenuation = data.optInt("DownAttenuation")
-        val upAttenuation = data.optInt("UpAttenuation")
-        val upPower = data.optInt("UpPower")
-        val downPower = data.optInt("DownPower")
-        val dslUpTime = data.optInt("ShowtimeStart") //TODO
-
-        return DslDetails(
-            status,
-            modulation,
-            upCurrRate,
-            downCurrRate,
-            downstreamMaxBitRate,
-            upstreamMaxBitRate,
-            impulsoNoiseProUs,
-            impulsoNoiseProDs,
-            downAttenuation,
-            upAttenuation,
-            upPower,
-            downPower,
-            dslUpTime
-        )
-    }
 
     fun formatMillisecondsToDuration(milliseconds: Int?): String {
         var milliseconds = milliseconds?.times(1000)

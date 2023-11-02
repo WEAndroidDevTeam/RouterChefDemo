@@ -18,16 +18,15 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         val view: View = binding.root
         setContentView(view)
         setupToolbar(title = "System Info")
+        (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().systemInfoPath)
 
-        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
-                RouterModel.getInstance().getSystemInfo(), null
-        )
     }
 
 
     override fun onPageLoaded(id: String) {
-        if (id != SYSTEM_INFO)
-            return
+        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
+                RouterModel.getInstance().getSystemInfo(), null
+        )
     }
 
     override fun render(id: String, data: String) {

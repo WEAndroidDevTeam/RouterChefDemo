@@ -2,6 +2,7 @@ package com.example.routerchefdemo.routerModels
 
 import com.example.routerchefdemo.ConnectedDevice
 import com.example.routerchefdemo.DeviceInfo
+import com.example.routerchefdemo.DslDetails
 import com.example.routerchefdemo.WifiDetails
 
 sealed class RouterModel {
@@ -33,6 +34,7 @@ sealed class RouterModel {
     abstract fun parseDeviceInfo(data: String): DeviceInfo
     abstract fun getWlanInfo(): String
     abstract fun extractWifiDetails(data: String): WifiDetails
+    abstract fun extractDslDetails(data: String): DslDetails
 
 
     companion object {
