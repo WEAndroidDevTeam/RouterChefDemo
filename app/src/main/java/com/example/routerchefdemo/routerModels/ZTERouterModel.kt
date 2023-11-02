@@ -17,7 +17,8 @@ class ZTERouterModel : RouterModel() {
     override var rebootPath: String =
         "https://192.168.1.1/getpage.lua?pid=1002&nextpage=ManagDiag_DeviceManag_t.lp"
     override var wlanInfoPath: String = ""
-
+    override var wlanAccessPath: String = ""
+    override var lanInterfacePath: String = ""
     override fun login(username: String, password: String): String {
 //        return "function login(user, pass, callback) {" +
 //                "  try {" +
@@ -377,6 +378,10 @@ class ZTERouterModel : RouterModel() {
     }
 
     override fun extractDslDetails(data: String): DslDetails {
+        TODO("Not yet implemented")
+    }
+
+    override fun getWlanAccess(): String {
         TODO("Not yet implemented")
     }
 

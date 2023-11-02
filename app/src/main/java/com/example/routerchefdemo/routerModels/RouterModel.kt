@@ -14,6 +14,8 @@ sealed class RouterModel {
     abstract var connectedDevicesPath: String
     abstract var rebootPath: String
     abstract var wlanInfoPath: String
+    abstract var wlanAccessPath: String
+    abstract var lanInterfacePath: String
 
 
     abstract fun login(username: String, password: String): String
@@ -35,6 +37,7 @@ sealed class RouterModel {
     abstract fun getWlanInfo(): String
     abstract fun extractWifiDetails(data: String): WifiDetails
     abstract fun extractDslDetails(data: String): DslDetails
+    abstract fun getWlanAccess(): String
 
 
     companion object {

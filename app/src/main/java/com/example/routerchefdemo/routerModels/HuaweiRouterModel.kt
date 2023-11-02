@@ -15,6 +15,9 @@ class HuaweiRouterModel : RouterModel() {
     override var connectedDevicesPath: String = "https://192.168.1.1/api/system/HostInfo"
     override var rebootPath: String = "https://192.168.1.1/html/advance.html#device_mngt"
     override var wlanInfoPath: String = "https://192.168.1.1/api/system/diagnose_wlan_basic?type=1"
+    override var wlanAccessPath: String = "https://192.168.1.1/api/ntwk/wlanfilter?frequency=2.4GHz"
+    override var lanInterfacePath: String = ""
+
 
     override fun login(username: String, password: String): String {
         return "function login(user,pass, callback) {" +
@@ -154,6 +157,45 @@ class HuaweiRouterModel : RouterModel() {
             downPower,
             dslUpTime
         )
+    }
+
+    override fun getWlanAccess(): String {
+        return "function getData(){" +
+                "    console.log('dataaaa' + '${this.wlanAccessPath}');" +
+                "    const http = new XMLHttpRequest();" +
+                "    http.open('GET', '${this.wlanAccessPath}');" +
+                // "    const timeoutDuration = 5;" +
+                // "    http.timeout = timeoutDuration;" +
+                // "    http.ontimeout = function() {" +
+                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
+                // "    };" +
+                "    http.onreadystatechange = function() {" +
+                "        if (this.readyState === 4) {" +
+                "            if (this.status === 200) {" +
+                "                const text = http.responseText;" +
+                "                Android.callbackHandle('${Constants.WLAN_ACCESS}', text);" +
+                "            } else {" +
+                "                console.log('fail');" +
+                "                console.log('Request failed with status: ' + this.status);" +
+                "                try {" +
+                "                    const errorResponse = JSON.parse(http.responseText);" +
+                "                    if (errorResponse && errorResponse.message) {" +
+                "                        console.log('Error Message: ' + errorResponse.message);" +
+                "                        Android.callbackHandle('${Constants.WLAN_ACCESS}', errorResponse.message);" +
+                "                    } else {" +
+                "                        console.log('Error Message: Unknown');" +
+                "                    }" +
+                "                } catch (error) {" +
+                "                    console.log('Error parsing API response:', error);" +
+                "                    console.log('Error Message: Unknown');" +
+                "                    Android.callbackHandle('${Constants.WLAN_ACCESS}', 'relogin');" +
+                "                }" +
+                "            }" +
+                "        }" +
+                "    };" +
+                "    http.send();" +
+                "}" +
+                "getData();"
     }
 
     override fun changeSSID(

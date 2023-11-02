@@ -3,6 +3,7 @@ package com.example.routerchefdemo
 import android.os.Bundle
 import android.view.View
 import com.example.routerchefdemo.databinding.ActivityWlanAccessBinding
+import com.example.routerchefdemo.routerModels.RouterModel
 import org.json.JSONObject
 
 class WlanAccessActivity : BaseActivity<ActivityWlanAccessBinding>() {
@@ -15,18 +16,15 @@ class WlanAccessActivity : BaseActivity<ActivityWlanAccessBinding>() {
         setContentView(view)
         setupToolbar(title = "WLAN Access")
 
-        (applicationContext as MyApp).webView.evaluateJavascript(
-            callAPI(
-                "https://192.168.1.1/api/ntwk/wlanfilter?frequency=2.4GHz",
-                "Wlan access",
-                "{\"WpsEnable\":false,\"WifiWpsApPinCode\":\"\",\"WpsCanEnable\":true,\"WpsMode\":\"pbc\",\"ID\":\"InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.WPS.\",\"FrequencyBand\":\"2.4GHz\",\"wpswifiEnable\":true,\"WifiWpsPinCode\":\"\"}"
-            ), null
-        )
+        (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().wlanAccessPath)
     }
 
 
 
     override fun onPageLoaded(id: String) {
+        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
+                RouterModel.getInstance().getWlanAccess(), null
+        )
     }
 
     override fun render(id: String, data: String) {
