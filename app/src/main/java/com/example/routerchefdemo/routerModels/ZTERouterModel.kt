@@ -1,6 +1,9 @@
 package com.example.routerchefdemo.routerModels
 
+import com.example.routerchefdemo.ConnectedDevice
 import com.example.routerchefdemo.Constants
+import com.example.routerchefdemo.DeviceInfo
+import com.example.routerchefdemo.WifiDetails
 
 class ZTERouterModel : RouterModel() {
 
@@ -16,6 +19,7 @@ class ZTERouterModel : RouterModel() {
         "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_WlanBasicAd_t.lp"
     override var rebootPath: String =
         "https://192.168.1.1/getpage.lua?pid=1002&nextpage=ManagDiag_DeviceManag_t.lp"
+    override var wlanInfoPath: String = ""
 
     override fun login(username: String, password: String): String {
 //        return "function login(user, pass, callback) {" +
@@ -357,6 +361,22 @@ class ZTERouterModel : RouterModel() {
                 "        }" +
                 "    } catch (err){ }" +
                 "}, 500);"
+    }
+
+    override fun parseConnectedDevices(data: String): List<ConnectedDevice> {
+        TODO("Not yet implemented")
+    }
+
+    override fun parseDeviceInfo(data: String): DeviceInfo {
+        TODO("Not yet implemented")
+    }
+
+    override fun getWlanInfo(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun extractWifiDetails(data: String): WifiDetails {
+        TODO("Not yet implemented")
     }
 
 }

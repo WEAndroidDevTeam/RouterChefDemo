@@ -1,5 +1,9 @@
 package com.example.routerchefdemo.routerModels
 
+import com.example.routerchefdemo.ConnectedDevice
+import com.example.routerchefdemo.DeviceInfo
+import com.example.routerchefdemo.WifiDetails
+
 sealed class RouterModel {
     abstract var routerModel: String
     abstract var loginPath: String
@@ -8,6 +12,8 @@ sealed class RouterModel {
     abstract var wlanSettingsPath: String
     abstract var connectedDevicesPath: String
     abstract var rebootPath: String
+    abstract var wlanInfoPath: String
+
 
     abstract fun login(username: String, password: String): String
     abstract fun getSystemInfo(): String
@@ -23,6 +29,10 @@ sealed class RouterModel {
 
     abstract fun getConnectedDevices(): String
     abstract fun reboot(): String
+    abstract fun parseConnectedDevices(data: String): List<ConnectedDevice>
+    abstract fun parseDeviceInfo(data: String): DeviceInfo
+    abstract fun getWlanInfo(): String
+    abstract fun extractWifiDetails(data: String): WifiDetails
 
 
     companion object {

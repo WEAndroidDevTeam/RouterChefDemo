@@ -34,7 +34,7 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         if(id != SYSTEM_INFO)
             return
         binding.progressCircular.visibility = View.GONE
-        var deviceInfo: DeviceInfo = parseDeviceInfo(data)
+        var deviceInfo: DeviceInfo = router.parseDeviceInfo(data)
         binding.textView2.text = deviceInfo.deviceName
         binding.textView3.text = deviceInfo.serialNumber
         binding.tvHardVersion.text = deviceInfo.hardwareVersion
@@ -42,17 +42,6 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         binding.tVTime.text = formatMillisecondsToDuration(deviceInfo.uptime)
 
 
-    }
-
-    fun parseDeviceInfo(jsonString: String): DeviceInfo {
-        val jsonObject = JSONObject(jsonString)
-        val deviceName = jsonObject.getString("DeviceName")
-        val serialNumber = jsonObject.getString("SerialNumber")
-        val softwareVersion = jsonObject.getString("SoftwareVersion")
-        val hardwareVersion = jsonObject.getString("HardwareVersion")
-        val uptime = jsonObject.getLong("UpTime")
-
-        return DeviceInfo(deviceName, serialNumber, softwareVersion, hardwareVersion, uptime)
     }
 
     fun formatMillisecondsToDuration(milliseconds: Long): String {

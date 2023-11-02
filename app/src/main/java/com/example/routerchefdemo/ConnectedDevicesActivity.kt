@@ -30,7 +30,7 @@ class ConnectedDevicesActivity : BaseActivity<ActivityConnectedDevicesBinding>()
             return
         }
         binding.progressCircular.visibility = View.GONE
-//        deviceList = router.parseConnectedDevices(data) // Assign parsed list to deviceList
+        deviceList = router.parseConnectedDevices(data) // Assign parsed list to deviceList
         Log.d("ConnectedDevices", "List size: ${deviceList.size}")
         binding.rvConnectedDevices.layoutManager = LinearLayoutManager(this)
         binding.rvConnectedDevices.adapter = ConnectedDevicesAdapter()

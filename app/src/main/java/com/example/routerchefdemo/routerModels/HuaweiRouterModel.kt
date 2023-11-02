@@ -1,27 +1,128 @@
 package com.example.routerchefdemo.routerModels
 
+import com.example.routerchefdemo.ConnectedDevice
+import com.example.routerchefdemo.Constants
+import com.example.routerchefdemo.DeviceInfo
+import com.example.routerchefdemo.WifiDetails
+import com.google.gson.Gson
+import com.google.gson.JsonParser
+import org.json.JSONObject
+
 class HuaweiRouterModel : RouterModel() {
 
     override var routerModel: String = "Huawei DG8045"
     override var loginPath: String = "https://192.168.1.1/"
-    override var systemInfoPath: String = "https://192.168.1.1/html/advance.html#device_info"
-    override var dslInfoPath: String = "https://192.168.1.1/html/advance.html#internet"
+    override var systemInfoPath: String = "https://192.168.1.1/api/system/deviceinfo"
+    override var dslInfoPath: String = "https://192.168.1.1/api/system/HostInfot"
     override var wlanSettingsPath: String = "https://192.168.1.1/html/advance.html#wlan"
-    override var connectedDevicesPath: String = "https://192.168.1.1/html/advance.html#wlan"
+    override var connectedDevicesPath: String = "https://192.168.1.1/api/system/HostInfo"
     override var rebootPath: String = "https://192.168.1.1/html/advance.html#device_mngt"
+    override var wlanInfoPath: String = "https://192.168.1.1/api/system/diagnose_wlan_basic?type=1"
 
     override fun login(username: String, password: String): String {
-        return "let username = '$username' ;" +
-                "\nlet password = '$password' ;" +
-                "\n\nlet exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({result:\"timeout\"}));    \n}, 25000);\nlet temp = setInterval(() => {\n        if (document.getElementById('login_window')) {\n            let errMsg = document.getElementById('errorCategory').innerText;\n            if (errMsg.includes(\"minute\")) {\n                clearInterval(temp);\n                clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"retry_after\", time: 60 }));\n            }\n            else if(errMsg.includes(\"You are already logged in.\")){\n                clearInterval(temp);\n                clearTimeout(exit);\n                Android.callbackHandle(JSON.stringify({result:\"already_login\"}));\n            }\n             else {\n\n                if (document.getElementById(\"setfirstbutton\")) {\n                    Android.callbackHandle(JSON.stringify({result:\"enforce_login\"}));\n                    document.getElementById(\"setfirstbutton\").click();\n                } else {\n                    if (errMsg.includes(\"Incorrect\")) {\n                        Android.callbackHandle(JSON.stringify({result:\"invalid_login\"}));\n                    }\n                    if (document.getElementById('index_username')) {\n                        Android.callbackHandle(JSON.stringify({result:\"logging_in\"}));\n                        document.getElementById('index_username').value = username;\n                        document.getElementById('password').value = password;\n                        document.getElementById(\"loginbtn\").click();\n                    }\n                }\n            }\n        } else if (document.getElementById('wizard_wifi_title')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({result:\"login_success\"}));\n        }\n}, 1000);"
+        return "function login(user,pass, callback) {" +
+                "  try {" +
+                "    document.querySelector('#index_username').value = user;" +
+                "    document.querySelector('#password').value = pass;" +
+                "    document.querySelector('#loginbtn').click();" +
+                "" +
+                "    setTimeout(function () {" +
+                "      var error = document.querySelector('#errorCategory').textContent;" +
+                "      if (typeof callback === 'function') {" +
+                "        callback(error);" +
+                "      }" +
+                "    }, 5000);" +
+                "  } catch (err) {" +
+                "    if (typeof callback === 'function') {" +
+                "      callback(err.message);" +
+                "    }" +
+                "  }" +
+                "}" +
+                "" +
+                "login('$username', '$password', function(result) {" +
+                "console.log('userName: ' + $username);" +
+                "console.log('Pass: ' + $password);" +
+                "  if (result !== undefined) {" +
+                "Android.callbackHandle('logged in' , result);" +
+                "  }" +
+                "});"
     }
 
     override fun getSystemInfo(): String {
-        return "function secondsToHms(d) {\n    d = Number(d);\n    var h = Math.floor(d / 3600);\n    var m = Math.floor(d % 3600 / 60);\n\n    var hDisplay = h > 0 ? h + (h == 1 ? \" hour, \" : \" hours, \") : \"\";\n    var mDisplay = m > 0 ? m + (m == 1 ? \" minute\" : \" minutes\") : \"\";\n    return hDisplay + mDisplay;\n}\n\nlet exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({ result: \"timeout\" }));\n}, 10000);\n\nlet temp = setInterval(() => {\n    try {\n        if (document.getElementById('login_window')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"need_login\" }));\n        } else {\n            Android.callbackHandle(JSON.stringify({ result: \"showing_info\" }));\n            Atp.DslInfoController.load();\n            if (Atp.DslInfoController.content.Status) {\n                let dslInfo = Atp.DslInfoController.content;\n                let upload = (dslInfo.UpCurrRate / 1024).toFixed(1);\n                let download = (dslInfo.DownCurrRate / 1024).toFixed(1);\n                let maxUpload = (dslInfo.UpstreamMaxBitRate / 1024).toFixed(1);\n                let maxDownload = (dslInfo.DownstreamMaxBitRate / 1024).toFixed(1);\n\n                if (!dslInfo.Modulation) {\n                    Android.callbackHandle(JSON.stringify({ result: \"null_dsl_info\" }));\n                    clearInterval(temp);\n                    clearTimeout(exit);\n                } else {\n\n                    let info = {\n                        result: \"dsl_info\",\n                        modType: dslInfo.Modulation,\n                        upload: upload,\n                        download: download,\n                        lineRate: upload + \"/\" + download + \" Mbps\",\n                        maxUpload: maxUpload,\n                        maxDownload: maxDownload,\n                        maxRate: maxUpload + \"/\" + maxDownload +\" Mbps\",\n                        noise: dslInfo.UpMargin + \"/\" + dslInfo.DownMargin,\n                        chanType: dslInfo.DataPath,\n                        depth: dslInfo.UpDepth + \"/\" + dslInfo.DownDepth,\n                        delay: dslInfo.InterleaveDelayUs + \"/\" + dslInfo.InterleaveDelayDs +\" ms\",\n                        crc: null,\n                        fec: null,\n                        upTime: secondsToHms(dslInfo.ShowtimeStart)\n                    }\n\n                    clearInterval(temp);\n                    clearTimeout(exit);\n                    Android.callbackHandle(JSON.stringify(info));\n                }\n            }\n        }\n    } catch (err){ }\n}, 500);"
-    }
+        return "function getData(){" +
+                "    console.log('dataaaa' + '${this.systemInfoPath}');" +
+                "    const http = new XMLHttpRequest();" +
+                "    http.open('GET', '${this.systemInfoPath}');" +
+                // "    const timeoutDuration = 5;" +
+                // "    http.timeout = timeoutDuration;" +
+                // "    http.ontimeout = function() {" +
+                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
+                // "    };" +
+                "    http.onreadystatechange = function() {" +
+                "        if (this.readyState === 4) {" +
+                "            if (this.status === 200) {" +
+                "                const text = http.responseText;" +
+                "                Android.callbackHandle('${Constants.SYSTEM_INFO}', text);" +
+                "            } else {" +
+                "                console.log('fail');" +
+                "                console.log('Request failed with status: ' + this.status);" +
+                "                try {" +
+                "                    const errorResponse = JSON.parse(http.responseText);" +
+                "                    if (errorResponse && errorResponse.message) {" +
+                "                        console.log('Error Message: ' + errorResponse.message);" +
+                "                        Android.callbackHandle('${Constants.SYSTEM_INFO}', errorResponse.message);" +
+                "                    } else {" +
+                "                        console.log('Error Message: Unknown');" +
+                "                    }" +
+                "                } catch (error) {" +
+                "                    console.log('Error parsing API response:', error);" +
+                "                    console.log('Error Message: Unknown');" +
+                "                    Android.callbackHandle('${Constants.SYSTEM_INFO}', 'relogin');" +
+                "                }" +
+                "            }" +
+                "        }" +
+                "    };" +
+                "    http.send();" +
+                "}" +
+                "getData();"    }
 
     override fun getDslInfo(): String {
-        return "function secondsToHms(d) {\n    d = Number(d);\n    var h = Math.floor(d / 3600);\n    var m = Math.floor(d % 3600 / 60);\n\n    var hDisplay = h > 0 ? h + (h == 1 ? \" hour, \" : \" hours, \") : \"\";\n    var mDisplay = m > 0 ? m + (m == 1 ? \" minute\" : \" minutes\") : \"\";\n    return hDisplay + mDisplay;\n}\n\nlet exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({ result: \"timeout\" }));\n}, 10000);\n\nlet temp = setInterval(() => {\n    try {\n        if (document.getElementById('login_window')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"need_login\" }));\n        } else {\n            Android.callbackHandle(JSON.stringify({ result: \"showing_info\" }));\n            Atp.DslInfoController.load();\n            if (Atp.DslInfoController.content.Status) {\n                let dslInfo = Atp.DslInfoController.content;\n                let upload = (dslInfo.UpCurrRate / 1024).toFixed(1);\n                let download = (dslInfo.DownCurrRate / 1024).toFixed(1);\n                let maxUpload = (dslInfo.UpstreamMaxBitRate / 1024).toFixed(1);\n                let maxDownload = (dslInfo.DownstreamMaxBitRate / 1024).toFixed(1);\n\n                if (!dslInfo.Modulation) {\n                    Android.callbackHandle(JSON.stringify({ result: \"null_dsl_info\" }));\n                    clearInterval(temp);\n                    clearTimeout(exit);\n                } else {\n\n                    let info = {\n                        result: \"dsl_info\",\n                        modType: dslInfo.Modulation,\n                        upload: upload,\n                        download: download,\n                        lineRate: upload + \"/\" + download + \" Mbps\",\n                        maxUpload: maxUpload,\n                        maxDownload: maxDownload,\n                        maxRate: maxUpload + \"/\" + maxDownload +\" Mbps\",\n                        noise: dslInfo.UpMargin + \"/\" + dslInfo.DownMargin,\n                        chanType: dslInfo.DataPath,\n                        depth: dslInfo.UpDepth + \"/\" + dslInfo.DownDepth,\n                        delay: dslInfo.InterleaveDelayUs + \"/\" + dslInfo.InterleaveDelayDs +\" ms\",\n                        crc: null,\n                        fec: null,\n                        upTime: secondsToHms(dslInfo.ShowtimeStart)\n                    }\n\n                    clearInterval(temp);\n                    clearTimeout(exit);\n                    Android.callbackHandle(JSON.stringify(info));\n                }\n            }\n        }\n    } catch (err){ }\n}, 500);"
+        return    "function getData (){" +
+                "    console.log('dataaaa' + '$dslInfoPath' );" +
+                "    const http = new XMLHttpRequest();" +
+                "    http.open('GET', '$dslInfoPath');" +
+                // "    const timeoutDuration = 5;" +
+                // "    http.timeout = timeoutDuration;" +
+                // "    http.ontimeout = function() {" +
+                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
+                // "    };" +
+                "    http.onreadystatechange = function() {" +
+                "        if (this.readyState === 4) {" +
+                "            if (this.status === 200) {" +
+                "                const text = http.responseText;" +
+                "                Android.callbackHandle('${Constants.DSL_INFO}', text);" +
+                "            } else {" +
+                "                console.log('fail');" +
+                "                console.log('Request failed with status: ' + this.status);" +
+                "                try {" +
+                "                    const errorResponse = JSON.parse(http.responseText);" +
+                "                    if (errorResponse && errorResponse.message) {" +
+                "                        console.log('Error Message: ' + errorResponse.message);" +
+                "                        Android.callbackHandle('${Constants.DSL_INFO}', errorResponse.message);" +
+                "                    } else {" +
+                "                        console.log('Error Message: Unknown');" +
+                "                    }" +
+                "                } catch (error) {" +
+                "                    console.log('Error parsing API response:', error);" +
+                "                    console.log('Error Message: Unknown');" +
+                "                    Android.callbackHandle('${Constants.DSL_INFO}', 'relogin');" +
+                "                }" +
+                "            }" +
+                "        }" +
+                "    };" +
+                "    http.send();" +
+                "}" +
+                "getData();";
     }
 
     override fun changeSSID(
@@ -48,11 +149,124 @@ class HuaweiRouterModel : RouterModel() {
     }
 
     override fun getConnectedDevices(): String {
-        return "let exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({ result: \"timeout\" }));\n}, 10000);\n\nlet temp = setInterval(() => {\n    try {\n        if (document.getElementById('login_window')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"need_login\" }));\n        } else {\n            Android.callbackHandle(JSON.stringify({ result: \"showing_info\" }));\n            let content = Atp.AllHostsController.content;\n            if (content.length) {\n                let devices = content\n                    .filter((item) => item.Rssi && item.WlanActive)\n                    .map(device => {\n                        return {\n                            ip: device.IPAddress,\n                            mac: device.MACAddress,\n                            hostname: device.HostName\n                        }\n                    });\n                if (devices.length) {\n                    info = {\n                        result: \"connected_devices_info\",\n                        devices: devices\n                    }\n                    Android.callbackHandle(JSON.stringify(info));\n                } else {\n                    Android.callbackHandle(JSON.stringify({ result: \"no_devices_found\" }));\n                }\n                clearInterval(temp);\n                clearTimeout(exit);\n            }\n        }\n    } catch (err){ }\n}, 1000);"
+        return "function getData(){" +
+                "    console.log('dataaaa' + '${this.connectedDevicesPath}');" +
+                "    const http = new XMLHttpRequest();" +
+                "    http.open('GET', '${this.connectedDevicesPath}');" +
+                // "    const timeoutDuration = 5;" +
+                // "    http.timeout = timeoutDuration;" +
+                // "    http.ontimeout = function() {" +
+                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
+                // "    };" +
+                "    http.onreadystatechange = function() {" +
+                "        if (this.readyState === 4) {" +
+                "            if (this.status === 200) {" +
+                "                const text = http.responseText;" +
+                "                Android.callbackHandle('${Constants.CONNECTED_DEVICES}', text);" +
+                "            } else {" +
+                "                console.log('fail');" +
+                "                console.log('Request failed with status: ' + this.status);" +
+                "                try {" +
+                "                    const errorResponse = JSON.parse(http.responseText);" +
+                "                    if (errorResponse && errorResponse.message) {" +
+                "                        console.log('Error Message: ' + errorResponse.message);" +
+                "                        Android.callbackHandle('${Constants.CONNECTED_DEVICES}', errorResponse.message);" +
+                "                    } else {" +
+                "                        console.log('Error Message: Unknown');" +
+                "                    }" +
+                "                } catch (error) {" +
+                "                    console.log('Error parsing API response:', error);" +
+                "                    console.log('Error Message: Unknown');" +
+                "                    Android.callbackHandle('${Constants.CONNECTED_DEVICES}', 'relogin');" +
+                "                }" +
+                "            }" +
+                "        }" +
+                "    };" +
+                "    http.send();" +
+                "}" +
+                "getData();"
     }
 
     override fun reboot(): String {
         return "let exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({ result: \"timeout\" }));\n}, 10000);\n\nlet temp = setInterval(() => {\n    try {\n        if (document.getElementById('login_window')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"need_login\" }));\n        } else {\n            Android.callbackHandle(JSON.stringify({ result: \"applying_settings\" }));\n            Atp.RebootController.click_proc();\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"executed\" }));\n        }\n    } catch (err){ }\n}, 500);"
+    }
+
+    override fun parseConnectedDevices(jsonData: String): List<ConnectedDevice> {
+        val connectedDevicesList = mutableListOf<ConnectedDevice>()
+
+        val jsonArray = Gson().fromJson(jsonData, Array<Any>::class.java)
+        jsonArray.forEach { jsonObject ->
+            val jsonString = Gson().toJson(jsonObject)
+            val hostName =
+                JsonParser.parseString(jsonString).getAsJsonObject().get("HostName").toString()
+            val iconType =
+                JsonParser.parseString(jsonString).getAsJsonObject().get("IconType").toString()
+
+            val connectedDevice = ConnectedDevice(hostName, iconType)
+            connectedDevicesList.add(connectedDevice)
+        }
+
+        return connectedDevicesList
+    }
+    override fun parseDeviceInfo(jsonString: String): DeviceInfo {
+        val jsonObject = JSONObject(jsonString)
+        val deviceName = jsonObject.getString("DeviceName")
+        val serialNumber = jsonObject.getString("SerialNumber")
+        val softwareVersion = jsonObject.getString("SoftwareVersion")
+        val hardwareVersion = jsonObject.getString("HardwareVersion")
+        val uptime = jsonObject.getLong("UpTime")
+
+        return DeviceInfo(deviceName, serialNumber, softwareVersion, hardwareVersion, uptime)
+    }
+
+    override fun getWlanInfo(): String {
+        return "function getData(){" +
+                "    console.log('dataaaa' + '${this.wlanInfoPath}');" +
+                "    const http = new XMLHttpRequest();" +
+                "    http.open('GET', '${this.wlanInfoPath}');" +
+                // "    const timeoutDuration = 5;" +
+                // "    http.timeout = timeoutDuration;" +
+                // "    http.ontimeout = function() {" +
+                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
+                // "    };" +
+                "    http.onreadystatechange = function() {" +
+                "        if (this.readyState === 4) {" +
+                "            if (this.status === 200) {" +
+                "                const text = http.responseText;" +
+                "                Android.callbackHandle('${Constants.WLAN_INFO}', text);" +
+                "            } else {" +
+                "                console.log('fail');" +
+                "                console.log('Request failed with status: ' + this.status);" +
+                "                try {" +
+                "                    const errorResponse = JSON.parse(http.responseText);" +
+                "                    if (errorResponse && errorResponse.message) {" +
+                "                        console.log('Error Message: ' + errorResponse.message);" +
+                "                        Android.callbackHandle('${Constants.WLAN_INFO}', errorResponse.message);" +
+                "                    } else {" +
+                "                        console.log('Error Message: Unknown');" +
+                "                    }" +
+                "                } catch (error) {" +
+                "                    console.log('Error parsing API response:', error);" +
+                "                    console.log('Error Message: Unknown');" +
+                "                    Android.callbackHandle('${Constants.WLAN_INFO}', 'relogin');" +
+                "                }" +
+                "            }" +
+                "        }" +
+                "    };" +
+                "    http.send();" +
+                "}" +
+                "getData();"
+    }
+    override fun extractWifiDetails(jsonData: String): WifiDetails {
+        val data = JSONObject(jsonData)
+        val ssid = data.optString("SSID")
+        val enable = data.optInt("Enable")
+        val bssid = data.optString("BSSID")
+        val autoChannelEnable = data.optBoolean("AutoChannelEnable")
+        val transmitPower = data.optInt("TransmitPower")
+        val region = data.optString("RegulatoryDomain")
+
+        return WifiDetails(ssid, enable, bssid, autoChannelEnable, transmitPower, region)
     }
 
 }
