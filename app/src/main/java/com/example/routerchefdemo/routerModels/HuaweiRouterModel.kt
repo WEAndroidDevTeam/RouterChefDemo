@@ -49,82 +49,11 @@ class HuaweiRouterModel : RouterModel() {
     }
 
     override fun getSystemInfo(): String {
-        return "function getData(){" +
-                "    console.log('dataaaa' + '${this.systemInfoPath}');" +
-                "    const http = new XMLHttpRequest();" +
-                "    http.open('GET', '${this.systemInfoPath}');" +
-                // "    const timeoutDuration = 5;" +
-                // "    http.timeout = timeoutDuration;" +
-                // "    http.ontimeout = function() {" +
-                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
-                // "    };" +
-                "    http.onreadystatechange = function() {" +
-                "        if (this.readyState === 4) {" +
-                "            if (this.status === 200) {" +
-                "                const text = http.responseText;" +
-                "                Android.callbackHandle('${Constants.SYSTEM_INFO}', text);" +
-                "            } else {" +
-                "                console.log('fail');" +
-                "                console.log('Request failed with status: ' + this.status);" +
-                "                try {" +
-                "                    const errorResponse = JSON.parse(http.responseText);" +
-                "                    if (errorResponse && errorResponse.message) {" +
-                "                        console.log('Error Message: ' + errorResponse.message);" +
-                "                        Android.callbackHandle('${Constants.SYSTEM_INFO}', errorResponse.message);" +
-                "                    } else {" +
-                "                        console.log('Error Message: Unknown');" +
-                "                    }" +
-                "                } catch (error) {" +
-                "                    console.log('Error parsing API response:', error);" +
-                "                    console.log('Error Message: Unknown');" +
-                "                    Android.callbackHandle('${Constants.SYSTEM_INFO}', 'relogin');" +
-                "                }" +
-                "            }" +
-                "        }" +
-                "    };" +
-                "    http.send();" +
-                "}" +
-                "getData();"
+        return callAPI(this.systemInfoPath , Constants.SYSTEM_INFO)
     }
 
     override fun getDslInfo(): String {
-        return "function getData(){" +
-                "    console.log('dataaaa' + '${this.dslInfoPath}');" +
-                "    const http = new XMLHttpRequest();" +
-                "    http.open('GET', '${this.dslInfoPath}');" +
-                // "    const timeoutDuration = 5;" +
-                // "    http.timeout = timeoutDuration;" +
-                // "    http.ontimeout = function() {" +
-                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
-                // "    };" +
-                "    http.onreadystatechange = function() {" +
-                "        if (this.readyState === 4) {" +
-                "            if (this.status === 200) {" +
-                "                const text = http.responseText;" +
-                "                console.log('DSL Info: ' + text);" +
-                "                Android.callbackHandle('${Constants.DSL_INFO}', text);" +
-                "            } else {" +
-                "                console.log('fail');" +
-                "                console.log('Request failed with status: ' + this.status);" +
-                "                try {" +
-                "                    const errorResponse = JSON.parse(http.responseText);" +
-                "                    if (errorResponse && errorResponse.message) {" +
-                "                        console.log('Error Message: ' + errorResponse.message);" +
-                "                        Android.callbackHandle('${Constants.DSL_INFO}', errorResponse.message);" +
-                "                    } else {" +
-                "                        console.log('Error Message: Unknown');" +
-                "                    }" +
-                "                } catch (error) {" +
-                "                    console.log('Error parsing API response:', error);" +
-                "                    console.log('Error Message: Unknown');" +
-                "                    Android.callbackHandle('${Constants.DSL_INFO}', 'relogin');" +
-                "                }" +
-                "            }" +
-                "        }" +
-                "    };" +
-                "    http.send();" +
-                "}" +
-                "getData();"
+        return callAPI(this.dslInfoPath , Constants.DSL_INFO)
     }
     override fun extractDslDetails(jsonData: String): DslDetails {
         val data = JSONObject(jsonData)
@@ -160,42 +89,7 @@ class HuaweiRouterModel : RouterModel() {
     }
 
     override fun getWlanAccess(): String {
-        return "function getData(){" +
-                "    console.log('dataaaa' + '${this.wlanAccessPath}');" +
-                "    const http = new XMLHttpRequest();" +
-                "    http.open('GET', '${this.wlanAccessPath}');" +
-                // "    const timeoutDuration = 5;" +
-                // "    http.timeout = timeoutDuration;" +
-                // "    http.ontimeout = function() {" +
-                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
-                // "    };" +
-                "    http.onreadystatechange = function() {" +
-                "        if (this.readyState === 4) {" +
-                "            if (this.status === 200) {" +
-                "                const text = http.responseText;" +
-                "                Android.callbackHandle('${Constants.WLAN_ACCESS}', text);" +
-                "            } else {" +
-                "                console.log('fail');" +
-                "                console.log('Request failed with status: ' + this.status);" +
-                "                try {" +
-                "                    const errorResponse = JSON.parse(http.responseText);" +
-                "                    if (errorResponse && errorResponse.message) {" +
-                "                        console.log('Error Message: ' + errorResponse.message);" +
-                "                        Android.callbackHandle('${Constants.WLAN_ACCESS}', errorResponse.message);" +
-                "                    } else {" +
-                "                        console.log('Error Message: Unknown');" +
-                "                    }" +
-                "                } catch (error) {" +
-                "                    console.log('Error parsing API response:', error);" +
-                "                    console.log('Error Message: Unknown');" +
-                "                    Android.callbackHandle('${Constants.WLAN_ACCESS}', 'relogin');" +
-                "                }" +
-                "            }" +
-                "        }" +
-                "    };" +
-                "    http.send();" +
-                "}" +
-                "getData();"
+        return callAPI(this.wlanAccessPath , Constants.WLAN_ACCESS)
     }
 
     override fun changeSSID(
@@ -224,42 +118,7 @@ class HuaweiRouterModel : RouterModel() {
     }
 
     override fun getConnectedDevices(): String {
-        return "function getData(){" +
-                "    console.log('dataaaa' + '${this.connectedDevicesPath}');" +
-                "    const http = new XMLHttpRequest();" +
-                "    http.open('GET', '${this.connectedDevicesPath}');" +
-                // "    const timeoutDuration = 5;" +
-                // "    http.timeout = timeoutDuration;" +
-                // "    http.ontimeout = function() {" +
-                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
-                // "    };" +
-                "    http.onreadystatechange = function() {" +
-                "        if (this.readyState === 4) {" +
-                "            if (this.status === 200) {" +
-                "                const text = http.responseText;" +
-                "                Android.callbackHandle('${Constants.CONNECTED_DEVICES}', text);" +
-                "            } else {" +
-                "                console.log('fail');" +
-                "                console.log('Request failed with status: ' + this.status);" +
-                "                try {" +
-                "                    const errorResponse = JSON.parse(http.responseText);" +
-                "                    if (errorResponse && errorResponse.message) {" +
-                "                        console.log('Error Message: ' + errorResponse.message);" +
-                "                        Android.callbackHandle('${Constants.CONNECTED_DEVICES}', errorResponse.message);" +
-                "                    } else {" +
-                "                        console.log('Error Message: Unknown');" +
-                "                    }" +
-                "                } catch (error) {" +
-                "                    console.log('Error parsing API response:', error);" +
-                "                    console.log('Error Message: Unknown');" +
-                "                    Android.callbackHandle('${Constants.CONNECTED_DEVICES}', 'relogin');" +
-                "                }" +
-                "            }" +
-                "        }" +
-                "    };" +
-                "    http.send();" +
-                "}" +
-                "getData();"
+        return callAPI(this.connectedDevicesPath , Constants.CONNECTED_DEVICES)
     }
 
     override fun reboot(): String {
@@ -296,42 +155,7 @@ class HuaweiRouterModel : RouterModel() {
     }
 
     override fun getWlanInfo(): String {
-        return "function getData(){" +
-                "    console.log('dataaaa' + '${this.wlanInfoPath}');" +
-                "    const http = new XMLHttpRequest();" +
-                "    http.open('GET', '${this.wlanInfoPath}');" +
-                // "    const timeoutDuration = 5;" +
-                // "    http.timeout = timeoutDuration;" +
-                // "    http.ontimeout = function() {" +
-                // "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
-                // "    };" +
-                "    http.onreadystatechange = function() {" +
-                "        if (this.readyState === 4) {" +
-                "            if (this.status === 200) {" +
-                "                const text = http.responseText;" +
-                "                Android.callbackHandle('${Constants.WLAN_INFO}', text);" +
-                "            } else {" +
-                "                console.log('fail');" +
-                "                console.log('Request failed with status: ' + this.status);" +
-                "                try {" +
-                "                    const errorResponse = JSON.parse(http.responseText);" +
-                "                    if (errorResponse && errorResponse.message) {" +
-                "                        console.log('Error Message: ' + errorResponse.message);" +
-                "                        Android.callbackHandle('${Constants.WLAN_INFO}', errorResponse.message);" +
-                "                    } else {" +
-                "                        console.log('Error Message: Unknown');" +
-                "                    }" +
-                "                } catch (error) {" +
-                "                    console.log('Error parsing API response:', error);" +
-                "                    console.log('Error Message: Unknown');" +
-                "                    Android.callbackHandle('${Constants.WLAN_INFO}', 'relogin');" +
-                "                }" +
-                "            }" +
-                "        }" +
-                "    };" +
-                "    http.send();" +
-                "}" +
-                "getData();"
+        return callAPI(this.wlanInfoPath , Constants.WLAN_INFO)
     }
 
     override fun extractWifiDetails(jsonData: String): WifiDetails {
@@ -344,6 +168,48 @@ class HuaweiRouterModel : RouterModel() {
         val region = data.optString("RegulatoryDomain")
 
         return WifiDetails(ssid, enable, bssid, autoChannelEnable, transmitPower, region)
+    }
+    fun callAPI(url: String, id: String, dummy: String? = null): String {
+
+        return (
+                "function getData (){" +
+                "console.log('dataaaa' + '$url' );" +
+                "const http = new XMLHttpRequest();" +
+                "http.open('GET', '$url');" +
+//                "    const timeoutDuration = 5;" +
+//                "http.timeout = timeoutDuration;" +
+//                "    http.ontimeout = function() {" +
+//                "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
+//                "    };" +
+                "http.onreadystatechange = function() {" +
+                "if (this.readyState === 4) {" +
+                "            if (this.status === 200) {" +
+                "                const text = http.responseText;" +
+                "                Android.callbackHandle('$id', text);" +
+                "            } else {" +
+                "                console.log('fail');" +
+                "                console.log('Request failed with status: ' + this.status);" +
+                "                try {" +
+                "                    const errorResponse = JSON.parse(http.responseText);" +
+                "                    if (errorResponse && errorResponse.message) {" +
+                "                        console.log('Error Message: ' + errorResponse.message);" +
+                "                Android.callbackHandle('$id', errorResponse.message);" +
+                "                    } else {" +
+                "                        console.log('Error Message: Unknown');" +
+                "                    }" +
+                "                } catch (error) {" +
+                "                    console.log('Error parsing API response:', error);" +
+                "                    console.log('Error Message: Unknown');" +
+                "                Android.callbackHandle('$id', 'relogin');" +
+                "                }" +
+                "            }" +
+                "        }" +
+                "    };" +
+                "http.send();" +
+                "}" +
+                "getData();")
+
+
     }
 
 }
