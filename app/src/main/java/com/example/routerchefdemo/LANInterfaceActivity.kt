@@ -24,14 +24,18 @@ class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
         setContentView(view)
         setupToolbar(title = "LAN Interface")
 
-        (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().lanInterfacePath)
         if (RouterModel.getInstance().lanInterfacePath == "")
             onPageLoaded("Huawei Router")
+        else
+            (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().lanInterfacePath)
 
     }
 
 
     override fun onPageLoaded(id: String) {
+        (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
+                RouterModel.getInstance().getLanInterface(), null
+        )
     }
 
     override fun render(id: String, data: String) {

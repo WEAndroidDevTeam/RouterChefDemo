@@ -13,7 +13,7 @@ class ZTERouterModel : RouterModel() {
     override var wlanSettingsPath: String =
         "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_WlanBasicAd_t.lp"
     override var connectedDevicesPath: String =
-        "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_WlanBasicAd_t.lp"
+        "https://192.168.1.1/"
     override var rebootPath: String =
         "https://192.168.1.1/getpage.lua?pid=1002&nextpage=ManagDiag_DeviceManag_t.lp"
     override var wlanInfoPath: String = ""
@@ -162,6 +162,10 @@ class ZTERouterModel : RouterModel() {
                 "}" +
                 "" +
                 "getSystemInfo();"
+    }
+
+    override fun getLanInterface(): String {
+        TODO("Not yet implemented")
     }
 
     override fun getDslInfo(): String {
@@ -330,7 +334,7 @@ class ZTERouterModel : RouterModel() {
     }
 
     override fun getConnectedDevices(): String {
-        TODO("Not yet implemented")
+        return callAPI("https://192.168.1.1/getpage.lua?pid=1005&nextpage=home_wlanDevice_lua.lua&InstNum=5", Constants.CONNECTED_DEVICES)
     }
 
     override fun reboot(): String {

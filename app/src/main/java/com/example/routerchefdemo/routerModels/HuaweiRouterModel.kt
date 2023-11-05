@@ -121,6 +121,10 @@ class HuaweiRouterModel : RouterModel() {
         return callAPI(this.connectedDevicesPath , Constants.CONNECTED_DEVICES)
     }
 
+    override fun getLanInterface(): String {
+        return callAPI(this.lanInterfacePath , Constants.LAN_INTERFACE_STATUS)
+    }
+
     override fun reboot(): String {
         return "let exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({ result: \"timeout\" }));\n}, 10000);\n\nlet temp = setInterval(() => {\n    try {\n        if (document.getElementById('login_window')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"need_login\" }));\n        } else {\n            Android.callbackHandle(JSON.stringify({ result: \"applying_settings\" }));\n            Atp.RebootController.click_proc();\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"executed\" }));\n        }\n    } catch (err){ }\n}, 500);"
     }
@@ -169,47 +173,4 @@ class HuaweiRouterModel : RouterModel() {
 
         return WifiDetails(ssid, enable, bssid, autoChannelEnable, transmitPower, region)
     }
-    fun callAPI(url: String, id: String, dummy: String? = null): String {
-
-        return (
-                "function getData (){" +
-                "console.log('dataaaa' + '$url' );" +
-                "const http = new XMLHttpRequest();" +
-                "http.open('GET', '$url');" +
-//                "    const timeoutDuration = 5;" +
-//                "http.timeout = timeoutDuration;" +
-//                "    http.ontimeout = function() {" +
-//                "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
-//                "    };" +
-                "http.onreadystatechange = function() {" +
-                "if (this.readyState === 4) {" +
-                "            if (this.status === 200) {" +
-                "                const text = http.responseText;" +
-                "                Android.callbackHandle('$id', text);" +
-                "            } else {" +
-                "                console.log('fail');" +
-                "                console.log('Request failed with status: ' + this.status);" +
-                "                try {" +
-                "                    const errorResponse = JSON.parse(http.responseText);" +
-                "                    if (errorResponse && errorResponse.message) {" +
-                "                        console.log('Error Message: ' + errorResponse.message);" +
-                "                Android.callbackHandle('$id', errorResponse.message);" +
-                "                    } else {" +
-                "                        console.log('Error Message: Unknown');" +
-                "                    }" +
-                "                } catch (error) {" +
-                "                    console.log('Error parsing API response:', error);" +
-                "                    console.log('Error Message: Unknown');" +
-                "                Android.callbackHandle('$id', 'relogin');" +
-                "                }" +
-                "            }" +
-                "        }" +
-                "    };" +
-                "http.send();" +
-                "}" +
-                "getData();")
-
-
-    }
-
 }

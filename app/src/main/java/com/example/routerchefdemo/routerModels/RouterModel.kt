@@ -21,6 +21,7 @@ sealed class RouterModel {
     abstract fun login(username: String, password: String): String
     abstract fun getSystemInfo(): String
     abstract fun getDslInfo(): String
+    abstract fun getLanInterface(): String
     abstract fun changeSSID(
         ssidName: String?,
         password: String?,
@@ -56,4 +57,49 @@ sealed class RouterModel {
             return instance as RouterModel
         }
     }
+
+
+    fun callAPI(url: String, id: String, dummy: String? = null): String {
+
+        return (
+                "function getData (){" +
+                        "console.log('dataaaa' + '$url' );" +
+                        "const http = new XMLHttpRequest();" +
+                        "http.open('GET', '$url');" +
+//                "    const timeoutDuration = 5;" +
+//                "http.timeout = timeoutDuration;" +
+//                "    http.ontimeout = function() {" +
+//                "        console.log('Request timed out after ' + timeoutDuration + ' milliseconds');" +
+//                "    };" +
+                        "http.onreadystatechange = function() {" +
+                        "if (this.readyState === 4) {" +
+                        "            if (this.status === 200) {" +
+                        "                const text = http.responseText;" +
+                        "                Android.callbackHandle('$id', text);" +
+                        "            } else {" +
+                        "                console.log('fail');" +
+                        "                console.log('Request failed with status: ' + this.status);" +
+                        "                try {" +
+                        "                    const errorResponse = JSON.parse(http.responseText);" +
+                        "                    if (errorResponse && errorResponse.message) {" +
+                        "                        console.log('Error Message: ' + errorResponse.message);" +
+                        "                Android.callbackHandle('$id', errorResponse.message);" +
+                        "                    } else {" +
+                        "                        console.log('Error Message: Unknown');" +
+                        "                    }" +
+                        "                } catch (error) {" +
+                        "                    console.log('Error parsing API response:', error);" +
+                        "                    console.log('Error Message: Unknown');" +
+                        "                Android.callbackHandle('$id', 'relogin');" +
+                        "                }" +
+                        "            }" +
+                        "        }" +
+                        "    };" +
+                        "http.send();" +
+                        "}" +
+                        "getData();")
+
+
+    }
+
 }
