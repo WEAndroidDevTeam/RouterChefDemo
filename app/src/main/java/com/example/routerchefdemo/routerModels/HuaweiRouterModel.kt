@@ -122,7 +122,52 @@ class HuaweiRouterModel : RouterModel() {
     }
 
     override fun getLanInterface(): String {
-        return callAPI(this.lanInterfacePath , Constants.LAN_INTERFACE_STATUS)
+        val urls = listOf(
+            "url1",
+            "url2",
+            "url3",
+            "url4"
+        )
+
+        val scriptBuilder = StringBuilder()
+
+        scriptBuilder.append("function getData(url, id) {\n" +
+                "            console.log('dataaaa' + url);\n" +
+                "            const http = new XMLHttpRequest();\n" +
+                "            http.open('GET', url);\n" +
+                "            http.onreadystatechange = function() {\n" +
+                "                if (this.readyState === 4) {\n" +
+                "                    if (this.status === 200) {\n" +
+                "                        const text = http.responseText;\n" +
+                "                        Android.callbackHandle(id, text);\n" +
+                "                    } else {\n" +
+                "                        console.log('fail');\n" +
+                "                        console.log('Request failed with status: ' + this.status);\n" +
+                "                        try {\n" +
+                "                            const errorResponse = JSON.parse(http.responseText);\n" +
+                "                            if (errorResponse && errorResponse.message) {\n" +
+                "                                console.log('Error Message: ' + errorResponse.message);\n" +
+                "                                Android.callbackHandle(id, errorResponse.message);\n" +
+                "                            } else {\n" +
+                "                                console.log('Error Message: Unknown');\n" +
+                "                            }\n" +
+                "                        } catch (error) {\n" +
+                "                            console.log('Error parsing API response:', error);\n" +
+                "                            console.log('Error Message: Unknown');\n" +
+                "                            Android.callbackHandle(id, 'relogin');\n" +
+                "                        }\n" +
+                "                    }\n" +
+                "                }\n" +
+                "            };\n" +
+                "            http.send();\n" +
+                "        }")
+
+        urls.forEachIndexed { index, url ->
+            val id = "lanInterface_$index"
+            scriptBuilder.append("getData('$url', '$id');\n")
+        }
+
+        return scriptBuilder.toString()
     }
 
     override fun reboot(): String {
