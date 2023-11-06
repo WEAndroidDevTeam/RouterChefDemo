@@ -1,6 +1,9 @@
 package com.example.routerchefdemo.routerModels
 
+import android.util.Xml
 import com.example.routerchefdemo.*
+import org.xmlpull.v1.XmlPullParser
+import java.io.StringReader
 
 class ZTERouterModel : RouterModel() {
 
@@ -339,6 +342,10 @@ class ZTERouterModel : RouterModel() {
         return callAPI("https://192.168.1.1/getpage.lua?pid=1005&nextpage=home_wlanDevice_lua.lua&InstNum=5", Constants.CONNECTED_DEVICES)
     }
 
+    override fun extractMacAndIp(data: String): Pair<String, String> {
+        TODO("Not yet implemented")
+    }
+
     override fun reboot(): String {
         return "let id = '${Constants.REBOOT}' ;" +
                 "let exit = setTimeout(() => {" +
@@ -367,8 +374,44 @@ class ZTERouterModel : RouterModel() {
                 "}, 500);"
     }
 
-    override fun parseConnectedDevices(data: String): List<ConnectedDevice> {
-        TODO("Not yet implemented")
+    override fun parseConnectedDevices(xmlString: String): List<ConnectedDevice> {
+        val connectedDevices = mutableListOf<ConnectedDevice>()
+
+        val parser: XmlPullParser = Xml.newPullParser()
+        parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
+        parser.setInput(StringReader(xmlString))
+
+        var eventType = parser.eventType
+        var currentHostName: String? = null
+
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            when (eventType) {
+                XmlPullParser.START_TAG -> {
+                    if (parser.name == "ParaName" && parser.nextText() == "HostName") {
+                        while (parser.next() != XmlPullParser.END_TAG) {
+                            if (parser.eventType != XmlPullParser.START_TAG) {
+                                continue
+                            }
+
+                            if (parser.name == "ParaValue") {
+                                currentHostName = parser.nextText()
+                                break
+                            }
+                        }
+                    }
+                }
+                XmlPullParser.END_TAG -> {
+                    if (parser.name == "Instance" && currentHostName != null) {
+                        connectedDevices.add(ConnectedDevice(currentHostName ,"" ))
+                        currentHostName = null
+                    }
+                }
+            }
+
+            eventType = parser.next()
+        }
+
+        return connectedDevices
     }
 
     override fun parseDeviceInfo(data: String): DeviceInfo {

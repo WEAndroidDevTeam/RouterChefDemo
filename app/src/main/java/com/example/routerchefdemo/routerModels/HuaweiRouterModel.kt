@@ -16,7 +16,7 @@ class HuaweiRouterModel : RouterModel() {
     override var rebootPath: String = "https://192.168.1.1/html/advance.html#device_mngt"
     override var wlanInfoPath: String = "https://192.168.1.1/api/system/diagnose_wlan_basic?type=1"
     override var wlanAccessPath: String = "https://192.168.1.1/api/ntwk/wlanfilter?frequency=2.4GHz"
-    override var lanInterfacePath: String = ""
+    override var lanInterfacePath: String = "https://192.168.1.1/api/ntwk/lan_host"
     override var changePasswordPath: String = "https://192.168.1.1/html/wizard/wifi.html"
 
 
@@ -56,6 +56,11 @@ class HuaweiRouterModel : RouterModel() {
     override fun getDslInfo(): String {
         return callAPI(this.dslInfoPath , Constants.DSL_INFO)
     }
+
+    override fun getLanInterface(): String {
+      return callAPI(this.lanInterfacePath , Constants.LAN_INTERFACE_STATUS)
+    }
+
     override fun extractDslDetails(jsonData: String): DslDetails {
         val data = JSONObject(jsonData)
         val status = data.optString("Status")
@@ -139,54 +144,65 @@ class HuaweiRouterModel : RouterModel() {
         return callAPI(this.connectedDevicesPath , Constants.CONNECTED_DEVICES)
     }
 
-    override fun getLanInterface(): String {
-        val urls = listOf(
-            "url1",
-            "url2",
-            "url3",
-            "url4"
-        )
-
-        val scriptBuilder = StringBuilder()
-
-        scriptBuilder.append("function getData(url, id) {\n" +
-                "            console.log('dataaaa' + url);\n" +
-                "            const http = new XMLHttpRequest();\n" +
-                "            http.open('GET', url);\n" +
-                "            http.onreadystatechange = function() {\n" +
-                "                if (this.readyState === 4) {\n" +
-                "                    if (this.status === 200) {\n" +
-                "                        const text = http.responseText;\n" +
-                "                        Android.callbackHandle(id, text);\n" +
-                "                    } else {\n" +
-                "                        console.log('fail');\n" +
-                "                        console.log('Request failed with status: ' + this.status);\n" +
-                "                        try {\n" +
-                "                            const errorResponse = JSON.parse(http.responseText);\n" +
-                "                            if (errorResponse && errorResponse.message) {\n" +
-                "                                console.log('Error Message: ' + errorResponse.message);\n" +
-                "                                Android.callbackHandle(id, errorResponse.message);\n" +
-                "                            } else {\n" +
-                "                                console.log('Error Message: Unknown');\n" +
-                "                            }\n" +
-                "                        } catch (error) {\n" +
-                "                            console.log('Error parsing API response:', error);\n" +
-                "                            console.log('Error Message: Unknown');\n" +
-                "                            Android.callbackHandle(id, 'relogin');\n" +
-                "                        }\n" +
-                "                    }\n" +
-                "                }\n" +
-                "            };\n" +
-                "            http.send();\n" +
-                "        }")
-
-        urls.forEachIndexed { index, url ->
-            val id = "lanInterface_$index"
-            scriptBuilder.append("getData('$url', '$id');\n")
-        }
-
-        return scriptBuilder.toString()
+    override fun extractMacAndIp(data: String): Pair<String, String> {
+        val jsonObject = JSONObject(data)
+        val macAddress = jsonObject.getString("MACAddress")
+        val ipAddress = jsonObject.getString("FristIP")
+        return Pair(macAddress, ipAddress)
     }
+
+//    override fun getLanInterface(): String {
+//        val urls = listOf(
+//            "url1",
+//            "url2",
+//            "url3",
+//            "url4",
+//            "url5",
+//            "url6"
+//
+//        )
+//
+//        val scriptBuilder = StringBuilder()
+//
+//        scriptBuilder.append("function getData(url, id) {\n" +
+//                "            console.log('dataaaa' + url);\n" +
+//                "            const http = new XMLHttpRequest();\n" +
+//                "            http.open('GET', url);\n" +
+//                "            http.onreadystatechange = function() {\n" +
+//                "                if (this.readyState === 4) {\n" +
+//                "                    if (this.status === 200) {\n" +
+//                "                        const text = http.responseText;\n" +
+//                "                        Android.callbackHandle(id, text);\n" +
+//                "                    } else {\n" +
+//                "                        console.log('fail');\n" +
+//                "                        console.log('Request failed with status: ' + this.status);\n" +
+//                "                        try {\n" +
+//                "                            const errorResponse = JSON.parse(http.responseText);\n" +
+//                "                            if (errorResponse && errorResponse.message) {\n" +
+//                "                                console.log('Error Message: ' + errorResponse.message);\n" +
+//                "                                Android.callbackHandle(id, errorResponse.message);\n" +
+//                "                            } else {\n" +
+//                "                                console.log('Error Message: Unknown');\n" +
+//                "                            }\n" +
+//                "                        } catch (error) {\n" +
+//                "                            console.log('Error parsing API response:', error);\n" +
+//                "                            console.log('Error Message: Unknown');\n" +
+//                "                            Android.callbackHandle(id, 'relogin');\n" +
+//                "                        }\n" +
+//                "                    }\n" +
+//                "                }\n" +
+//                "            };\n" +
+//                "            http.send();\n" +
+//                "        }")
+//
+//        urls.forEachIndexed { index, url ->
+//            val id = "lanInterface_$index"
+//            scriptBuilder.append("getData('$url', '$id');\n")
+//        }
+//
+//        return scriptBuilder.toString()
+//    }
+
 
     override fun reboot(): String {
         return "let exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({ result: \"timeout\" }));\n}, 10000);\n\nlet temp = setInterval(() => {\n    try {\n        if (document.getElementById('login_window')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"need_login\" }));\n        } else {\n            Android.callbackHandle(JSON.stringify({ result: \"applying_settings\" }));\n            Atp.RebootController.click_proc();\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"executed\" }));\n        }\n    } catch (err){ }\n}, 500);"

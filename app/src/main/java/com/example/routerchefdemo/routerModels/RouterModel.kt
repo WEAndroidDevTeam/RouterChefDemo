@@ -33,6 +33,7 @@ sealed class RouterModel {
     ): String
 
     abstract fun getConnectedDevices(): String
+    abstract fun extractMacAndIp(data: String):Pair<String, String>
     abstract fun reboot(): String
     abstract fun parseConnectedDevices(data: String): List<ConnectedDevice>
     abstract fun parseDeviceInfo(data: String): DeviceInfo
