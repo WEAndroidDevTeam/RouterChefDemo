@@ -2,8 +2,12 @@ package com.example.routerchefdemo.routerModels
 
 import android.util.Xml
 import com.example.routerchefdemo.*
+import org.w3c.dom.Element
+import org.w3c.dom.NodeList
+import org.xml.sax.InputSource
 import org.xmlpull.v1.XmlPullParser
 import java.io.StringReader
+import javax.xml.parsers.DocumentBuilderFactory
 
 class ZTERouterModel : RouterModel() {
 
@@ -349,9 +353,36 @@ class ZTERouterModel : RouterModel() {
     }
 
     override fun extractMacAndIp(data: String): Pair<String, String> {
-        TODO("Not yet implemented")
-    }
+        val docBuilderFactory = DocumentBuilderFactory.newInstance()
+        val docBuilder = docBuilderFactory.newDocumentBuilder()
+        val inputSource = InputSource(StringReader(data))
+        val doc = docBuilder.parse(inputSource)
 
+        val lanInstances: NodeList = (doc.getElementsByTagName("OBJ_ETH_ID").item(0) as Element).getElementsByTagName("Instance")
+        var macAddress = ""
+        var ipAddress = ""
+
+        for (i in 0 until lanInstances.length) {
+            val instance = lanInstances.item(i) as Element
+            val lanId = instance.getElementsByTagName("ParaValue").item(1).textContent // LAN ID
+
+            if (lanId == "LAN4") {
+                macAddress = instance.getElementsByTagName("ParaValue").item(5).textContent // MAC Address
+                val wanLanInstances = (doc.getElementsByTagName("OBJ_WANLAN_ID").item(0) as Element).getElementsByTagName("Instance")
+                for (j in 0 until wanLanInstances.length) {
+                    val wanLanInstance = wanLanInstances.item(j) as Element
+                    val wanLanId = wanLanInstance.getElementsByTagName("ParaValue").item(0).textContent // WANLAN ID
+                    if (wanLanId == "IGD.LD1.ETH4") {
+                        ipAddress = wanLanInstance.getElementsByTagName("ParaValue").item(1).textContent // IP Address
+                        break
+                    }
+                }
+                break
+            }
+        }
+
+        return Pair(macAddress, ipAddress)
+    }
     override fun reboot(): String {
         return "let id = '${Constants.REBOOT}' ;" +
                 "let exit = setTimeout(() => {" +
