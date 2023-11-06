@@ -16,6 +16,7 @@ sealed class RouterModel {
     abstract var wlanInfoPath: String
     abstract var wlanAccessPath: String
     abstract var lanInterfacePath: String
+    abstract var changePasswordPath: String
 
 
     abstract fun login(username: String, password: String): String
@@ -39,13 +40,17 @@ sealed class RouterModel {
     abstract fun extractWifiDetails(data: String): WifiDetails
     abstract fun extractDslDetails(data: String): DslDetails
     abstract fun getWlanAccess(): String
-
+    abstract fun changePassword(
+        ssidName: String?,
+        password: String?
+    ): String
 
     companion object {
         private var instance: RouterModel? = null
 
         fun getInstance(): RouterModel {
-            return instance ?: throw IllegalStateException("Router instance has not been initialized.")
+            return instance
+                ?: throw IllegalStateException("Router instance has not been initialized.")
         }
 
         fun createRouterModel(routerModelName: String): RouterModel {

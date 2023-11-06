@@ -19,6 +19,8 @@ class ZTERouterModel : RouterModel() {
     override var wlanInfoPath: String = ""
     override var wlanAccessPath: String = ""
     override var lanInterfacePath: String = ""
+    override var changePasswordPath: String = ""
+
     override fun login(username: String, password: String): String {
 //        return "function login(user, pass, callback) {" +
 //                "  try {" +
@@ -387,6 +389,23 @@ class ZTERouterModel : RouterModel() {
 
     override fun getWlanAccess(): String {
         TODO("Not yet implemented")
+    }
+
+    override fun changePassword(ssidName: String?, password: String?): String {
+        return  "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').addEventListener('click', function(e){" +
+                "document.querySelector('#home_wifi_access24id_ctrl').addEventListener('change', function(){" +
+                "document.querySelector('#home_wifi_access24id_ctrl').value = '${ssidName}';" +
+                "console.log('ssidName: ' + $ssidName);" +
+                "});" +
+                "document.querySelector('#hidesharekeyMenu_Password_ctrl').addEventListener('change', function(){" +
+                "document.querySelector('#hidesharekeyMenu_Password_ctrl').value = '${password}';" +
+                "console.log('password: ' + $password);" +
+                "});" +
+                "document.querySelector('#home_wifi_access24id_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
+                "document.querySelector('#hidesharekeyMenu_Password_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
+                "});" +
+                "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').click();" +
+                "Android.callbackHandle('change password' , 'wait until success');"
     }
 
 }

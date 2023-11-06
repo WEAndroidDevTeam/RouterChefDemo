@@ -17,6 +17,7 @@ class HuaweiRouterModel : RouterModel() {
     override var wlanInfoPath: String = "https://192.168.1.1/api/system/diagnose_wlan_basic?type=1"
     override var wlanAccessPath: String = "https://192.168.1.1/api/ntwk/wlanfilter?frequency=2.4GHz"
     override var lanInterfacePath: String = ""
+    override var changePasswordPath: String = "https://192.168.1.1/html/wizard/wifi.html"
 
 
     override fun login(username: String, password: String): String {
@@ -90,6 +91,23 @@ class HuaweiRouterModel : RouterModel() {
 
     override fun getWlanAccess(): String {
         return callAPI(this.wlanAccessPath , Constants.WLAN_ACCESS)
+    }
+
+    override fun changePassword(ssidName: String?, password: String?): String {
+        return  "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').addEventListener('click', function(e){" +
+                "document.querySelector('#home_wifi_access24id_ctrl').addEventListener('change', function(){" +
+                "document.querySelector('#home_wifi_access24id_ctrl').value = '${ssidName}';" +
+                "console.log('ssidName: ' + $ssidName);" +
+                "});" +
+                "document.querySelector('#hidesharekeyMenu_Password_ctrl').addEventListener('change', function(){" +
+                "document.querySelector('#hidesharekeyMenu_Password_ctrl').value = '${password}';" +
+                "console.log('password: ' + $password);" +
+                "});" +
+                "document.querySelector('#home_wifi_access24id_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
+                "document.querySelector('#hidesharekeyMenu_Password_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
+                "});" +
+                "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').click();" +
+                "Android.callbackHandle('change password' , 'wait until success');"
     }
 
     override fun changeSSID(
