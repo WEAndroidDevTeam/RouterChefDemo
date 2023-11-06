@@ -21,7 +21,7 @@ class ZTERouterModel : RouterModel() {
         "https://192.168.1.1/getpage.lua?pid=1002&nextpage=ManagDiag_DeviceManag_t.lp"
     override var wlanInfoPath: String = ""
     override var wlanAccessPath: String = ""
-    override var lanInterfacePath: String = ""
+    override var lanInterfacePath: String = "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_LocalnetStatusAd_t.lp"
     override var changePasswordPath: String = "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_WlanBasicAd_t.lp"
 
     override fun login(username: String, password: String): String {
@@ -170,7 +170,10 @@ class ZTERouterModel : RouterModel() {
     }
 
     override fun getLanInterface(): String {
-        TODO("Not yet implemented")
+        return callAPI(
+            "https://192.168.1.1/getpage.lua?pid=1005&nextpage=lanStatus_lua.lua&InstNum=5",
+            Constants.LAN_INTERFACE_STATUS
+        )
     }
 
     override fun getDslInfo(): String {
@@ -487,6 +490,10 @@ class ZTERouterModel : RouterModel() {
                     "" +
                     "                document.getElementById('ESSID:0').value = ssid;" +
                     "" +
+                    "                document.getElementById('EncryptionType:0').value = 'WPA/WPA2-PSK-TKIP/AES';" +
+                    "                if (password) {" +
+                    "                    document.getElementById('KeyPassphrase:0').value = password;" +
+                    "                }" +
                     "                if (document.getElementById('Btn_apply_WLANSSIDConf:0')) {" +
                     "                    document.getElementById('Btn_apply_WLANSSIDConf:0').click();" +
                     "                    applied = true;" +
