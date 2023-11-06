@@ -21,6 +21,7 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
         (applicationContext as MyApp).webView.loadUrl(RouterModel.getInstance().changePasswordPath)
 
         binding.bApply.setOnClickListener {
+            binding.progressCircular.visibility = View.VISIBLE
             (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
                     RouterModel.getInstance().changePassword(binding.etSsid.text.toString() , binding.etPassword.text.toString()), null
             )

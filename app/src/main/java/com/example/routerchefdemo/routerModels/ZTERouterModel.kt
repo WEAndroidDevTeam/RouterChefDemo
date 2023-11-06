@@ -19,7 +19,7 @@ class ZTERouterModel : RouterModel() {
     override var wlanInfoPath: String = ""
     override var wlanAccessPath: String = ""
     override var lanInterfacePath: String = ""
-    override var changePasswordPath: String = ""
+    override var changePasswordPath: String = "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_WlanBasicAd_t.lp"
 
     override fun login(username: String, password: String): String {
 //        return "function login(user, pass, callback) {" +
@@ -114,7 +114,7 @@ class ZTERouterModel : RouterModel() {
                 "        if (document.getElementsByClassName('emFont loginTitle')[0]) {" +
 //                "            clearInterval(temp);" +
                 "            clearTimeout(exit);" +
-                "            Android.callbackHandle(id, 'need_login');" +
+                "            Android.callbackHandle(id, 'relogin');" +
                 "" +
                 "        } else {" +
                 "            Android.callbackHandle(id, 'showing_info');" +
@@ -183,7 +183,7 @@ class ZTERouterModel : RouterModel() {
                 "        if (document.getElementsByClassName('emFont loginTitle')[0]) {" +
                 "            clearInterval(temp);" +
                 "            clearTimeout(exit);" +
-                "            Android.callbackHandle(id, 'need_login');" +
+                "            Android.callbackHandle(id, 'relogin');" +
                 "" +
                 "        } else {" +
                 "            let lineRate = document.getElementById('crate:0').innerText;" +
@@ -281,7 +281,7 @@ class ZTERouterModel : RouterModel() {
                     "        if (document.getElementsByClassName('emFont loginTitle')[0]) {" +
                     "            clearInterval(temp);" +
                     "            clearTimeout(exit);" +
-                    "            Android.callbackHandle(id, 'need_login');" +
+                    "            Android.callbackHandle(id, 'relogin');" +
                     "        }" +
                     "        else if (document.getElementById('WLANSSIDConf_container').style.display == 'none') {" +
                     "            document.getElementById('WLANSSIDConfBar').click();" +
@@ -336,7 +336,10 @@ class ZTERouterModel : RouterModel() {
     }
 
     override fun getConnectedDevices(): String {
-        return callAPI("https://192.168.1.1/getpage.lua?pid=1005&nextpage=home_wlanDevice_lua.lua&InstNum=5", Constants.CONNECTED_DEVICES)
+        return callAPI(
+            "https://192.168.1.1/getpage.lua?pid=1005&nextpage=home_wlanDevice_lua.lua&InstNum=5",
+            Constants.CONNECTED_DEVICES
+        )
     }
 
     override fun reboot(): String {
@@ -352,7 +355,7 @@ class ZTERouterModel : RouterModel() {
                 "        if (document.getElementsByClassName('emFont loginTitle')[0]) {" +
                 "            clearInterval(temp);" +
                 "            clearTimeout(exit);" +
-                "            Android.callbackHandle(id, 'need_login');" +
+                "            Android.callbackHandle(id, 'relogin');" +
                 "        }" +
                 "        else if (document.getElementById('confirmOK').style.display == 'block') {" +
                 "            document.getElementById('confirmOK').click();" +
@@ -392,20 +395,67 @@ class ZTERouterModel : RouterModel() {
     }
 
     override fun changePassword(ssidName: String?, password: String?): String {
-        return  "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').addEventListener('click', function(e){" +
-                "document.querySelector('#home_wifi_access24id_ctrl').addEventListener('change', function(){" +
-                "document.querySelector('#home_wifi_access24id_ctrl').value = '${ssidName}';" +
-                "console.log('ssidName: ' + $ssidName);" +
-                "});" +
-                "document.querySelector('#hidesharekeyMenu_Password_ctrl').addEventListener('change', function(){" +
-                "document.querySelector('#hidesharekeyMenu_Password_ctrl').value = '${password}';" +
-                "console.log('password: ' + $password);" +
-                "});" +
-                "document.querySelector('#home_wifi_access24id_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
-                "document.querySelector('#hidesharekeyMenu_Password_ctrl').dispatchEvent(new Event('change', {'bubbles': true}));" +
-                "});" +
-                "document.querySelector('button#wifi_wizard_save.atp_button.fontweight_thick').click();" +
-                "Android.callbackHandle('change password' , 'wait until success');"
+        val sb = StringBuilder()
+        sb.append("function changeSSID(){")
+        sb.append("let ssid = '")
+        sb.append(ssidName)
+        sb.append(
+            "';" +
+                    "let password = '"
+        )
+        sb.append(password)
+        sb.append(
+            "';" +
+                    "" +
+                    "let id = '${Constants.CHANGE_PASSWORD}' ;" +
+                    "let applied = false;" +
+                    "let exit = setTimeout(() => {" +
+                    "    clearInterval(temp);" +
+                    "    clearTimeout(exit);" +
+                    "    Android.callbackHandle(id, 'timeout');" +
+                    "}, 15000);" +
+                    "" +
+                    "let temp = setInterval(() => {" +
+                    "    try {" +
+                    "        if (document.getElementsByClassName('emFont loginTitle')[0]) {" +
+                    "            clearInterval(temp);" +
+                    "            clearTimeout(exit);" +
+                    "            Android.callbackHandle(id, 'relogin');" +
+                    "        }" +
+                    "        else if (document.getElementById('WLANSSIDConf_container').style.display == 'none') {" +
+                    "            document.getElementById('WLANSSIDConfBar').click();" +
+                    "        } else {" +
+                    "            if (document.getElementById('confirmLayer').style.display != 'none') {" +
+                    "                document.getElementById('confirmOK').click();" +
+                    "                clearInterval(temp);" +
+                    "                clearTimeout(exit);" +
+                    "                setTimeout(() => {" +
+                    "                    Android.callbackHandle(id, 'executed');" +
+                    "                }, 1000);" +
+                    "" +
+                    "            }else if(applied){" +
+                    "                clearInterval(temp);" +
+                    "                clearTimeout(exit);" +
+                    "                setTimeout(() => {" +
+                    "                    Android.callbackHandle(id, 'executed');" +
+                    "                }, 1000);" +
+                    "            }" +
+                    "            else if (!document.getElementById('KeyPassphrase:0').value.includes('/t') && document.getElementById('KeyPassphrase:0').value != '\t\t\t\t\t\t') {" +
+                    "" +
+                    "                document.getElementById('ESSID:0').value = ssid;" +
+                    "" +
+                    "                if (document.getElementById('Btn_apply_WLANSSIDConf:0')) {" +
+                    "                    document.getElementById('Btn_apply_WLANSSIDConf:0').click();" +
+                    "                    applied = true;" +
+                    "                }" +
+                    "            } else {" +
+                    "                document.getElementById('Switch_KeyPassType:0').click();" +
+                    "            }" +
+                    "        }" +
+                    "    } catch (err){ }" +
+                    "}, 2000);"
+        )
+        sb.append("} changeSSID();")
+        return sb.toString()
     }
-
 }
