@@ -2,9 +2,12 @@ package com.example.routerchefdemo.routerModels
 
 import android.util.Xml
 import com.example.routerchefdemo.*
+import com.google.gson.JsonObject
+import org.json.JSONObject
 import org.w3c.dom.Element
 import org.w3c.dom.NodeList
 import org.xml.sax.InputSource
+import org.xml.sax.Parser
 import org.xmlpull.v1.XmlPullParser
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
@@ -497,10 +500,60 @@ class ZTERouterModel : RouterModel() {
         TODO("Not yet implemented")
     }
 
-    override fun extractDslDetails(data: String): DslDetails {
-        TODO("Not yet implemented")
+    override fun extractDslDetails(json: String): DslDetails {
+        val jsonWithoutUnits = json.replace(" Mbps", "").replace(" dB", "").replace(" h", "h").replace(" min", "min").replace(" s", "s")
+
+        val parts = jsonWithoutUnits.split(",\"")
+
+        val status = getValueByKey(parts, "chanType")
+        val modulation = getValueByKey(parts, "modType")
+        val upCurrRate = getValueByKey(parts, "upload")?.toFloatOrNull()?.toInt()
+        val downCurrRate = getValueByKey(parts, "download")?.toFloatOrNull()?.toInt()
+        val (downstreamMaxBitRate, upstreamMaxBitRate) = extractRates(getValueByKey(parts, "lineRate"))
+        val (impulsoNoiseProUs, impulsoNoiseProDs) = extractNoise(getValueByKey(parts, "noise"))
+        val (downAttenuation, upAttenuation) = extractDepth(getValueByKey(parts, "depth"))
+        val (upPower, downPower) = extractDelay(getValueByKey(parts, "delay"))
+        val dslUpTime = extractUpTime(getValueByKey(parts, "upTime"))
+
+        return DslDetails(
+            status, modulation, upCurrRate, downCurrRate, downstreamMaxBitRate, upstreamMaxBitRate,
+            impulsoNoiseProUs, impulsoNoiseProDs, downAttenuation, upAttenuation, upPower, downPower, dslUpTime
+        )
     }
 
+    fun getValueByKey(parts: List<String>, key: String): String? {
+        val found = parts.find { it.startsWith("$key\":\"") }
+        return found?.substringAfter("$key\":\"")?.removeSuffix("\"")
+    }
+
+    fun extractRates(rateString: String?): Pair<Int?, Int?> {
+        val rates = rateString?.split("/")?.map { it.toFloatOrNull()?.toInt() }
+        return Pair(rates?.getOrNull(0), rates?.getOrNull(1))
+    }
+
+    fun extractNoise(noiseString: String?): Pair<Int?, Int?> {
+        val noise = noiseString?.split("/")?.map { it.toIntOrNull() }
+        return Pair(noise?.getOrNull(0), noise?.getOrNull(1))
+    }
+
+    fun extractDepth(depthString: String?): Pair<Int?, Int?> {
+        val depth = depthString?.split("/")?.map { it.toIntOrNull() }
+        return Pair(depth?.getOrNull(0), depth?.getOrNull(1))
+    }
+
+    fun extractDelay(delayString: String?): Pair<Int?, Int?> {
+        val powers = delayString?.substringBefore(" ms")?.split("/") ?: listOf()
+        val upPower = powers.getOrNull(0)?.trim()?.toIntOrNull()
+        val downPower = powers.getOrNull(1)?.trim()?.toIntOrNull()
+        return Pair(upPower, downPower)
+    }
+    fun extractUpTime(upTimeString: String?): Int? {
+        val timeParts = upTimeString?.split(" ") ?: listOf("0", "0", "0")
+        val hours = timeParts[0].removeSuffix("h").toIntOrNull() ?: 0
+        val minutes = timeParts.getOrNull(1)?.removeSuffix("min")?.toIntOrNull() ?: 0
+        val seconds = timeParts.getOrNull(2)?.removeSuffix("s")?.toIntOrNull() ?: 0
+        return (hours * 3600 + minutes * 60 + seconds)*1000
+    }
     override fun getWlanAccess(): String {
         TODO("Not yet implemented")
     }
