@@ -451,8 +451,42 @@ class ZTERouterModel : RouterModel() {
         return connectedDevices
     }
 
-    override fun parseDeviceInfo(data: String): DeviceInfo {
-        TODO("Not yet implemented")
+    override fun parseDeviceInfo(xmlData: String): DeviceInfo {
+        val docBuilderFactory = DocumentBuilderFactory.newInstance()
+        val docBuilder = docBuilderFactory.newDocumentBuilder()
+        val inputSource = InputSource(StringReader(xmlData))
+        val doc = docBuilder.parse(inputSource)
+
+        val instanceNode = doc.getElementsByTagName("Instance").item(0) as? Element
+
+        // Check if the instanceNode is null or not
+        if (instanceNode == null) {
+            println("Instance node not found")
+            return DeviceInfo("", "", "", "", 0)
+        }
+
+        val paraValues = instanceNode.getElementsByTagName("ParaValue")
+
+        val deviceName = paraValues.item(3)?.textContent ?: ""
+        val serialNumber = paraValues.item(5)?.textContent ?: ""
+        val softwareVersion = paraValues.item(2)?.textContent ?: ""
+        val hardwareVersion = paraValues.item(4)?.textContent ?: ""
+
+        // As the VerDate is in the format 'yyyyMMddHHmmss', parse it accordingly
+        val verDate = paraValues.item(1)?.textContent?.toLongOrNull() ?: 0
+        val currentTime = System.currentTimeMillis()
+        val uptime = currentTime - verDate
+
+        val deviceInfo = DeviceInfo(deviceName, serialNumber, softwareVersion, hardwareVersion, uptime)
+
+        println("Device Information:")
+        println("Device Name: ${deviceInfo.deviceName}")
+        println("Serial Number: ${deviceInfo.serialNumber}")
+        println("Software Version: ${deviceInfo.softwareVersion}")
+        println("Hardware Version: ${deviceInfo.hardwareVersion}")
+        println("Uptime (seconds): ${deviceInfo.uptime}")
+
+        return deviceInfo
     }
 
     override fun getWlanInfo(): String {

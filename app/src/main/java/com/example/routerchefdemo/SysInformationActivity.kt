@@ -38,7 +38,7 @@ class SysInformationActivity : BaseActivity<ActivitySysInformationBinding>() {
         binding.textView3.text = deviceInfo.serialNumber
         binding.tvHardVersion.text = deviceInfo.hardwareVersion
         binding.tVSoftVersion.text = deviceInfo.softwareVersion
-        binding.tVTime.text = formatMillisecondsToDuration(deviceInfo.uptime)
+//        binding.tVTime.text = formatMillisecondsToDuration(deviceInfo.uptime)
 
 
     }

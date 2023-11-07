@@ -80,6 +80,7 @@
             android:layout_marginTop="@dimen/_24sdp"
             android:fontFamily="@font/montserrat_medium"
             android:text="System Up time:"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/softWareVersion" />
 
@@ -121,6 +122,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_medium"
+            android:visibility="gone"
             android:paddingEnd="@dimen/_16sdp"
             app:layout_constraintBottom_toBottomOf="@+id/tV_systemTime"
             app:layout_constraintEnd_toEndOf="parent"
