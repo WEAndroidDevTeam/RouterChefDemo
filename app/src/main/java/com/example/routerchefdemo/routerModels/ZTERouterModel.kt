@@ -110,70 +110,10 @@ class ZTERouterModel : RouterModel() {
     }
 
     override fun getSystemInfo(): String {
-        return "function getSystemInfo(){" +
-                "" +
-                "let id = '${Constants.SYSTEM_INFO}' ;" +
-                "" +
-                "let exit = setTimeout(() => {" +
-//                "    clearInterval(temp);" +
-                "    clearTimeout(exit);" +
-                "    Android.callbackHandle(id, 'timeout');" +
-                "}, 100000);" +
-                "let temp = setInterval(() => {" +
-                "    try {" +
-                "        if (document.getElementsByClassName('emFont loginTitle')[0]) {" +
-//                "            clearInterval(temp);" +
-                "            clearTimeout(exit);" +
-                "            Android.callbackHandle(id, 'relogin');" +
-                "" +
-                "        } else {" +
-                "            Android.callbackHandle(id, 'showing_info');" +
-                "            let lineRate = document.getElementById('crate:0').innerText;" +
-                "            let upload = (Number(lineRate.split('/')[0]) / 1024).toFixed(1);" +
-                "            let download = (Number(lineRate.split('/')[1].split('k')[0]) / 1024).toFixed(1);" +
-                "            let lineRateMb = upload + '/' + download + ' Mbps';" +
-                "" +
-                "            let maxRate = document.getElementById('cmaxrate:0').innerText;" +
-                "            let maxUpload = (Number(maxRate.split('/')[0]) / 1024).toFixed(1);" +
-                "            let maxDownload = (Number(maxRate.split('/')[1].split('k')[0]) / 1024).toFixed(1);" +
-                "            let maxRateMb = maxUpload + '/' + maxDownload + ' Mbps';" +
-                "" +
-                "" +
-                "            if (document.getElementById('cModule_type:0').innerText == 'N/A') {" +
-                "                Android.callbackHandle(id, 'null_dsl_info');" +
-//                "                clearInterval(temp);" +
-                "                clearTimeout(exit);" +
-                "            } else {" +
-                "" +
-                "                let info = {" +
-                "                    result: 'dsl_info'," +
-                "                    modType: document.getElementById('cModule_type:0').innerText," +
-                "                    upload: upload," +
-                "                    download: download," +
-                "                    lineRate: lineRateMb," +
-                "                    maxUpload: maxUpload," +
-                "                    maxDownload: maxDownload," +
-                "                    maxRate: maxRateMb," +
-                "                    noise: document.getElementById('cmargin:0').innerText," +
-                "                    chanType: document.getElementById('cdatapath:0').innerText," +
-                "                    depth: document.getElementById('cdepth:0').innerText," +
-                "                    delay: document.getElementById('cdelay:0').innerText," +
-                "                    crc: document.getElementById('ccrc:0').innerText," +
-                "                    fec: document.getElementById('cfec:0').innerText," +
-                "                    upTime: document.getElementById('cststart:0').innerText" +
-                "                }" +
-                "" +
-//                "                clearInterval(temp);" +
-                "                clearTimeout(exit);" +
-                "                Android.callbackHandle(id, 'info');" +
-                "            }" +
-                "        }" +
-                "    } catch (err){ }" +
-                "}, 500);" +
-                "" +
-                "}" +
-                "" +
-                "getSystemInfo();"
+        return callAPI(
+            "https://192.168.1.1/common_page/ManagReg_lua.lua",
+            Constants.SYSTEM_INFO
+        )
     }
 
     override fun getLanInterface(): String {
@@ -210,11 +150,11 @@ class ZTERouterModel : RouterModel() {
                 "            let maxRateMb = maxUpload + '/' + maxDownload + ' Mbps';" +
                 "" +
                 "" +
-                "            if (document.getElementById('cModule_type:0').innerText == 'N/A') {" +
-                "                Android.callbackHandle(id, 'null_dsl_info');" +
-                "                clearInterval(temp);" +
-                "                clearTimeout(exit);" +
-                "            } else {" +
+//                "            if (document.getElementById('cModule_type:0').innerText == 'N/A') {" +
+//                "                Android.callbackHandle(id, 'null_dsl_info');" +
+//                "                clearInterval(temp);" +
+//                "                clearTimeout(exit);" +
+//                "            } else {" +
                 "" +
                 "                let info = {" +
                 "                    result: 'dsl_info'," +
@@ -237,7 +177,7 @@ class ZTERouterModel : RouterModel() {
                 "                clearInterval(temp);" +
                 "                clearTimeout(exit);" +
                 "                Android.callbackHandle(id, JSON.stringify(info));" +
-                "            }" +
+//                "            }" +
                 "        }" +
                 "    } catch (err){ }" +
                 "}, 5000);" +
