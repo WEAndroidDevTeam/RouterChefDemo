@@ -4,6 +4,7 @@ import android.util.Xml
 import com.example.routerchefdemo.*
 import com.google.gson.JsonObject
 import org.json.JSONObject
+import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.NodeList
 import org.xml.sax.InputSource
@@ -26,10 +27,13 @@ class ZTERouterModel : RouterModel() {
         "https://192.168.1.1/"
     override var rebootPath: String =
         "https://192.168.1.1/getpage.lua?pid=1002&nextpage=ManagDiag_DeviceManag_t.lp"
-    override var wlanInfoPath: String = ""
+    override var wlanInfoPath: String =
+        "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_LocalnetStatusAd_t.lp"
     override var wlanAccessPath: String = ""
-    override var lanInterfacePath: String = "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_LocalnetStatusAd_t.lp"
-    override var changePasswordPath: String = "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_WlanBasicAd_t.lp"
+    override var lanInterfacePath: String =
+        "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_LocalnetStatusAd_t.lp"
+    override var changePasswordPath: String =
+        "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_WlanBasicAd_t.lp"
 
     override fun login(username: String, password: String): String {
 //        return "function login(user, pass, callback) {" +
@@ -301,7 +305,8 @@ class ZTERouterModel : RouterModel() {
         val inputSource = InputSource(StringReader(data))
         val doc = docBuilder.parse(inputSource)
 
-        val lanInstances: NodeList = (doc.getElementsByTagName("OBJ_ETH_ID").item(0) as Element).getElementsByTagName("Instance")
+        val lanInstances: NodeList = (doc.getElementsByTagName("OBJ_ETH_ID")
+            .item(0) as Element).getElementsByTagName("Instance")
         var macAddress = ""
         var ipAddress = ""
 
@@ -310,13 +315,17 @@ class ZTERouterModel : RouterModel() {
             val lanId = instance.getElementsByTagName("ParaValue").item(1).textContent // LAN ID
 
             if (lanId == "LAN4") {
-                macAddress = instance.getElementsByTagName("ParaValue").item(5).textContent // MAC Address
-                val wanLanInstances = (doc.getElementsByTagName("OBJ_WANLAN_ID").item(0) as Element).getElementsByTagName("Instance")
+                macAddress =
+                    instance.getElementsByTagName("ParaValue").item(5).textContent // MAC Address
+                val wanLanInstances = (doc.getElementsByTagName("OBJ_WANLAN_ID")
+                    .item(0) as Element).getElementsByTagName("Instance")
                 for (j in 0 until wanLanInstances.length) {
                     val wanLanInstance = wanLanInstances.item(j) as Element
-                    val wanLanId = wanLanInstance.getElementsByTagName("ParaValue").item(0).textContent // WANLAN ID
+                    val wanLanId = wanLanInstance.getElementsByTagName("ParaValue")
+                        .item(0).textContent // WANLAN ID
                     if (wanLanId == "IGD.LD1.ETH4") {
-                        ipAddress = wanLanInstance.getElementsByTagName("ParaValue").item(1).textContent // IP Address
+                        ipAddress = wanLanInstance.getElementsByTagName("ParaValue")
+                            .item(1).textContent // IP Address
                         break
                     }
                 }
@@ -326,6 +335,7 @@ class ZTERouterModel : RouterModel() {
 
         return Pair(macAddress, ipAddress)
     }
+
     override fun reboot(): String {
         return "let id = '${Constants.REBOOT}' ;" +
                 "let exit = setTimeout(() => {" +
@@ -382,7 +392,7 @@ class ZTERouterModel : RouterModel() {
                 }
                 XmlPullParser.END_TAG -> {
                     if (parser.name == "Instance" && currentHostName != null) {
-                        connectedDevices.add(ConnectedDevice(currentHostName ,"" ))
+                        connectedDevices.add(ConnectedDevice(currentHostName, ""))
                         currentHostName = null
                     }
                 }
@@ -420,7 +430,8 @@ class ZTERouterModel : RouterModel() {
         val currentTime = System.currentTimeMillis()
         val uptime = currentTime - verDate
 
-        val deviceInfo = DeviceInfo(deviceName, serialNumber, softwareVersion, hardwareVersion, uptime)
+        val deviceInfo =
+            DeviceInfo(deviceName, serialNumber, softwareVersion, hardwareVersion, uptime)
 
         println("Device Information:")
         println("Device Name: ${deviceInfo.deviceName}")
@@ -433,67 +444,122 @@ class ZTERouterModel : RouterModel() {
     }
 
     override fun getWlanInfo(): String {
-        TODO("Not yet implemented")
-    }
-
-    override fun extractWifiDetails(data: String): WifiDetails {
-        TODO("Not yet implemented")
-    }
-
-    override fun extractDslDetails(json: String): DslDetails {
-        val jsonWithoutUnits = json.replace(" Mbps", "").replace(" dB", "").replace(" h", "h").replace(" min", "min").replace(" s", "s")
-
-        val parts = jsonWithoutUnits.split(",\"")
-
-        val status = getValueByKey(parts, "chanType")
-        val modulation = getValueByKey(parts, "modType")
-        val upCurrRate = getValueByKey(parts, "upload")?.toFloatOrNull()?.toInt()
-        val downCurrRate = getValueByKey(parts, "download")?.toFloatOrNull()?.toInt()
-        val (downstreamMaxBitRate, upstreamMaxBitRate) = extractRates(getValueByKey(parts, "lineRate"))
-        val (impulsoNoiseProUs, impulsoNoiseProDs) = extractNoise(getValueByKey(parts, "noise"))
-        val (downAttenuation, upAttenuation) = extractDepth(getValueByKey(parts, "depth"))
-        val (upPower, downPower) = extractDelay(getValueByKey(parts, "delay"))
-        val dslUpTime = extractUpTime(getValueByKey(parts, "upTime"))
-
-        return DslDetails(
-            status, modulation, upCurrRate, downCurrRate, downstreamMaxBitRate, upstreamMaxBitRate,
-            impulsoNoiseProUs, impulsoNoiseProDs, downAttenuation, upAttenuation, upPower, downPower, dslUpTime
+        return callAPI(
+            "https://192.168.1.1/common_page/wlanStatus_lua.lua",
+            Constants.WLAN_INFO
         )
     }
 
-    fun getValueByKey(parts: List<String>, key: String): String? {
-        val found = parts.find { it.startsWith("$key\":\"") }
-        return found?.substringAfter("$key\":\"")?.removeSuffix("\"")
+    data class Instance(
+        val paraValue: String,
+        val paraName: String,
+        val attributes: List<Attribute>
+    )
+
+    data class Attribute(
+        val paraValue: String,
+        val paraName: String
+    )
+
+    override fun extractWifiDetails(xmlData: String): WifiDetails {
+        val docBuilderFactory = DocumentBuilderFactory.newInstance()
+        val docBuilder = docBuilderFactory.newDocumentBuilder()
+        val inputSource = InputSource(StringReader(xmlData))
+        val doc: Document = docBuilder.parse(inputSource)
+
+        val wlanAPInstances = doc.getElementsByTagName("OBJ_WLANAP_ID").item(0)?.childNodes
+        val wlanConfigInstances =
+            doc.getElementsByTagName("OBJ_WLANCONFIGDRV_ID").item(0)?.childNodes
+
+        val ssidNode =
+            (wlanAPInstances?.item(0) as? Element)?.getElementsByTagName("ParaValue")?.item(3)
+        val enableNode =
+            (wlanAPInstances?.item(0) as? Element)?.getElementsByTagName("ParaValue")?.item(1)
+        val bssidNode =
+            (wlanConfigInstances?.item(0) as? Element)?.getElementsByTagName("ParaValue")?.item(2)
+
+        val ssid = ssidNode?.textContent ?: ""
+        val enable = enableNode?.textContent?.toIntOrNull() ?: 0
+        val bssid = bssidNode?.textContent ?: ""
+        return WifiDetails(ssid, enable, bssid, null, null, null)
     }
 
-    fun extractRates(rateString: String?): Pair<Int?, Int?> {
-        val rates = rateString?.split("/")?.map { it.toFloatOrNull()?.toInt() }
-        return Pair(rates?.getOrNull(0), rates?.getOrNull(1))
+    override fun extractDslDetails(json: String): DslDetails {
+        val jsonString = json.replace(" Mbps", "").replace(" dB", "").replace(" h", "h").replace(" min", "min").replace(" s", "s")
+
+        val parts = jsonString.split("\",\"")
+
+        fun getValueByKey(key: String): String? {
+            return parts.find { it.contains("\"$key\":\"") || it.contains("$key\":\"") }
+                ?.split("\":\"")
+                ?.get(1)
+                ?.removeSuffix("\"")
+        }
+
+        fun extractNoise(noiseValue: String?): Pair<Int, Int> {
+            val values = noiseValue?.split("/")?.map { it.trim().split(" ")[0].toFloat().toInt() }
+            return Pair(values?.getOrNull(0) ?: 0, values?.getOrNull(1) ?: 0)
+        }
+
+        fun extractDepth(depthValue: String?): Pair<Int, Int> {
+            val values = depthValue?.split("/")?.map { it.trim().split(" ")[0].toInt() }
+            return Pair(values?.getOrNull(0) ?: 0, values?.getOrNull(1) ?: 0)
+        }
+
+        fun extractDelay(delayValue: String?): Pair<Int, Int> {
+            val values = delayValue?.split("/")?.map { it.trim().split(" ")[0].toInt() }
+            return Pair(values?.getOrNull(0) ?: 0, values?.getOrNull(1) ?: 0)
+        }
+
+        fun extractUpTime(upTimeValue: String?): Int {
+            return upTimeValue?.let {
+                val timeParts = it.split("\\s+".toRegex()) // Split using one or more whitespace characters
+                var timeInMillis = 0L
+                for (i in timeParts.indices step 3) {
+                    val value = timeParts[i].toIntOrNull() ?: 0
+                    val unit = timeParts[i + 1]
+                    timeInMillis += when (unit) {
+                        "h" -> value * 3600 * 1000L
+                        "min" -> value * 60 * 1000L
+                        "s" -> value * 1000L
+                        else -> 0L
+                    }
+                }
+                timeInMillis.toInt()
+            } ?: 0
+        }
+
+        val status = getValueByKey("chanType")
+        val modulation = getValueByKey("modType")
+        val upCurrRate = getValueByKey("upload")?.toFloatOrNull()?.toInt()
+        val downCurrRate = getValueByKey("download")?.toFloatOrNull()?.toInt()
+        val downstreamMaxBitRate = getValueByKey("maxDownload")?.toFloatOrNull()?.toInt()
+        val upstreamMaxBitRate = getValueByKey("maxUpload")?.toFloatOrNull()?.toInt()
+        val impulsoNoisePro = extractNoise(getValueByKey("noise"))
+        val downAttenuation = extractDepth(getValueByKey("depth"))
+        val upPower = extractDelay(getValueByKey("delay"))
+        val dslUpTime = extractUpTime(getValueByKey("upTime"))
+        println("DSL Up Time: $dslUpTime")
+
+
+        return DslDetails(
+            status,
+            modulation,
+            upCurrRate,
+            downCurrRate,
+            downstreamMaxBitRate,
+            upstreamMaxBitRate,
+            impulsoNoisePro.first,
+            impulsoNoisePro.second,
+            downAttenuation.first,
+            downAttenuation.second,
+            upPower.first,
+            upPower.second,
+            dslUpTime
+        )
     }
 
-    fun extractNoise(noiseString: String?): Pair<Int?, Int?> {
-        val noise = noiseString?.split("/")?.map { it.toIntOrNull() }
-        return Pair(noise?.getOrNull(0), noise?.getOrNull(1))
-    }
 
-    fun extractDepth(depthString: String?): Pair<Int?, Int?> {
-        val depth = depthString?.split("/")?.map { it.toIntOrNull() }
-        return Pair(depth?.getOrNull(0), depth?.getOrNull(1))
-    }
-
-    fun extractDelay(delayString: String?): Pair<Int?, Int?> {
-        val powers = delayString?.substringBefore(" ms")?.split("/") ?: listOf()
-        val upPower = powers.getOrNull(0)?.trim()?.toIntOrNull()
-        val downPower = powers.getOrNull(1)?.trim()?.toIntOrNull()
-        return Pair(upPower, downPower)
-    }
-    fun extractUpTime(upTimeString: String?): Int? {
-        val timeParts = upTimeString?.split(" ") ?: listOf("0", "0", "0")
-        val hours = timeParts[0].removeSuffix("h").toIntOrNull() ?: 0
-        val minutes = timeParts.getOrNull(1)?.removeSuffix("min")?.toIntOrNull() ?: 0
-        val seconds = timeParts.getOrNull(2)?.removeSuffix("s")?.toIntOrNull() ?: 0
-        return (hours * 3600 + minutes * 60 + seconds)*1000
-    }
     override fun getWlanAccess(): String {
         TODO("Not yet implemented")
     }
