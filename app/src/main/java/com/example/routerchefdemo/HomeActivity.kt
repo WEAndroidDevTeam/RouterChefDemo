@@ -38,8 +38,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             val intent = Intent(this, SysInformationActivity::class.java)
             startActivity(intent)
         }
-        binding.btHomeNetwork.setOnClickListener {
-            val intent = Intent(this, HomeNetworkActivity::class.java)
+        binding.btnLanInterface.setOnClickListener {
+            val intent = Intent(this, LANInterfaceActivity::class.java)
             startActivity(intent)
 
         }

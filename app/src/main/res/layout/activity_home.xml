@@ -59,12 +59,12 @@
         app:layout_constraintTop_toBottomOf="@id/bt_maintain" />
 
     <Button
-        android:id="@+id/bt_homeNetwork"
+        android:id="@+id/btn_lanInterface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_15sdp"
         android:fontFamily="@font/montserrat_semi_bold"
-        android:text="home network"
+        android:text="LAN Interface"
         android:backgroundTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,7 @@
         android:text="change SSID Name/Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bt_homeNetwork" />
+        app:layout_constraintTop_toBottomOf="@id/btn_lanInterface" />
     />
 
     <Button

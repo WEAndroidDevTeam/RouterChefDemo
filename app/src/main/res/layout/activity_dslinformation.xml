@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/_10sdp"
     tools:context=".DSLInformationActivity">
 
     <include
@@ -15,6 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
     <TextView
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
 
         android:text="DSL Synchronization status:"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
 
         android:text="Connection Status:"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
 
         android:text="Upstream line rate(kbit/s):"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
 
         android:text="Downstream line rate(kbit/s):"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,9 +93,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
 
-        android:text="Maximum downstream rate(kbit/s):      "
+        android:text="Maximum downstream rate(kbit/s): "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/maxUpRate" />
 
@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
 
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         android:text="Up noise safety coefficient(dB):"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/maxDownRate" />
@@ -115,7 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         android:text="Down noise safety coefficient(dB):"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         android:text="Upstream line attenuation(dB):"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +139,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:text="Downstream line attenuation(dB):"
         app:layout_constraintStart_toStartOf="parent"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintTop_toBottomOf="@+id/upAttenuation" />
 
     <TextView
@@ -148,7 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
         android:text="Upstream output power(dBm):"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/downAttenuation" />
 
@@ -156,7 +156,7 @@
         android:id="@+id/downOutPower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         android:layout_marginTop="@dimen/_16sdp"
         android:text="Downstream output power(dBm):"
         app:layout_constraintStart_toStartOf="parent"
@@ -168,7 +168,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
         android:text="DSL up time:"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/downOutPower" />
 
@@ -177,7 +177,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="NoSignal"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/dslSync"
         app:layout_constraintStart_toEndOf="@id/maxDownRate" />
 
@@ -186,7 +186,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="IdIe"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/connectionStatus"
         app:layout_constraintStart_toStartOf="@+id/tV_dslSync" />
 
@@ -195,7 +195,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/upStreamLine"
         app:layout_constraintStart_toStartOf="@+id/tV_connectionStatus" />
 
@@ -204,7 +204,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/downStreamLine"
         app:layout_constraintStart_toStartOf="@+id/tV_upStreamLine" />
 
@@ -213,7 +213,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/maxUpRate"
         app:layout_constraintStart_toStartOf="@+id/tV_DownStreamLine" />
 
@@ -222,7 +222,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/maxDownRate"
         app:layout_constraintStart_toStartOf="@+id/tV_maxUpRate" />
 
@@ -231,7 +231,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/upNoise"
         app:layout_constraintStart_toStartOf="@+id/tV_maxDownRate" />
 
@@ -240,7 +240,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/downNoise"
         app:layout_constraintStart_toStartOf="@+id/tV_upNoise" />
 
@@ -249,7 +249,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/upAttenuation"
         app:layout_constraintStart_toStartOf="@+id/tV_downNoise" />
 
@@ -258,7 +258,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/downAttenuation"
         app:layout_constraintStart_toStartOf="@+id/tV_upAttenuation" />
 
@@ -267,7 +267,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/upOutPower"
         app:layout_constraintStart_toStartOf="@+id/tV_downAttenuation" />
 
@@ -276,7 +276,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/downOutPower"
         app:layout_constraintStart_toStartOf="@+id/tV_upOutPower" />
 
@@ -285,7 +285,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="@+id/dslUpTime"
         app:layout_constraintStart_toStartOf="@+id/tV_downOutPower" />
     <ProgressBar

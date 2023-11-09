@@ -53,6 +53,7 @@ class LANInterfaceActivity : BaseActivity<ActivityLaninterfaceBinding>() {
         val result = router.extractMacAndIp(data)
         binding.tVMacNum.text = result.first
         binding.tVIpNum.text = result.second
+        binding.cLLanInterfaceStatus.visibility = View.VISIBLE
 
     }
 }
