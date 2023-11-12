@@ -53,18 +53,9 @@ class DSLInformationActivity : BaseActivity<ActivityDslinformationBinding>() {
         binding.tVDownAttenuation.text = dslDetails.downAttenuation.toString()
         binding.tVUpOutPower.text = dslDetails.upPower.toString()
         binding.tVDownOutPower.text = dslDetails.downPower.toString()
-        binding.tVDslUpTime.text = formatMillisecondsToDuration(dslDetails.dslUpTime)
+        binding.tVDslUpTime.text = dslDetails.dslUpTime
     }
 
 
-    fun formatMillisecondsToDuration(milliseconds: Int?): String {
-        var milliseconds = milliseconds?.times(1000)
-        val seconds = (milliseconds?.div(1000))?.toInt()
-        val days = seconds?.div(86400)
-        val hours = (seconds?.rem(86400))?.div(3600)
-        val minutes = (seconds?.rem(3600))?.div(60)
-        val remainingSeconds = seconds?.rem(60)
 
-        return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, remainingSeconds)
-    }
 }

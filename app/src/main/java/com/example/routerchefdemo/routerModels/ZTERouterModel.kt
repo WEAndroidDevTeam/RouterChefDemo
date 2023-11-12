@@ -538,7 +538,7 @@ class ZTERouterModel : RouterModel() {
         val impulsoNoisePro = extractNoise(getValueByKey("noise"))
         val downAttenuation = extractDepth(getValueByKey("depth"))
         val upPower = extractDelay(getValueByKey("delay"))
-        val dslUpTime = extractUpTime(getValueByKey("upTime"))
+        val dslUpTime =(getValueByKey("upTime"))
         println("DSL Up Time: $dslUpTime")
 
 

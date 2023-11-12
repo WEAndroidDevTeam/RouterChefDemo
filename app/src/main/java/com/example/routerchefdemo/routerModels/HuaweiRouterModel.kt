@@ -90,7 +90,7 @@ class HuaweiRouterModel : RouterModel() {
             upAttenuation,
             upPower,
             downPower,
-            dslUpTime
+           formatMillisecondsToDuration(dslUpTime)
         )
     }
 
@@ -251,5 +251,14 @@ class HuaweiRouterModel : RouterModel() {
         val region = data.optString("RegulatoryDomain")
 
         return WifiDetails(ssid, enable, bssid, autoChannelEnable, transmitPower, region)
+    }
+    fun formatMillisecondsToDuration(milliseconds: Int?): String {
+        var milliseconds = milliseconds?.times(1000)
+        val seconds = (milliseconds?.div(1000))?.toInt()
+        val days = seconds?.div(86400)
+        val hours = (seconds?.rem(86400))?.div(3600)
+        val minutes = (seconds?.rem(3600))?.div(60)
+        val remainingSeconds = seconds?.rem(60)
+        return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, remainingSeconds)
     }
 }

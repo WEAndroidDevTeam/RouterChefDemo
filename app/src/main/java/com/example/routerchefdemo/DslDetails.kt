@@ -13,5 +13,5 @@ data class DslDetails(
     val upAttenuation: Int?,
     val upPower: Int?,
     val downPower: Int?,
-    val dslUpTime: Int?
+    val dslUpTime: String?
 )
