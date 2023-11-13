@@ -82,7 +82,7 @@ class MyApp : Application() {
     public fun callbackHandle(id: String, jsonData: String) {
         Log.i("ROUTER", "$id $jsonData")
         if(jsonData == "relogin"){
-            startActivity(Intent(this, MainActivity::class.java))
+            mCurrentActivity?.startActivity(Intent(this, MainActivity::class.java))
             return
         }
         if(jsonData.isNullOrEmpty())

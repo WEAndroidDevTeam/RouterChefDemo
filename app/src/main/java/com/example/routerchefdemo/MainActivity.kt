@@ -66,7 +66,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-        binding.spinner.setSelection(2)
+//        binding.spinner.setSelection(2)
 
         binding.bLogin.setOnClickListener {
             (applicationContext as MyApp).isLogging = true

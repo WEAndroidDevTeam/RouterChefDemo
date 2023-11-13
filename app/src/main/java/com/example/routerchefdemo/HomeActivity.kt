@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import com.example.routerchefdemo.Constants.USER_LEVEL
 import com.example.routerchefdemo.databinding.ActivityHomeBinding
+import com.example.routerchefdemo.routerModels.RouterModel
 import org.json.JSONObject
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
@@ -53,19 +54,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
         binding.btLogout.setOnClickListener {
             (applicationContext as MyApp).webView.evaluateJavascript("javascript: " +
-                    "function LogOut(){" +
-                    "    try{" +
-                    "       document.querySelector('#signout_ctrl').click();" +
-                    "       Android.callbackHandle('logout' , 'relogin');" +
-                    "    }catch(err){" +
-                    "       Android.callbackHandle('logout' , 'relogin');" +
-                    "        return err.message;" +
-                    "    }" +
-                    "}" +
-                    "LogOut();" , null
+                    RouterModel.getInstance().logout(), null
             )
-            }
         }
+    }
 
 
 

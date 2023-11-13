@@ -208,6 +208,19 @@ class HuaweiRouterModel : RouterModel() {
         return "let exit = setTimeout(() => {\n    clearInterval(temp);\n    clearTimeout(exit);\n    Android.callbackHandle(JSON.stringify({ result: \"timeout\" }));\n}, 10000);\n\nlet temp = setInterval(() => {\n    try {\n        if (document.getElementById('login_window')) {\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"relogin\" }));\n        } else {\n            Android.callbackHandle(JSON.stringify({ result: \"applying_settings\" }));\n            Atp.RebootController.click_proc();\n            clearInterval(temp);\n            clearTimeout(exit);\n            Android.callbackHandle(JSON.stringify({ result: \"executed\" }));\n        }\n    } catch (err){ }\n}, 500);"
     }
 
+    override fun logout(): String {
+        return "function LogOut(){" +
+                "    try {" +
+                "       document.querySelector('#signout_ctrl').click();" +
+                "       Android.callbackHandle('logout' , 'relogin');" +
+                "    }catch(err){" +
+                "       Android.callbackHandle('logout' , 'relogin');" +
+                "        return err.message;" +
+                "    }" +
+                "}" +
+                "LogOut();"
+    }
+
     override fun parseConnectedDevices(jsonData: String): List<ConnectedDevice> {
         val connectedDevicesList = mutableListOf<ConnectedDevice>()
 

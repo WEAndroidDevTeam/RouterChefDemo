@@ -65,6 +65,8 @@ sealed class RouterModel {
     }
 
 
+    abstract fun logout(): String
+
     fun callAPI(url: String, id: String, dummy: String? = null): String {
 
         return (

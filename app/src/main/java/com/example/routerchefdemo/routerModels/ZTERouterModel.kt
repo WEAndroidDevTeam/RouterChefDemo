@@ -24,7 +24,7 @@ class ZTERouterModel : RouterModel() {
     override var wlanSettingsPath: String =
         "https://192.168.1.1/getpage.lua?pid=1002&nextpage=Localnet_WlanBasicAd_t.lp"
     override var connectedDevicesPath: String =
-        "https://192.168.1.1/"
+        "https://192.168.1.1/getpage.lua?pid=1002&nextpage=home_t.lp"
     override var rebootPath: String =
         "https://192.168.1.1/getpage.lua?pid=1002&nextpage=ManagDiag_DeviceManag_t.lp"
     override var wlanInfoPath: String =
@@ -631,5 +631,17 @@ class ZTERouterModel : RouterModel() {
         )
         sb.append("} changeSSID();")
         return sb.toString()
+    }
+
+    override fun logout(): String {
+        return "function LogOut(){" +
+                "    try {" +
+                "       document.getElementById('LogOffLnk').click();" +
+                "       Android.callbackHandle('logout' , 'relogin');" +
+                "    }catch(err){" +
+                "       Android.callbackHandle('logout' , 'relogin');" +
+                "    }" +
+                "}" +
+                "LogOut();"
     }
 }
